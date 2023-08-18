@@ -1,0 +1,79 @@
+.slider {
+    position: relative;
+    width: 100%;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.navSlider {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    right: 0;
+}
+
+.navSlider svg {
+    width: 18px;
+    height: 20px;
+}
+
+.prev {
+    position: absolute;
+    left: 30px;
+}
+
+.next {
+    position: absolute;
+    right: 30px;
+}
+
+.navSlider button {
+    color: #fff;
+    border-radius: 3px;
+    padding: 8px 5px;
+    background: rgba(255, 152, 0, 0.75);
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+    transition: 0.7s;
+    border: none;
+}
+
+.navSlider button:hover {
+    background-position: right center;
+}
+
+.dotSlider {
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    top: inherit;
+}
+
+.dotSlider button {
+    display: inline-block;
+    zoom: 1;
+    border: none;
+    background: 0 0;
+}
+
+.dotSlider span {
+    display: block;
+    width: 25px;
+    margin: 5px 7px;
+    padding: 4px;
+    background: #52a7f1;
+    transition: opacity 0.2s ease;
+}
+
+.dotSlider span:hover {
+    background-color: #8bc34a;
+}
+
+.dotSlider .active {
+    background-color: #8bc34a !important;
+}

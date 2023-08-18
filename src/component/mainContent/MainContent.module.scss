@@ -1,0 +1,68 @@
+// mainContent
+
+.mainContent {
+    margin-bottom: 20px;
+}
+
+.showMovie {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+// numberPage
+.numberPage {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.numberPage ul {
+    padding: 0;
+    color: #fff;
+}
+
+.numberPage li {
+    display: inline-block;
+    margin: 3px;
+    line-height: 35px;
+}
+
+.numberPage li span {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    background-color: #1b364e;
+    margin: 20px 0;
+
+    &:hover {
+        background: #396792;
+        color: #fff;
+        transition: 0.5s all;
+    }
+}
+
+.numberPage li span.current {
+    background: #bf7d18;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#cd881e), to(#674614));
+    transition: 0.5s all;
+    color: #fff;
+
+    &:hover {
+        background: #cd881e;
+        transition: 0.5s all;
+        cursor: not-allowed;
+    }
+}
+
+.numberPage li span.dots {
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(0, 0, 0, 0.28);
+    transition: 0.5s all;
+    padding: 8px 5px;
+    background-color: #151d25;
+
+    &:hover {
+        background: #cd881e;
+        transition: 0.5s all;
+        cursor: not-allowed;
+    }
+}

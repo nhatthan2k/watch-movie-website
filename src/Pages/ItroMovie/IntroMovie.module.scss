@@ -1,0 +1,204 @@
+.mainInfo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    background: #0c131a9e;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.first {
+    width: 19%;
+    padding: 5px;
+    background: black;
+}
+
+.first img {
+    width: 100%;
+    display: block;
+}
+
+.last {
+    margin-left: 10px;
+    width: 81%;
+}
+
+.last > div {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #1e2838;
+    padding: 6px;
+
+    &:first-child {
+        border-top: 0;
+    }
+}
+
+.last > div > div {
+    color: #a7a7a7;
+    padding: 10px 5px;
+    font-size: 1.3rem;
+
+    &:first-child {
+        flex: 0.2;
+        font-weight: 700;
+    }
+
+    &:last-child {
+        flex: 0.8;
+        font-weight: 400;
+    }
+}
+
+.name h1 {
+    font-size: 1.7rem;
+    color: #c68819;
+}
+
+.name_other p {
+    margin: 5px 0;
+}
+
+.last > div > div > a {
+    background: rgb(255 255 255 / 15%);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px 2px;
+    display: inline-flex;
+    color: #efefef;
+}
+
+.list_cate > div:last-child {
+    padding: 3px;
+}
+
+.new-ep span {
+    padding: 3px 7px 3px;
+    color: #fff;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #25aae1, #043ea5, #04befe, #3f86ed);
+    border-radius: 3px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.hh3d-info {
+    & svg {
+        width: 13px;
+        margin: 0 2.5px;
+    }
+    & a {
+        margin: 0 1px;
+        color: #87c3f9;
+    }
+}
+
+// navInfo
+
+.navInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0c131a9e;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.navInfo a {
+    font-weight: 400;
+    font-size: 1.5rem;
+    transition: all 0.4s ease-in-out;
+    background-image: linear-gradient(to right, #fb0, #e43603, #ff6290, #ff5000);
+    background-size: 300% 100%;
+    background-color: #6b6a6a;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: #fff;
+
+    & svg {
+        margin-right: 5px;
+    }
+}
+
+// time movie
+.showtimeMovies {
+    background: #22466b url(../../asset/Image/weekly-calendar.png) no-repeat;
+    background-position: 10px 42%;
+    background-size: 25px;
+    padding: 10px 15px;
+    padding-left: 45px;
+    margin-bottom: -1px;
+    color: #bdbdbd;
+    font-size: 13.5px;
+}
+
+.showtimeMovies span {
+    color: #ffa500;
+    text-transform: uppercase;
+}
+
+// nội dung phim
+.entryContent {
+    margin-top: -1px;
+    background: #101821;
+    padding: 15px;
+    border: 1px solid #1d2731;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.entryContent h1 {
+    margin: -15px 0;
+}
+
+.entryContent h1 span::before {
+    height: 1px;
+}
+
+.videoItem {
+    font-size: 1.4rem;
+    color: #989898;
+}
+
+.itemContent {
+    line-height: 1.8;
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.itemContent p {
+    margin-bottom: 10px;
+}
+
+.itemContentToggle {
+    position: relative;
+    margin: 5px 0 0;
+}
+
+.itemContentToggle div {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    bottom: 26px;
+    background: linear-gradient(to bottom, rgba(16, 24, 33, 0.28) 0%, rgb(16, 24, 33) 100%);
+}
+
+.showMore {
+    border-top: none;
+    padding: 8px 7px 0 0;
+    cursor: pointer;
+    font-size: 13px;
+
+    &:hover {
+        color: #ff8a00;
+    }
+}

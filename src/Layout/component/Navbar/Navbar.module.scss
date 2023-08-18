@@ -1,0 +1,100 @@
+.navbar {
+    background-color: #12171b;
+    transition: 0.25s transform;
+    z-index: 999;
+    box-shadow: 0 5px 10px -1px #161d23;
+}
+
+.container {
+    width: 86%;
+    margin: auto;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu > li + .active {
+    background-color: #234;
+}
+
+.menu a {
+    display: block;
+    color: #d0d0d0;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 14px 10px;
+    transition: all 0.5s ease;
+    border-right: 1px solid #12171b;
+}
+
+.menu a:hover {
+    color: #ea8300;
+    background: #000;
+}
+
+.menu a svg {
+    margin-right: 3px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown > a:hover {
+    + .dropdownMenu {
+        display: block;
+    }
+}
+
+.dropdownMenu:hover {
+    display: block;
+}
+
+.dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    font-size: 14px;
+    text-align: left;
+    background: #1f3d58 !important;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.dropdownMenu::after {
+    content: '';
+    border-bottom: 8px solid #1f3d58;
+    border-left: 8px solid transparent;
+    z-index: 999;
+    display: block;
+    border-right: 8px solid transparent;
+    top: -8px;
+    left: 37px;
+    position: absolute;
+}
+
+.activeMenu {
+    background-color: #337ab7;
+}
+
+.dropdownMenu li a {
+    color: #fff;
+    padding: 8px 15px;
+    white-space: normal;
+    font-size: 1.25rem;
+}
+
+.dropdownMenu li a:hover,
+.dropdownMenu li a:focus {
+    text-decoration: none;
+    color: #6cbbff;
+    background-color: #1f3d58;
+    transition: 0.5s all;
+}

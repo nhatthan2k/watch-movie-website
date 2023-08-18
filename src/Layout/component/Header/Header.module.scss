@@ -1,0 +1,35 @@
+.Header {
+    background-color: #1b2d3c;
+}
+
+.container {
+    width: 86%;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2.4rem;
+    font-weight: 800;
+    padding: 8px 16px;
+}
+
+.nav-items {
+    display: flex;
+}
+
+.nav-items a {
+    padding: 7px 15px;
+    margin: 0px 3px;
+    font-size: 2rem;
+    display: inline-flex;
+    background-color: #12171b;
+    border: 1px solid #404040;
+    color: #ccc;
+    position: relative;
+}

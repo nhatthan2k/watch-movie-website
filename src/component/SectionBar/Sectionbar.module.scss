@@ -1,0 +1,41 @@
+.sectionBar {
+    margin: 15px 0;
+}
+
+.sectionBar h1 {
+    position: relative;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    display: flow-root;
+}
+
+.sectionBar h1::before {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #1e2732 !important;
+    bottom: 0;
+    width: 100%;
+}
+
+.sectionBar span {
+    position: relative;
+    float: left;
+    font-size: 15px;
+    padding: 5px 0 2px;
+    background: linear-gradient(to right, #ff8a00, #ff2070);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    font-weight: 700;
+}
+
+.sectionBar span::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+    background: linear-gradient(to right, #ff8a00, #ff2070);
+    height: 0.5px;
+}

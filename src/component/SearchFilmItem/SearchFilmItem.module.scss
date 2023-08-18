@@ -1,0 +1,27 @@
+.result-item a {
+    display: flex;
+    padding: 12px;
+    border-top: 1px solid #20282f;
+    background-color: #090b0c;
+}
+
+.Avata {
+    width: 35px;
+    height: 44px;
+}
+
+.info {
+    margin-left: 12px;
+}
+
+.info span {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 3px;
+    display: -webkit-box;
+}
+
+.info p {
+    font-size: 1.1rem;
+    color: #7d9db9;
+}

@@ -1,0 +1,43 @@
+.navContent {
+    margin-top: 15px;
+}
+
+.navContent ul {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navContent li {
+    width: calc(100% / 8);
+    margin: 1px;
+}
+
+.navContent li button {
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-radius: 4px;
+    width: 100%;
+    padding: 5px 10px;
+    background: #23232a;
+    color: #fff;
+
+    &:hover {
+        background-color: #333;
+    }
+}
+
+.navContent li button.active {
+    background: linear-gradient(
+        140deg,
+        rgba(0, 77, 102, 0.8) 0%,
+        rgba(0, 134, 179, 0.9) 50%,
+        rgba(0, 191, 255, 1) 100%
+    );
+}
+
+.navContent li span {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 26px;
+}
