@@ -16,26 +16,31 @@ import {
     faThumbsUp,
     faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
+import { useMediaQuery } from 'react-responsive';
 
 const cx = classNames.bind(Styles);
 
 function WatchMoviePage() {
+    const istabletPC = useMediaQuery({ minWidth: 740 });
+
     return (
         <Content>
             <VideoComponent />
 
             <div className={cx('NavWatch')}>
-                <div className={cx('leftside')}>
-                    <div className={cx('like')}>
-                        <FontAwesomeIcon icon={faThumbsUp} />
-                        Thích
-                    </div>
+                {istabletPC && (
+                    <div className={cx('leftside')}>
+                        <div className={cx('like')}>
+                            <FontAwesomeIcon icon={faThumbsUp} />
+                            Thích
+                        </div>
 
-                    <div className={cx('share')}>
-                        <FontAwesomeIcon icon={faShareNodes} />
-                        chia sẻ
+                        <div className={cx('share')}>
+                            <FontAwesomeIcon icon={faShareNodes} />
+                            chia sẻ
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <div className={cx('rightside')}>
                     <div className={cx('prevEpisode')}>
@@ -46,18 +51,22 @@ function WatchMoviePage() {
                         Tập tiếp theo
                         <FontAwesomeIcon icon={faForward} />
                     </div>
-                    <div className={cx('toggleLight')}>
-                        <FontAwesomeIcon icon={faCircleHalfStroke} />
-                        Tắt đèn
-                    </div>
+                    {istabletPC && (
+                        <div className={cx('toggleLight')}>
+                            <FontAwesomeIcon icon={faCircleHalfStroke} />
+                            Tắt đèn
+                        </div>
+                    )}
                     <div className={cx('report')}>
                         <FontAwesomeIcon icon={faTriangleExclamation} />
                         Báo lỗi
                     </div>
-                    <div className={cx('View')}>
-                        <FontAwesomeIcon icon={faEye} />
-                        Lượt xem
-                    </div>
+                    {istabletPC && (
+                        <div className={cx('View')}>
+                            <FontAwesomeIcon icon={faEye} />
+                            Lượt xem
+                        </div>
+                    )}
                 </div>
             </div>
 

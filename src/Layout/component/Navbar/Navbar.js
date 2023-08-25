@@ -1,16 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Styles from './Navbar.module.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCaretDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { publicRoute } from '../../../Route/Routes';
+import { useMediaQuery } from 'react-responsive';
+import Search from '../Search/Search';
 
 const cx = classNames.bind(Styles);
 
 function Navbar() {
     const itemRefs = useRef([]);
     const menuRefs = useRef([]);
+    const [toggleMenu, setToggleMenu] = useState(true);
+    const [toggleSeach, setToggleSeach] = useState(false);
+    const isTabletMobile = useMediaQuery({ maxWidth: 1200 });
 
     const MovieGenderList = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Typefilm');
@@ -19,6 +24,14 @@ function Navbar() {
     const Navnamelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Navname');
     });
+
+    useEffect(() => {
+        if (isTabletMobile) {
+            setToggleMenu(false);
+        } else {
+            setToggleMenu(true);
+        }
+    }, [isTabletMobile]);
 
     const handleClick = (index) => {
         const itemNames = cx({
@@ -55,7 +68,17 @@ function Navbar() {
     return (
         <div className={cx('navbar')}>
             <div className={cx('container')}>
-                <ul className={cx('menu')}>
+                <div className={cx('wapperTogger')}>
+                    <button className={cx('navbarToggle')} onClick={() => setToggleMenu(!toggleMenu)}>
+                        <FontAwesomeIcon icon={faBars} />
+                    </button>
+
+                    <button className={cx('navbarToggle')} onClick={() => setToggleSeach(!toggleSeach)}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                </div>
+
+                <ul className={cx('menu')} style={toggleMenu ? { display: 'flex' } : { display: 'none' }}>
                     <li>
                         <Link to="/">Trang chủ</Link>
                     </li>
@@ -92,6 +115,12 @@ function Navbar() {
                         );
                     })}
                 </ul>
+
+                {isTabletMobile && toggleSeach && (
+                    <div className={cx('seachWrapper')}>
+                        <Search />
+                    </div>
+                )}
             </div>
         </div>
     );

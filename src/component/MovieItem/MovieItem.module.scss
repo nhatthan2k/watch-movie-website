@@ -88,3 +88,17 @@
     -webkit-box-flex: 1;
     -webkit-box-orient: vertical;
 }
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .movieItem {
+        width: calc(100% / 4);
+    }
+}
+
+/* mobile */
+@media (max-width: 739px) {
+    .movieItem {
+        width: calc(100% / 2);
+    }
+}

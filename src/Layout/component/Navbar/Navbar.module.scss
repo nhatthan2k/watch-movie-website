@@ -10,6 +10,19 @@
     margin: auto;
 }
 
+.wapperTogger {
+    display: none;
+    justify-content: space-between;
+}
+
+.navbarToggle {
+    margin: 6px 0 2px;
+    padding: 9px;
+    background: transparent;
+    font-size: 1.8rem;
+    color: #d0d0d0;
+}
+
 .menu {
     display: flex;
 }
@@ -26,15 +39,15 @@
     padding: 14px 10px;
     transition: all 0.5s ease;
     border-right: 1px solid #12171b;
-}
 
-.menu a:hover {
-    color: #ea8300;
-    background: #000;
-}
+    &:hover {
+        color: #ea8300;
+        background: #000;
+    }
 
-.menu a svg {
-    margin-right: 3px;
+    & svg {
+        margin-right: 3px;
+    }
 }
 
 .dropdown {
@@ -97,4 +110,28 @@
     color: #6cbbff;
     background-color: #1f3d58;
     transition: 0.5s all;
+}
+
+.seachWrapper {
+    padding: 15px 20px 10px 5px;
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+// responsive
+@media (max-width: 1200px) {
+    .container {
+        border-left: 1px solid #12171b;
+        border-right: 1px solid #12171b;
+    }
+
+    .menu {
+        flex-direction: column;
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .wapperTogger {
+        display: flex;
+    }
 }

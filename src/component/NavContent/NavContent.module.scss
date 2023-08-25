@@ -41,3 +41,21 @@
     font-weight: 600;
     line-height: 26px;
 }
+
+@media (max-width: 739px) {
+    .navContent ul {
+        flex-wrap: wrap;
+    }
+
+    .navContent li {
+        width: calc(50% - 2px);
+
+        &:first-child {
+            width: 100%;
+        }
+    }
+
+    .toggleNav button:first-child {
+        height: 30px;
+    }
+}

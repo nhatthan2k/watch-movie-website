@@ -77,3 +77,11 @@
 .result-item:hover {
     background-color: #1e262d;
 }
+
+// tablet & mobile
+@media (max-width: 1200px) {
+    .search {
+        width: 100%;
+        background-color: transparent;
+    }
+}

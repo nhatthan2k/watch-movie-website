@@ -50,6 +50,7 @@ function Search() {
     return (
         <HeadlessTippy
             interactive
+            placement="bottom"
             visible={showresult && debounce.length > 0}
             offset={[0, 0]}
             render={(attrs) => (

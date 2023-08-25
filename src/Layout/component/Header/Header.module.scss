@@ -33,3 +33,28 @@
     color: #ccc;
     position: relative;
 }
+
+/* pc */
+@media (min-width: 1024px) {
+}
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* mobile */
+@media (max-width: 739px) {
+    .Header {
+        padding: 15px 0;
+        background-color: #181c20;
+    }
+
+    .container {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .nav-items {
+        margin: 10px 0;
+    }
+}

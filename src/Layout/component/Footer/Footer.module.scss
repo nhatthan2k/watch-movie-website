@@ -35,3 +35,13 @@
     padding: 8px 7%;
     color: #adadad;
 }
+
+@media (max-width: 739px) {
+    .container {
+        width: 100%;
+    }
+
+    .Footerinfo {
+        width: 100%;
+    }
+}

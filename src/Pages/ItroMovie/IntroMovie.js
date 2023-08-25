@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Styles from './IntroMovie.module.scss';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FilmList } from '../../filmlist/Filmlist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
@@ -28,6 +28,8 @@ function IntroMovie() {
     const hiddenContent = () => {
         setShowMore(!showMore);
     };
+
+    const moviePath = Translate(Data[0].Name);
 
     return (
         <Content>
@@ -100,10 +102,10 @@ function IntroMovie() {
 
                 <div className={cx('navInfo')}>
                     <div className={cx('watchMovie')}>
-                        <a>
+                        <Link to={`/xem-phim/${moviePath}`}>
                             <FontAwesomeIcon icon={faCirclePlay} />
                             Xem Phim
-                        </a>
+                        </Link>
                     </div>
                     <div className={cx('followMovie')}>
                         <a>

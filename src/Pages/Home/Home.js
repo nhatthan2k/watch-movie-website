@@ -7,13 +7,15 @@ import { FilmList } from '../../filmlist/Filmlist';
 import SliderItem from '../../component/SliderItem/SliderItem';
 import NavContent from '../../component/NavContent/NavContent';
 import Content from '../../Layout/component/Content/Content';
+import { useMediaQuery } from 'react-responsive';
 
 const cx = classNames.bind(Styles);
 
 function Home() {
     const btnRefs = useRef([]);
+    const isPc = useMediaQuery({ maxWidth: 1023 });
 
-    const favorieFilm = FilmList.filter((FilmItem) => {
+    const favoriteFilm = FilmList.filter((FilmItem) => {
         return FilmItem.hasOwnProperty('Poster');
     });
 
@@ -21,17 +23,19 @@ function Home() {
 
     const gotoPrev = () => {
         const isfistslide = currentIndex === 0;
-        const newIndex = isfistslide ? favorieFilm.length - 2 : currentIndex - 1;
+        const newIndex = isfistslide ? favoriteFilm.length - 2 : currentIndex - 1;
         setCurrentIndex(newIndex);
     };
 
     const gotoNext = () => {
-        const islastslide = currentIndex === favorieFilm.length - 2;
+        const islastslide = currentIndex === favoriteFilm.length - 2;
         const newIndex = islastslide ? 0 : currentIndex + 1;
         setCurrentIndex(newIndex);
     };
 
-    const sliderFilm = [favorieFilm[currentIndex], favorieFilm[currentIndex + 1]];
+    const sliderFilm = isPc
+        ? [favoriteFilm[currentIndex]]
+        : [favoriteFilm[currentIndex], favoriteFilm[currentIndex + 1]];
 
     const gotoslides = (index) => {
         setCurrentIndex(index);

@@ -34,8 +34,15 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #3b6080;
 }
+
 ::-webkit-scrollbar-track {
     background: #213342;
+}
+
+::selection {
+    background: #fd9dff;
+    color: #fff;
+    text-shadow: none;
 }
 
 button {

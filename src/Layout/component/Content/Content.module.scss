@@ -12,3 +12,9 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+@media (max-width: 739px) {
+    .container {
+        width: 100%;
+    }
+}

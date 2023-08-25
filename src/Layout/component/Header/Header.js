@@ -4,10 +4,13 @@ import classNames from 'classnames/bind';
 import Search from '../Search/Search';
 import { Link } from 'react-router-dom';
 import { publicRoute } from '../../../Route/Routes';
+import { useMediaQuery } from 'react-responsive';
 
 const cx = classNames.bind(Styles);
 
 function Header() {
+    const isPC = useMediaQuery({ minWidth: 1201 });
+
     const Pagelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Name');
     });
@@ -21,7 +24,7 @@ function Header() {
                     <Link to="/">MyWebsite.vn</Link>
                 </div>
 
-                <Search />
+                {isPC && <Search />}
 
                 <div className={cx('nav-items')}>
                     {Pagelist.map((PageItem, index) => {

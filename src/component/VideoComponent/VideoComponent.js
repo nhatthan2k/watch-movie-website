@@ -15,6 +15,7 @@ import {
     faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCirclePlay } from '@fortawesome/free-regular-svg-icons';
+import dptk from '../../asset/Image/dau-pha-thuong-khung-phan-5-gia-nam-hoc-vien-poster.jpg';
 
 const cx = classNames.bind(Styles);
 
@@ -149,6 +150,7 @@ function VideoComponent() {
                 playbackRate={playbackRate}
                 light={true}
                 onClickPreview={handleLight}
+                // light={<img src={dptk} alt="Thumbnail" />}
             />
             {islight && (
                 <div className={cx('Wapper')}>

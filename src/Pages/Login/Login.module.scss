@@ -21,6 +21,7 @@
 .GoogleLink,
 .FacebookLink {
     padding: 5px 0;
+    min-width: 120px;
 }
 
 .GoogleLink a,
@@ -63,6 +64,9 @@
     line-height: 20px;
     letter-spacing: 0.25px;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 // form
@@ -151,5 +155,24 @@
 
     &:hover {
         color: #23527c;
+    }
+}
+
+/* pc */
+@media (min-width: 1024px) {
+}
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* mobile */
+@media (max-width: 739px) {
+    .Container {
+        width: 100%;
+    }
+
+    .info {
+        max-width: none;
     }
 }

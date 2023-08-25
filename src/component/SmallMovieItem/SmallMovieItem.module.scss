@@ -70,3 +70,9 @@
     color: #ab8d20;
     font-style: italic;
 }
+
+@media (max-width: 739px) {
+    .item {
+        width: 100%;
+    }
+}
