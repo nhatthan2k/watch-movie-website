@@ -28,7 +28,7 @@ function EpComponent() {
                 <ul className={cx('listEps')}>
                     <li>
                         <a>
-                            <span>14</span>
+                            <span className={cx('active')}>14</span>
                         </a>
                     </li>
                     <li>
