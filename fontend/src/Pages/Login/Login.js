@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Styles from './Login.module.scss';
 import classNames from 'classnames/bind';
+import {loginUser} from '../../redux/apiRequest'
+import {useNavigate} from "react-router-dom"
+import {useDispatch} from "react-redux"
 import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +12,22 @@ import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 const cx = classNames.bind(Styles);
 
 function Login() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");  
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        const newUser = {
+            username: username,
+            password: password
+        }
+
+        loginUser(newUser, dispatch, navigate)
+    }
+
     return (
         <Content>
             <SectionBar>Đăng nhập tài khoản</SectionBar>
@@ -38,7 +57,7 @@ function Login() {
                         </div>
                     </div>
 
-                    <form className={cx('loginForm')}>
+                    <form className={cx('loginForm')} onSubmit={handleLogin}>
                         <div className={cx('formGroup')}>
                             <label htmlFor="user-login">Tên tài khoản</label>
                             <input
@@ -49,11 +68,12 @@ function Login() {
                                 size="20"
                                 placeholder="Nhập tên tài khoản của bạn"
                                 required=""
+                                onChange={(e) => setUsername(e.target.value)}
                             ></input>
                         </div>
 
                         <div className={cx('formGroup')}>
-                            <label htmlFor="user-pass">Tên tài khoản</label>
+                            <label htmlFor="user-pass">Password</label>
                             <input
                                 type="password"
                                 name="pwd"
@@ -62,6 +82,7 @@ function Login() {
                                 size="20"
                                 placeholder="Nhập mật khẩu của bạn"
                                 required=""
+                                onChange={(e) => setPassword(e.target.value)}
                             ></input>
                         </div>
 
