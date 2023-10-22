@@ -94,7 +94,7 @@ function Login() {
                         <button className={cx('button')}>Đăng Nhập</button>
                         <p>
                             Chưa có tài khoản?
-                            <a href="#">Đăng kí ngay</a>
+                            <a href="/register">Đăng kí ngay</a>
                         </p>
                     </form>
                 </div>

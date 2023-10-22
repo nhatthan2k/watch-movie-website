@@ -66,8 +66,8 @@ const authController = {
 
             if (user && validPassword){
 
-                // tao accesstoken
-                const accesstoken = authController.generateAccessToken(user)
+                // tao accessToken
+                const accessToken = authController.generateAccessToken(user)
                 
                 // tạo refreshToken
                 const refreshToken = authController.generateRefreshToken(user)
@@ -84,7 +84,7 @@ const authController = {
                 })
 
                 const {password, ...orther} = user._doc
-                res.status(200).json({...orther, accesstoken})
+                res.status(200).json({...orther, accessToken})
             }
         }
         catch (err) {
@@ -127,7 +127,7 @@ const authController = {
             })
 
             // lưu accessToken mới 
-            res.status(200).json({accesstoken: newAccessToken})
+            res.status(200).json({accessToken: newAccessToken})
         })
     },
     
