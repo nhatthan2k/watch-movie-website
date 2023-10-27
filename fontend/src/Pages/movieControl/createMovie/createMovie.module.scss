@@ -1,0 +1,98 @@
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Container {
+    width: 50%;
+}
+// form
+
+.registerForm {
+    margin-top: 15px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+.formGroup label {
+    font-size: 1.3rem;
+    color: #a5a5a5;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formGroup input {
+    display: block;
+    border-radius: 4px;
+    height: 34px;
+    font-size: 1.4rem;
+    line-height: 20px;
+    width: 100%;
+    margin: 10px 0;
+    padding: 20px 10px;
+    background: #000;
+    opacity: 0.8;
+    color: #dbdbdb !important;
+    box-sizing: border-box;
+    border: none;
+}
+
+.button {
+    color: #fff;
+    background-color: #5cb85c;
+    border: 1px solid#4cae4c;
+    padding: 6px 12px;
+    font-size: 1.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    height: 34px;
+    width: 105px;
+
+    &:hover {
+        background-color: #449d44;
+    }
+}
+
+.registerForm > p {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #ccc;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.registerForm p a {
+    margin-left: 3px;
+    cursor: pointer;
+    color: #87c3f9;
+    text-decoration: none;
+
+    &:hover {
+        color: #23527c;
+    }
+}
+
+/* pc */
+@media (min-width: 1024px) {
+}
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* mobile */
+@media (max-width: 739px) {
+    .Container {
+        width: 100%;
+    }
+
+    .info {
+        max-width: none;
+    }
+}

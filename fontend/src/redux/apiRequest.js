@@ -39,6 +39,19 @@ export const getAllUser = async (accessToken, dispatch, axiosJwt) => {
     }
 }
 
+export const getAUser = async (accessToken, dispatch, id, axiosJwt) => {
+    dispatch(getUserStart());
+    try {
+        const res = await axiosJwt.get("/v1/user/" + id, {
+            headers: {token: `Bearer ${accessToken}`}
+        })
+        dispatch(getUserSuccess(res.data))
+    }
+    catch (err) {
+        dispatch(getUserError())
+    }
+}
+
 export const deleteUser = async (accessToken, dispatch, id, axiosJwt) => {
     dispatch(deleteUserStart());
     try { 

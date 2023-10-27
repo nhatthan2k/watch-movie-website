@@ -1,6 +1,7 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import authReduce from "./authSlice";
-import userReduce from "./userSlice";
+import authReducer from "./authSlice";
+import userReducer from "./userSlice";
+import movieReducer from "./movieSlice"
 import {
     persistStore,
     persistReducer,
@@ -14,12 +15,24 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
-    key: 'root',
-    version: 1,
-    storage,
-}
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ['auth','users']
+};
 
-const rootReducer = combineReducers({ auth: authReduce, users: userReduce})
+const combinedReducer = combineReducers({
+  auth: authReducer,
+  users: userReducer,
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === "auth/logoutSuccess") {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({

@@ -7,7 +7,6 @@ import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux"
 import { RegisterUser } from '../../redux/apiRequest';
 
-
 const cx = classNames.bind(Styles);
 
 function Register() {
