@@ -7,7 +7,6 @@ import { Cookies } from 'react-cookie';
 export const post_login = (formLogin) => {
     return async function post_login_thunk(dispatch) {
         let response = await POST_LOGIN(formLogin);
-        console.log(response);
         if (response.status === 200) {
             const data = response.data;
             const cookie = new Cookies();
@@ -17,7 +16,7 @@ export const post_login = (formLogin) => {
             dispatch(setFavourite(data.favourite));
             dispatch(setUserLogin(data));
             dispatch(setUser(data));
-            return data.roles;
+            return data.content.roles;
         } else {
             return response.data;
         }
