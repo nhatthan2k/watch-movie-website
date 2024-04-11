@@ -16,23 +16,23 @@ const cx = classNames.bind(Styles);
 
 function Header() {
     const isPC = useMediaQuery({ minWidth: 1201 });
-    const user =  useSelector(state => state.auth.login.currentUser)
+    // const user =  useSelector(state => state.auth.login.currentUser)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const axiosJwt = createAxios(user, dispatch, resetUser)
+    // const axiosJwt = createAxios(user, dispatch, resetUser)
 
     let Pagelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Name');
     });
 
-    if (user) {
-        Pagelist = Pagelist.filter(item => item.Name !== "Login")
-    }
+    // if (user) {
+    //     Pagelist = Pagelist.filter(item => item.Name !== "Login")
+    // }
 
     Pagelist.shift();
 
     const handleLogout = () => {
-        handle_logout(user?.accessToken, dispatch, user?._id, navigate, axiosJwt)
+        // handle_logout(user?.accessToken, dispatch, user?._id, navigate, axiosJwt)
     }
 
     return (
@@ -53,7 +53,7 @@ function Header() {
                         );
                     })}
 
-                    {user ? (
+                    {/* {user ? ( */}
                     <>
                         <Link> 
                             <FontAwesomeIcon icon={faUser} />
@@ -63,7 +63,7 @@ function Header() {
                             <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
                         </Link>
                     </>
-                    ) : null}
+                    {/* ) : null} */}
                     
                 </div>
             </div>
