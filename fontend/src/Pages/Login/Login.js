@@ -1,32 +1,42 @@
 import React, { useState } from 'react';
 import Styles from './Login.module.scss';
 import classNames from 'classnames/bind';
-import {loginUser} from '../../redux/apiRequest'
-import {useNavigate} from "react-router-dom"
-import {useDispatch} from "react-redux"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { post_login } from '../../redux/thunk/authThunk';
 
 const cx = classNames.bind(Styles);
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");  
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogin = (e) => {
         e.preventDefault();
 
-        const newUser = {
+        const formLogin = {
             username: username,
-            password: password
-        }
+            password: password,
+        };
 
-        loginUser(newUser, dispatch, navigate)
-    }
+        dispatch(post_login(formLogin)).then((resp) => {
+            if (Array.isArray(resp)) {
+                if (resp.includes('ROLE_ADMIN')) {
+                    navigate('/admin');
+                } else {
+                    navigate('/');
+                }
+            } else {
+                setError(resp);
+            }
+        });
+    };
 
     return (
         <Content>
