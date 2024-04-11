@@ -11,12 +11,13 @@ import { faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { handle_logout } from '../../../redux/thunk/authThunk';
 import { createAxios } from '../../../createInstance';
 import { resetUser } from '../../../redux/reducers/authSlice';
+import { AUTH } from '../../../redux/selectors/selectors';
 
 const cx = classNames.bind(Styles);
 
 function Header() {
     const isPC = useMediaQuery({ minWidth: 1201 });
-    // const user =  useSelector(state => state.auth.login.currentUser)
+    const user = useSelector(AUTH);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const axiosJwt = createAxios(user, dispatch, resetUser)
@@ -25,15 +26,16 @@ function Header() {
         return publicRouteItem.hasOwnProperty('Name');
     });
 
-    // if (user) {
-    //     Pagelist = Pagelist.filter(item => item.Name !== "Login")
-    // }
+    if (user) {
+        Pagelist = Pagelist.filter((item) => item.Name !== 'Login');
+    }
 
     Pagelist.shift();
 
     const handleLogout = () => {
         // handle_logout(user?.accessToken, dispatch, user?._id, navigate, axiosJwt)
-    }
+        dispatch(handle_logout());
+    };
 
     return (
         <div className={cx('Header')}>
@@ -53,18 +55,17 @@ function Header() {
                         );
                     })}
 
-                    {/* {user ? ( */}
-                    <>
-                        <Link> 
-                            <FontAwesomeIcon icon={faUser} />
-                        </Link>
+                    {user ? (
+                        <>
+                            <Link>
+                                <FontAwesomeIcon icon={faUser} />
+                            </Link>
 
-                        <Link>
-                            <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
-                        </Link>
-                    </>
-                    {/* ) : null} */}
-                    
+                            <Link>
+                                <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
+                            </Link>
+                        </>
+                    ) : null}
                 </div>
             </div>
         </div>

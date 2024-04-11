@@ -3,34 +3,34 @@ import Styles from './Register.module.scss';
 import classNames from 'classnames/bind';
 import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
-import {useNavigate} from "react-router-dom"
-import {useDispatch} from "react-redux"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 // import { RegisterUser } from '../../redux/apiRequest';
 
 const cx = classNames.bind(Styles);
 
 function Register() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleRegister = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const newUser = {
             username,
             password,
-            email
-        }
+            email,
+        };
 
         // RegisterUser(newUser, dispatch, navigate)
-    }
+    };
 
-    return ( 
+    return (
         <Content>
-            <SectionBar>Đăng nhập tài khoản</SectionBar>
+            <SectionBar>Đăng ký tài khoản</SectionBar>
 
             <div className={cx('register')}>
                 <div className={cx('Container')}>

@@ -26,16 +26,15 @@ function Login() {
         };
 
         dispatch(post_login(formLogin)).then((resp) => {
-            // if (resp.includes('ROLE_ADMIN')) {
-                // navigate('/admin');
-            // } else {
-                navigate('/');
-            // }
-            // if (Array.isArray(resp)) {
-                
-            // } else {
-            //     setError(resp);
-            // }
+            if (Array.isArray(resp)) {
+                if (resp.includes('ROLE_ADMIN')) {
+                    navigate('/admin');
+                } else {
+                    navigate('/');
+                }
+            } else {
+                setError(resp);
+            }
         });
     };
 
