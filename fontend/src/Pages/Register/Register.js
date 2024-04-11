@@ -5,12 +5,13 @@ import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { RegisterUser } from '../../redux/apiRequest';
+import { post_register } from '../../redux/thunk/authThunk'
 
 const cx = classNames.bind(Styles);
 
 function Register() {
     const [username, setUsername] = useState('');
+    const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
@@ -23,9 +24,17 @@ function Register() {
             username,
             password,
             email,
+            fullName
         };
 
-        // RegisterUser(newUser, dispatch, navigate)
+        dispatch(post_register(newUser)).then((resp) => {
+            if(resp === true) {
+                navigate('/')
+            }
+            // else {
+                
+            // }
+        });
     };
 
     return (
@@ -46,6 +55,20 @@ function Register() {
                                 placeholder="Nhập tên tài khoản của bạn"
                                 required=""
                                 onChange={(e) => setUsername(e.target.value)}
+                            ></input>
+                        </div>
+
+                        <div className={cx('formGroup')}>
+                            <label htmlFor="user-register">fullName</label>
+                            <input
+                                type="text"
+                                name="log"
+                                id="fullName-register"
+                                className={cx('form-control')}
+                                size="20"
+                                placeholder="Nhập fullName của bạn"
+                                required=""
+                                onChange={(e) => setFullName(e.target.value)}
                             ></input>
                         </div>
 
