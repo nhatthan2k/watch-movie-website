@@ -5,9 +5,9 @@ import Context from "../../../Layout/component/Content/Content"
 import SectionBar from "../../../component/SectionBar/SectionBar";
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import { deleteUser, getAllUser } from "../../../redux/apiRequest";
+// import { deleteUser, getAllUser } from "../../../redux/apiRequest";
 import { createAxios } from "../../../createInstance"
-import { loginSuccess } from "../../../redux/authSlice";
+// import { loginSuccess } from "../../../redux/authSlice";
 
 const cx = classNames.bind(Styles)
 
@@ -16,15 +16,15 @@ function UserPage() {
     const listUser = useSelector(state => state.users.users?.allusers)
     const msg = useSelector(state => state.users?.msg)
     const dispatch = useDispatch();
-    const axiosJwt = createAxios(user, dispatch, loginSuccess)
+    // const axiosJwt = createAxios(user, dispatch, loginSuccess)
 
     const handleDelete = (id) => {
-        deleteUser(user?.accessToken, dispatch, id, axiosJwt)
+        // deleteUser(user?.accessToken, dispatch, id, axiosJwt)
     } 
 
     useEffect(() => {
         if(user?.accessToken) {
-            getAllUser(user?.accessToken, dispatch, axiosJwt)
+            // getAllUser(user?.accessToken, dispatch, axiosJwt)
         }
     }, [])
 

@@ -5,7 +5,7 @@ import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux"
-import { RegisterUser } from '../../redux/apiRequest';
+// import { RegisterUser } from '../../redux/apiRequest';
 
 const cx = classNames.bind(Styles);
 
@@ -25,7 +25,7 @@ function Register() {
             email
         }
 
-        RegisterUser(newUser, dispatch, navigate)
+        // RegisterUser(newUser, dispatch, navigate)
     }
 
     return ( 

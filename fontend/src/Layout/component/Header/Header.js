@@ -8,9 +8,9 @@ import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
-import { logoutUser } from '../../../redux/apiRequest';
+import { handle_logout } from '../../../redux/thunk/authThunk';
 import { createAxios } from '../../../createInstance';
-import { logoutSuccess } from '../../../redux/authSlice';
+import { resetUser } from '../../../redux/reducers/authSlice';
 
 const cx = classNames.bind(Styles);
 
@@ -19,7 +19,7 @@ function Header() {
     const user =  useSelector(state => state.auth.login.currentUser)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const axiosJwt = createAxios(user, dispatch, logoutSuccess)
+    const axiosJwt = createAxios(user, dispatch, resetUser)
 
     let Pagelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Name');
@@ -32,7 +32,7 @@ function Header() {
     Pagelist.shift();
 
     const handleLogout = () => {
-        logoutUser(user?.accessToken, dispatch, user?._id, navigate, axiosJwt)
+        handle_logout(user?.accessToken, dispatch, user?._id, navigate, axiosJwt)
     }
 
     return (
