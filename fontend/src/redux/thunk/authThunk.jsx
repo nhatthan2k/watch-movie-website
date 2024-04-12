@@ -18,7 +18,7 @@ export const post_login = (formLogin) => {
             dispatch(setUser(data));
             return data.content.roles;
         } else {
-            return response.data;
+            return response.data.content;
         }
     };
 };

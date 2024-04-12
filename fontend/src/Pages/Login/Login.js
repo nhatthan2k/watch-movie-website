@@ -90,7 +90,6 @@ function Login() {
                     </div>
 
                     <form className={cx('loginForm')} onSubmit={handleLogin}>
-                        {error && <p className={cx('error')}>{error}</p>}
                         <div className={cx('formGroup')}>
                             <label htmlFor="user-login">Tên tài khoản</label>
                             <input
@@ -120,6 +119,7 @@ function Login() {
                             ></input>
                             <small className={cx('validate')}>{errPassword}</small>
                         </div>
+                        {error && <span className={cx('error')}>{error}</span>}
 
                         <div className={cx('formGroup', 'flex')}>
                             <input type="checkbox" name="rememberme" style={{ marginRight: '4px' }} />{' '}
