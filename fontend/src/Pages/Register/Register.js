@@ -5,7 +5,7 @@ import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { post_register } from '../../redux/thunk/authThunk'
+import { post_register } from '../../redux/thunk/authThunk';
 
 const cx = classNames.bind(Styles);
 

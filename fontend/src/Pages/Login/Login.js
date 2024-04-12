@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Styles from './Login.module.scss';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,8 @@ import SectionBar from '../../component/SectionBar/SectionBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { post_login } from '../../redux/thunk/authThunk';
+import { validateBlank } from '../../utills/validate';
+
 
 const cx = classNames.bind(Styles);
 
@@ -31,11 +33,11 @@ function Login() {
 
         // validate
         if (validateBlank(formLogin.username)) {
-            setErrorEmail("you can't blank email");
+            setErrUsername("You can't blank email");
             return;
         }
         if (validateBlank(formLogin.password)) {
-            setErrorPassword("you can't blank password");
+            setErrPassword("You can't blank password");
             return;
         }
 
@@ -53,9 +55,8 @@ function Login() {
     };
 
     useEffect(() => {
-        setError('');
-        setErrorEmail('');
-        setErrorPassword('');
+        setErrUsername('');
+        setErrPassword('');
     }, []);
 
     return (
@@ -100,7 +101,7 @@ function Login() {
                                 required=""
                                 onChange={(e) => setUsername(e.target.value)}
                             ></input>
-                            <small class="form-text text-danger">{errUsername}</small>
+                            <small className={cx('validate')}>{errUsername}</small>
                         </div>
 
                         <div className={cx('formGroup')}>
@@ -115,7 +116,7 @@ function Login() {
                                 required=""
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
-                            <small class="form-text text-danger">{errPassword}</small>
+                            <small className={cx('validate')}>{errPassword}</small>
                         </div>
 
                         <div className={cx('formGroup', 'flex')}>

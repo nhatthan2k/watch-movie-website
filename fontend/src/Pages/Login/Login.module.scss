@@ -158,6 +158,14 @@
     }
 }
 
+// validate
+.validate {
+    position: relative;
+    color: red;
+    display: block;
+    top: 0px;
+}
+
 /* pc */
 @media (min-width: 1024px) {
 }
