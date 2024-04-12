@@ -12,10 +12,14 @@ import { post_login } from '../../redux/thunk/authThunk';
 const cx = classNames.bind(Styles);
 
 function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    // login form
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    // validate
+    const [errUsername, setErrUsername] = useState('');
+    const [errPassword, setErrPassword] = useState('');
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -24,6 +28,16 @@ function Login() {
             username: username,
             password: password,
         };
+
+        // validate
+        if (validateBlank(formLogin.username)) {
+            setErrorEmail("you can't blank email");
+            return;
+        }
+        if (validateBlank(formLogin.password)) {
+            setErrorPassword("you can't blank password");
+            return;
+        }
 
         dispatch(post_login(formLogin)).then((resp) => {
             if (Array.isArray(resp)) {
@@ -37,6 +51,12 @@ function Login() {
             }
         });
     };
+
+    useEffect(() => {
+        setError('');
+        setErrorEmail('');
+        setErrorPassword('');
+    }, []);
 
     return (
         <Content>
@@ -80,6 +100,7 @@ function Login() {
                                 required=""
                                 onChange={(e) => setUsername(e.target.value)}
                             ></input>
+                            <small class="form-text text-danger">{errUsername}</small>
                         </div>
 
                         <div className={cx('formGroup')}>
@@ -94,6 +115,7 @@ function Login() {
                                 required=""
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
+                            <small class="form-text text-danger">{errPassword}</small>
                         </div>
 
                         <div className={cx('formGroup', 'flex')}>
