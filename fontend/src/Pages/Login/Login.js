@@ -10,7 +10,6 @@ import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { post_login } from '../../redux/thunk/authThunk';
 import { validateBlank } from '../../utills/validate';
 
-
 const cx = classNames.bind(Styles);
 
 function Login() {
@@ -20,6 +19,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // validate
+    const [error, setError] = useState('');
     const [errUsername, setErrUsername] = useState('');
     const [errPassword, setErrPassword] = useState('');
 
@@ -49,12 +49,13 @@ function Login() {
                     navigate('/');
                 }
             } else {
-                // setError(resp);
+                setError(resp);
             }
         });
     };
 
     useEffect(() => {
+        setError('');
         setErrUsername('');
         setErrPassword('');
     }, []);
@@ -89,6 +90,7 @@ function Login() {
                     </div>
 
                     <form className={cx('loginForm')} onSubmit={handleLogin}>
+                        {error && <p className={cx('error')}>{error}</p>}
                         <div className={cx('formGroup')}>
                             <label htmlFor="user-login">Tên tài khoản</label>
                             <input
