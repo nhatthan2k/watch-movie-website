@@ -6,34 +6,68 @@ import SectionBar from '../../component/SectionBar/SectionBar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { post_register } from '../../redux/thunk/authThunk';
+import { validateBlank, validateUserName, validateEmail } from '../../utills/validate';
 
 const cx = classNames.bind(Styles);
 
 function Register() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // login form
     const [username, setUsername] = useState('');
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
+    // validate
+    const [error, setError] = useState('');
+    const [errUsername, setErrUsername] = useState('');
+    const [errPassword, setErrPassword] = useState('');
+    const [errFullName, setErrFullName] = useState('');
+    const [errEmail, setErrEmail] = useState('');
 
     const handleRegister = (e) => {
         e.preventDefault();
+
+        setError('');
+        setErrUsername('');
+        setErrPassword('');
+        setEmail('');
+        setErrFullName('');
 
         const newUser = {
             username,
             password,
             email,
-            fullName
+            fullName,
         };
 
+        // validate
+        if (!validateUserName(newUser.username)) {
+            setErrUsername('UserName has 6 to 100 character and no special characters');
+            return;
+        }
+        if (validateBlank(newUser.password)) {
+            setErrPassword("You can't blank password");
+            return;
+        }
+        if (validateBlank(newUser.fullName)) {
+            setErrFullName("You can't blank fullname");
+            return;
+        }
+        if (!validateEmail(newUser.email)) {
+            setErrEmail("Email can't blank and must be in the correct email format");
+            return;
+        }
+
         dispatch(post_register(newUser)).then((resp) => {
-            if(resp === true) {
-                navigate('/')
+            console.log(resp);
+            if (resp === true) {
+                navigate('/');
+            } else {
+                setError(resp);
             }
-            // else {
-                
-            // }
         });
     };
 
@@ -56,6 +90,7 @@ function Register() {
                                 required=""
                                 onChange={(e) => setUsername(e.target.value)}
                             ></input>
+                            <small className={cx('validate')}>{errUsername}</small>
                         </div>
 
                         <div className={cx('formGroup')}>
@@ -70,6 +105,7 @@ function Register() {
                                 required=""
                                 onChange={(e) => setFullName(e.target.value)}
                             ></input>
+                            <small className={cx('validate')}>{errFullName}</small>
                         </div>
 
                         <div className={cx('formGroup')}>
@@ -84,6 +120,7 @@ function Register() {
                                 required=""
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
+                            <small className={cx('validate')}>{errPassword}</small>
                         </div>
 
                         <div className={cx('formGroup')}>
@@ -98,7 +135,10 @@ function Register() {
                                 required=""
                                 onChange={(e) => setEmail(e.target.value)}
                             ></input>
+                            <small className={cx('validate')}>{errEmail}</small>
                         </div>
+
+                        {error && <span className={cx('error')}>{error}</span>}
 
                         <button className={cx('button')}>Đăng Kí</button>
                     </form>

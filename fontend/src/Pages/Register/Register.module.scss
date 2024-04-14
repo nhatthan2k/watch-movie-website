@@ -78,6 +78,22 @@
     }
 }
 
+// validate
+.validate {
+    position: relative;
+    color: red;
+    display: block;
+    top: 0px;
+}
+
+.error {
+    display: block;
+    color: red;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
 /* pc */
 @media (min-width: 1024px) {
 }

@@ -80,3 +80,24 @@ const getYear = (date) => {
     let arr = date.split('-');
     return arr[0];
 };
+
+// validate registerform
+export const validateUserName = (userName) => {
+    const length = userName.toString().trim().length;
+    if (length >= 6 && length <= 100) {
+        const regex = /^[a-zA-Z0-9]+$/;
+        return regex.test(userName);
+    } else {
+        return false;
+    }
+};
+
+export const validateEmail = (email) => {
+    const length = email.toString().trim().length;
+    if (length > 0) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    } else {
+        return false;
+    }
+};

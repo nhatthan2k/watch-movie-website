@@ -26,6 +26,10 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
+        setError('');
+        setErrUsername('');
+        setErrPassword('');
+
         const formLogin = {
             username: username,
             password: password,
@@ -33,7 +37,7 @@ function Login() {
 
         // validate
         if (validateBlank(formLogin.username)) {
-            setErrUsername("You can't blank email");
+            setErrUsername("You can't blank username");
             return;
         }
         if (validateBlank(formLogin.password)) {
@@ -53,12 +57,6 @@ function Login() {
             }
         });
     };
-
-    useEffect(() => {
-        setError('');
-        setErrUsername('');
-        setErrPassword('');
-    }, []);
 
     return (
         <Content>
@@ -119,6 +117,7 @@ function Login() {
                             ></input>
                             <small className={cx('validate')}>{errPassword}</small>
                         </div>
+
                         {error && <span className={cx('error')}>{error}</span>}
 
                         <div className={cx('formGroup', 'flex')}>

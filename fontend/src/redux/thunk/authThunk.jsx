@@ -29,7 +29,7 @@ export const post_register = (formRegister) => {
         if (response.status === 201) {
             return true;
         } else {
-            return response.data;
+            return response.data.content;
         }
     };
 };
