@@ -6,7 +6,7 @@ import SectionBar from '../../component/SectionBar/SectionBar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { post_register } from '../../redux/thunk/authThunk';
-import { validateBlank, validateUserName, validateEmail } from '../../utills/validate';
+import { validateBlank, validateUserName, validateEmail } from '../../utils/validate';
 
 const cx = classNames.bind(Styles);
 

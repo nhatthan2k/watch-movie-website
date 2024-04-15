@@ -8,7 +8,7 @@ import SectionBar from '../../component/SectionBar/SectionBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { post_login } from '../../redux/thunk/authThunk';
-import { validateBlank } from '../../utills/validate';
+import { validateBlank } from '../../utils/validate';
 
 const cx = classNames.bind(Styles);
 
