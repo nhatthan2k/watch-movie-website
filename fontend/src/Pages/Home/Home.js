@@ -8,6 +8,9 @@ import SliderItem from '../../component/SliderItem/SliderItem';
 import NavContent from '../../component/NavContent/NavContent';
 import Content from '../../Layout/component/Content/Content';
 import { useMediaQuery } from 'react-responsive';
+import Header from '../../Layout/component/Header/Header';
+import Navbar from '../../Layout/component/Navbar/Navbar';
+import Footer from '../../Layout/component/Footer/Footer';
 
 const cx = classNames.bind(Styles);
 
@@ -56,43 +59,48 @@ function Home() {
     };
 
     return (
-        <Content>
-            <div className={cx('slider')}>
-                <div className={cx('action')}>
-                    {sliderFilm.map((sliderFilmItem, index) => (
-                        <SliderItem data={sliderFilmItem} key={index} />
-                    ))}
+        <>
+            <Header />
+            <Navbar />
+            <Content>
+                <div className={cx('slider')}>
+                    <div className={cx('action')}>
+                        {sliderFilm.map((sliderFilmItem, index) => (
+                            <SliderItem data={sliderFilmItem} key={index} />
+                        ))}
+                    </div>
+
+                    <div className={cx('navSlider')}>
+                        <button className={cx('prev')} onClick={gotoPrev}>
+                            <FontAwesomeIcon icon={faAngleLeft} />
+                        </button>
+
+                        <button className={cx('next')} onClick={gotoNext}>
+                            <FontAwesomeIcon icon={faAngleRight} />
+                        </button>
+                    </div>
+
+                    <div className={cx('dotSlider')}>
+                        <button>
+                            <span
+                                ref={(el) => (btnRefs.current[0] = el)}
+                                onClick={() => gotoslides(0)}
+                                className={cx('active')}
+                            ></span>
+                        </button>
+                        <button>
+                            <span ref={(el) => (btnRefs.current[2] = el)} onClick={() => gotoslides(2)}></span>
+                        </button>
+                        <button>
+                            <span ref={(el) => (btnRefs.current[4] = el)} onClick={() => gotoslides(4)}></span>
+                        </button>
+                    </div>
                 </div>
 
-                <div className={cx('navSlider')}>
-                    <button className={cx('prev')} onClick={gotoPrev}>
-                        <FontAwesomeIcon icon={faAngleLeft} />
-                    </button>
-
-                    <button className={cx('next')} onClick={gotoNext}>
-                        <FontAwesomeIcon icon={faAngleRight} />
-                    </button>
-                </div>
-
-                <div className={cx('dotSlider')}>
-                    <button>
-                        <span
-                            ref={(el) => (btnRefs.current[0] = el)}
-                            onClick={() => gotoslides(0)}
-                            className={cx('active')}
-                        ></span>
-                    </button>
-                    <button>
-                        <span ref={(el) => (btnRefs.current[2] = el)} onClick={() => gotoslides(2)}></span>
-                    </button>
-                    <button>
-                        <span ref={(el) => (btnRefs.current[4] = el)} onClick={() => gotoslides(4)}></span>
-                    </button>
-                </div>
-            </div>
-
-            <NavContent />
-        </Content>
+                <NavContent />
+            </Content>
+            <Footer />
+        </>
     );
 }
 

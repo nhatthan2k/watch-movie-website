@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { post_register } from '../../redux/thunk/authThunk';
 import { validateBlank, validateUserName, validateEmail } from '../../utils/validate';
+import Header from '../../Layout/component/Header/Header';
+import Navbar from '../../Layout/component/Navbar/Navbar';
+import Footer from '../../Layout/component/Footer/Footer';
 
 const cx = classNames.bind(Styles);
 
@@ -72,79 +75,84 @@ function Register() {
     };
 
     return (
-        <Content>
-            <SectionBar>Đăng ký tài khoản</SectionBar>
+        <>
+            <Header />
+            <Navbar />
+            <Content>
+                <SectionBar>Đăng ký tài khoản</SectionBar>
 
-            <div className={cx('register')}>
-                <div className={cx('Container')}>
-                    <form className={cx('registerForm')} onSubmit={handleRegister}>
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-register">Tên tài khoản</label>
-                            <input
-                                type="text"
-                                name="log"
-                                id="user-register"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập tên tài khoản của bạn"
-                                required=""
-                                onChange={(e) => setUsername(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errUsername}</small>
-                        </div>
+                <div className={cx('register')}>
+                    <div className={cx('Container')}>
+                        <form className={cx('registerForm')} onSubmit={handleRegister}>
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-register">Tên tài khoản</label>
+                                <input
+                                    type="text"
+                                    name="log"
+                                    id="user-register"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập tên tài khoản của bạn"
+                                    required=""
+                                    onChange={(e) => setUsername(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errUsername}</small>
+                            </div>
 
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-register">fullName</label>
-                            <input
-                                type="text"
-                                name="log"
-                                id="fullName-register"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập fullName của bạn"
-                                required=""
-                                onChange={(e) => setFullName(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errFullName}</small>
-                        </div>
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-register">fullName</label>
+                                <input
+                                    type="text"
+                                    name="log"
+                                    id="fullName-register"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập fullName của bạn"
+                                    required=""
+                                    onChange={(e) => setFullName(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errFullName}</small>
+                            </div>
 
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-pass">Password</label>
-                            <input
-                                type="password"
-                                name="pwd"
-                                id="user-pass"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập mật khẩu của bạn"
-                                required=""
-                                onChange={(e) => setPassword(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errPassword}</small>
-                        </div>
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-pass">Password</label>
+                                <input
+                                    type="password"
+                                    name="pwd"
+                                    id="user-pass"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập mật khẩu của bạn"
+                                    required=""
+                                    onChange={(e) => setPassword(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errPassword}</small>
+                            </div>
 
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-email">email</label>
-                            <input
-                                type="text"
-                                name="eml"
-                                id="user-email"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập Email của bạn"
-                                required=""
-                                onChange={(e) => setEmail(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errEmail}</small>
-                        </div>
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-email">email</label>
+                                <input
+                                    type="text"
+                                    name="eml"
+                                    id="user-email"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập Email của bạn"
+                                    required=""
+                                    onChange={(e) => setEmail(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errEmail}</small>
+                            </div>
 
-                        {error && <span className={cx('error')}>{error}</span>}
+                            {error && <span className={cx('error')}>{error}</span>}
 
-                        <button className={cx('button')}>Đăng Kí</button>
-                    </form>
+                            <button className={cx('button')}>Đăng Kí</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </Content>
+            </Content>
+            <Footer />
+        </>
     );
 }
 

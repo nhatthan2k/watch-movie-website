@@ -4,13 +4,22 @@ import classNames from 'classnames/bind';
 import Content from '../../Layout/component/Content/Content';
 import SectionBar from '../../component/SectionBar/SectionBar';
 
+import Header from '../../Layout/component/Header/Header';
+import Navbar from '../../Layout/component/Navbar/Navbar';
+import Footer from '../../Layout/component/Footer/Footer';
+
 const cx = classNames.bind(Styles);
 
 function Follow() {
     return (
-        <Content>
-            <SectionBar>Tủ theo dõi phim</SectionBar>
-        </Content>
+        <>
+            <Header />
+            <Navbar />
+            <Content>
+                <SectionBar>Tủ theo dõi phim</SectionBar>
+            </Content>
+            <Footer />
+        </>
     );
 }
 

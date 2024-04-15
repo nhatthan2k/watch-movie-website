@@ -3,9 +3,6 @@ import './App.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoute } from './Route/Routes';
 // user
-import Header from './Layout/component/Header/Header';
-import Navbar from './Layout/component/Navbar/Navbar';
-import Footer from './Layout/component/Footer/Footer';
 import Register from './Pages/Register/Register';
 import FilmPage from './Pages/FilmPage/FilmPage';
 import IntroMovie from './Pages/ItroMovie/IntroMovie';
@@ -31,8 +28,6 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <Header />
-                <Navbar />
                 <Routes>
                     {NotFilmPageArr.map((RouteItem, index) => {
                         return <Route path={RouteItem.path} exact Component={RouteItem.component} key={index} />;
@@ -42,30 +37,28 @@ function App() {
                     <Route path="/user" Component={UserPage} />
                     <Route path="/user/edit/:id" Component={editUser} />
                     <Route path="/register" Component={Register} />
-                    <Route path="/:FilmPage" Component={FilmPage} />;
+                    <Route path="/:FilmPage" Component={FilmPage} />
                     <Route path="/phim/:IntroMovie" Component={IntroMovie} />
                     <Route path="/xem-phim/:WatchMovie" Component={WatchMoviePage} />
+
+                    {/* admin */}
+                    <Route path="/admin" Component={IndexAdminHome}>
+                        {/* dashboard */}
+                        <Route index Component={AdminHome}></Route>
+                        {/* orders */}
+                        <Route path="/admin/orders" Component={ManageOrders}></Route>
+                        {/* products */}
+                        <Route path="/admin/category" Component={ManageCategory}></Route>
+                        <Route path="/admin/product" Component={ManageProduct}></Route>
+                        <Route path="/admin/color" Component={ManageColor}></Route>
+                        <Route path="/admin/size" Component={ManageSize}></Route>
+                        {/* coupon */}
+                        <Route path="/admin/coupon" Component={ManageCoupon}></Route>
+                        {/* users */}
+                        <Route path="/admin/users" Component={ManageUsers}></Route>
+                    </Route>
                 </Routes>
-                <Footer />
             </Router>
-            {/* admin */}
-            <Routes>
-                <Route path="/admin" Component={IndexAdminHome}>
-                    {/* dashboard */}
-                    <Route index Component={AdminHome}></Route>
-                    {/* orders */}
-                    <Route path="/admin/orders" Component={ManageOrders}></Route>
-                    {/* products */}
-                    <Route path="/admin/category" Component={ManageCategory}></Route>
-                    <Route path="/admin/product" Component={ManageProduct}></Route>
-                    <Route path="/admin/color" Component={ManageColor}></Route>
-                    <Route path="/admin/size" Component={ManageSize}></Route>
-                    {/* coupon */}
-                    <Route path="/admin/coupon" Component={ManageCoupon}></Route>
-                    {/* users */}
-                    <Route path="/admin/users" Component={ManageUsers}></Route>
-                </Route>
-            </Routes>
         </div>
     );
 }

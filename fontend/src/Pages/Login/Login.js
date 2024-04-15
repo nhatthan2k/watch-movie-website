@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { post_login } from '../../redux/thunk/authThunk';
 import { validateBlank } from '../../utils/validate';
+import Header from '../../Layout/component/Header/Header';
+import Navbar from '../../Layout/component/Navbar/Navbar';
+import Footer from '../../Layout/component/Footer/Footer';
 
 const cx = classNames.bind(Styles);
 
@@ -59,81 +62,86 @@ function Login() {
     };
 
     return (
-        <Content>
-            <SectionBar>Đăng nhập tài khoản</SectionBar>
+        <>
+            <Header />
+            <Navbar />
+            <Content>
+                <SectionBar>Đăng nhập tài khoản</SectionBar>
 
-            <div className={cx('Login')}>
-                <div className={cx('Container')}>
-                    <div className={cx('info')}>
-                        <div className={cx('GoogleLink')}>
-                            <a>
-                                <div className={cx('logo')}>
-                                    <FontAwesomeIcon icon={faGoogle} />
-                                </div>
-                                <div className={cx('tiltle')}>
-                                    Continue with <b>Google</b>
-                                </div>
-                            </a>
+                <div className={cx('Login')}>
+                    <div className={cx('Container')}>
+                        <div className={cx('info')}>
+                            <div className={cx('GoogleLink')}>
+                                <a>
+                                    <div className={cx('logo')}>
+                                        <FontAwesomeIcon icon={faGoogle} />
+                                    </div>
+                                    <div className={cx('tiltle')}>
+                                        Continue with <b>Google</b>
+                                    </div>
+                                </a>
+                            </div>
+                            <div className={cx('FacebookLink')}>
+                                <a>
+                                    <div className={cx('logo')}>
+                                        <FontAwesomeIcon icon={faFacebook} />
+                                    </div>
+                                    <div className={cx('tiltle')}>
+                                        Continue with <b>Facebook</b>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div className={cx('FacebookLink')}>
-                            <a>
-                                <div className={cx('logo')}>
-                                    <FontAwesomeIcon icon={faFacebook} />
-                                </div>
-                                <div className={cx('tiltle')}>
-                                    Continue with <b>Facebook</b>
-                                </div>
-                            </a>
-                        </div>
+
+                        <form className={cx('loginForm')} onSubmit={handleLogin}>
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-login">Tên tài khoản</label>
+                                <input
+                                    type="text"
+                                    name="log"
+                                    id="user-login"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập tên tài khoản của bạn"
+                                    required=""
+                                    onChange={(e) => setUsername(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errUsername}</small>
+                            </div>
+
+                            <div className={cx('formGroup')}>
+                                <label htmlFor="user-pass">Password</label>
+                                <input
+                                    type="password"
+                                    name="pwd"
+                                    id="user-pass"
+                                    className={cx('form-control')}
+                                    size="20"
+                                    placeholder="Nhập mật khẩu của bạn"
+                                    required=""
+                                    onChange={(e) => setPassword(e.target.value)}
+                                ></input>
+                                <small className={cx('validate')}>{errPassword}</small>
+                            </div>
+
+                            {error && <span className={cx('error')}>{error}</span>}
+
+                            <div className={cx('formGroup', 'flex')}>
+                                <input type="checkbox" name="rememberme" style={{ marginRight: '4px' }} />{' '}
+                                <p>Ghi nhớ đăng nhập</p>
+                            </div>
+
+                            <button className={cx('button')}>Đăng Nhập</button>
+                            <p>
+                                Chưa có tài khoản?
+                                <a href="/register">Đăng kí ngay</a>
+                            </p>
+                        </form>
                     </div>
-
-                    <form className={cx('loginForm')} onSubmit={handleLogin}>
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-login">Tên tài khoản</label>
-                            <input
-                                type="text"
-                                name="log"
-                                id="user-login"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập tên tài khoản của bạn"
-                                required=""
-                                onChange={(e) => setUsername(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errUsername}</small>
-                        </div>
-
-                        <div className={cx('formGroup')}>
-                            <label htmlFor="user-pass">Password</label>
-                            <input
-                                type="password"
-                                name="pwd"
-                                id="user-pass"
-                                className={cx('form-control')}
-                                size="20"
-                                placeholder="Nhập mật khẩu của bạn"
-                                required=""
-                                onChange={(e) => setPassword(e.target.value)}
-                            ></input>
-                            <small className={cx('validate')}>{errPassword}</small>
-                        </div>
-
-                        {error && <span className={cx('error')}>{error}</span>}
-
-                        <div className={cx('formGroup', 'flex')}>
-                            <input type="checkbox" name="rememberme" style={{ marginRight: '4px' }} />{' '}
-                            <p>Ghi nhớ đăng nhập</p>
-                        </div>
-
-                        <button className={cx('button')}>Đăng Nhập</button>
-                        <p>
-                            Chưa có tài khoản?
-                            <a href="/register">Đăng kí ngay</a>
-                        </p>
-                    </form>
                 </div>
-            </div>
-        </Content>
+            </Content>
+            <Footer />
+        </>
     );
 }
 
