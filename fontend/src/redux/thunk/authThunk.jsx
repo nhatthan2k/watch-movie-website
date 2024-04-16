@@ -7,16 +7,17 @@ import { Cookies } from 'react-cookie';
 export const post_login = (formLogin) => {
     return async function post_login_thunk(dispatch) {
         let response = await POST_LOGIN(formLogin);
+        // console.log(response);
         if (response.status === 200) {
-            const data = response.data;
+            const data = response.data.content;
             const cookie = new Cookies();
-            cookie.set('token', data.token, { path: '/' });
+            cookie.set('token', data.accessToken, { path: '/' });
             // cookie.set("roles", data.roles, { path: "/" });
             localStorage.setItem('user', JSON.stringify(data));
             dispatch(setFavourite(data.favourite));
             dispatch(setUserLogin(data));
             dispatch(setUser(data));
-            return data.content.roles;
+            return data.roles;
         } else {
             return response.data.content;
         }

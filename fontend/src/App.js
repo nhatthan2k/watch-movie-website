@@ -7,10 +7,6 @@ import Register from './Pages/Register/Register';
 import FilmPage from './Pages/FilmPage/FilmPage';
 import IntroMovie from './Pages/ItroMovie/IntroMovie';
 import WatchMoviePage from './Pages/WatchMoviePage/WatchMoviePage';
-import createMovie from './Pages/movieControl/createMovie/createMovie';
-import UserPage from './Pages/user/UserPage/UserPage';
-import editMovie from './Pages/movieControl/editMovie/editMovie';
-import editUser from './Pages/user/editUser/editUser';
 // admin
 import AdminHome from './Pages/admin/home/AdminHome';
 import IndexAdminHome from './Pages/admin/IndexAdminHome';
@@ -32,10 +28,6 @@ function App() {
                     {NotFilmPageArr.map((RouteItem, index) => {
                         return <Route path={RouteItem.path} exact Component={RouteItem.component} key={index} />;
                     })}
-                    <Route path="/movie" Component={createMovie} />
-                    <Route path="/movie/edit" Component={editMovie} />
-                    <Route path="/user" Component={UserPage} />
-                    <Route path="/user/edit/:id" Component={editUser} />
                     <Route path="/register" Component={Register} />
                     <Route path="/:FilmPage" Component={FilmPage} />
                     <Route path="/phim/:IntroMovie" Component={IntroMovie} />
