@@ -1,15 +1,15 @@
 import { TIME_OUT, debouncing } from '../../../utils/deboucing';
-import { disabledEditItem, enableEditItem } from '../../../redux/reducers/categorySlice';
+import { disabledEditItem, enableEditItem } from '../../../redux/reducers/genreSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import Button from '@mui/material/Button';
-import { CATEGORY } from '../../../redux/selectors/selectors';
+import { GENRE } from '../../../redux/selectors/selectors';
 import CategoryIcon from '@mui/icons-material/Category';
 import EditIcon from '@mui/icons-material/Edit';
 import FormAddCategory from '../../../component/form/category/FormAddCategory';
 import FormEditCategory from '../../../component/form/category/FormEditCategory';
-import { GET_ALL_CATEGORY } from '../../../redux/api/service/categoryService';
+import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
@@ -21,11 +21,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import { put_status_category } from '../../../redux/thunk/categoryThunk';
+import { put_status_genre } from '../../../redux/thunk/genreThunk';
 
 function ManageCategory() {
     const dispatch = useDispatch();
-    const categories = useSelector(CATEGORY);
+    const genre = useSelector(GENRE);
 
     // handle add new category
     const [toggle, setToggle] = useState(false);
@@ -37,23 +37,23 @@ function ManageCategory() {
     };
 
     const handleChangeStatusShip = (id) => {
-        dispatch(put_status_category(id));
+        dispatch(put_status_genre(id));
     };
 
     const [search, setSearch] = useState('');
     const handleChangeSearch = (e) => setSearch(e.target.value);
 
     useEffect(() => {
-        dispatch(GET_ALL_CATEGORY(search));
+        dispatch(GET_ALL_GENRE(search));
     }, [search]);
 
     return (
         <div>
-            <div className="flex justify-center text-3xl font-semibold uppercase">Manage Category</div>
+            <div className="flex justify-center text-3xl font-semibold uppercase">Manage Genre</div>
             <div className="flex justify-end">
                 <div className="add_manager">
                     <Button variant="contained" className="flex gap-2" onClick={handleCreateForm}>
-                        <CategoryIcon /> <span>ADD CATEGORY</span>{' '}
+                        <CategoryIcon /> <span>ADD Genre</span>{' '}
                     </Button>
                 </div>
             </div>
@@ -74,7 +74,7 @@ function ManageCategory() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="center">STT</TableCell>
-                                    <TableCell align="center">CATEGORY NAME</TableCell>
+                                    <TableCell align="center">GENRE NAME</TableCell>
                                     <TableCell align="center">STATUS</TableCell>
                                     <TableCell align="center" sx={{ width: '300px' }}>
                                         ACTIONS
@@ -83,7 +83,7 @@ function ManageCategory() {
                             </TableHead>
                             <TableBody>
                                 {toggle && <FormAddCategory handleCloseForm={handleCloseForm} />}
-                                {categories.categories.map((item, index) => {
+                                {genre.genre.map((item, index) => {
                                     if (item?.isEdit) {
                                         return (
                                             <FormEditCategory

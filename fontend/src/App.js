@@ -10,12 +10,12 @@ import WatchMoviePage from './Pages/WatchMoviePage/WatchMoviePage';
 // admin
 import AdminHome from './Pages/admin/home/AdminHome';
 import IndexAdminHome from './Pages/admin/IndexAdminHome';
-import ManageCategory from './Pages/admin/products/ManageCategory';
-import ManageColor from './Pages/admin/products/ManageColor';
-import ManageCoupon from './Pages/admin/coupon/ManageCoupon';
-import ManageOrders from './Pages/admin/orders/ManageOrders';
-import ManageProduct from './Pages/admin/products/ManageProduct';
-import ManageSize from './Pages/admin/products/ManageSize';
+import ManageGenre from './Pages/admin/movie/ManageGenre';
+import ManageSeason from './Pages/admin/movie/ManageSeason';
+// import ManageCoupon from './Pages/admin/coupon/ManageCoupon';
+// import ManageOrders from './Pages/admin/orders/ManageOrders';
+import ManageMovie from './Pages/admin/movie/ManageMovie';
+import ManageEpisode from './Pages/admin/movie/ManageEpisode';
 import ManageUsers from './Pages/admin/users/ManageUsers';
 // 404
 import page404 from './Pages/404 Page/404';
@@ -48,14 +48,14 @@ function App() {
                                 {/* dashboard */}
                                 <Route index Component={AdminHome}></Route>
                                 {/* orders */}
-                                <Route path="/admin/orders" Component={ManageOrders}></Route>
-                                {/* products */}
-                                <Route path="/admin/category" Component={ManageCategory}></Route>
-                                <Route path="/admin/product" Component={ManageProduct}></Route>
-                                <Route path="/admin/color" Component={ManageColor}></Route>
-                                <Route path="/admin/size" Component={ManageSize}></Route>
+                                {/* <Route path="/admin/orders" Component={ManageOrders}></Route> */}
+                                {/* movie */}
+                                <Route path="/admin/genre" Component={ManageGenre}></Route>
+                                <Route path="/admin/movie" Component={ManageMovie}></Route>
+                                <Route path="/admin/season" Component={ManageSeason}></Route>
+                                <Route path="/admin/episode" Component={ManageEpisode}></Route>
                                 {/* coupon */}
-                                <Route path="/admin/coupon" Component={ManageCoupon}></Route>
+                                {/* <Route path="/admin/coupon" Component={ManageCoupon}></Route> */}
                                 {/* users */}
                                 <Route path="/admin/users" Component={ManageUsers}></Route>
                             </Route>

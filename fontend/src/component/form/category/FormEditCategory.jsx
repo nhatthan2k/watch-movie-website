@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import { put_update_category } from '../../../redux/thunk/categoryThunk';
+import { put_update_category } from '../../../redux/thunk/genreThunk';
 import { useDispatch } from 'react-redux';
 import { validateBlank } from '../../../utils/validate';
 
