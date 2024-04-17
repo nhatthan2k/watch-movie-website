@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 function AdminNavbar() {
-    // const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function AdminNavbar() {
                     minWidth: '130px',
                     borderRadius: '999px',
                 }}
-                // label={user.fullName}
+                label={user.fullName}
                 color="primary"
                 component="a"
                 clickable

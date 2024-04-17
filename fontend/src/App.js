@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { publicRoute } from './Route/Routes';
 // user
 import Register from './Pages/Register/Register';
@@ -17,14 +17,19 @@ import ManageOrders from './Pages/admin/orders/ManageOrders';
 import ManageProduct from './Pages/admin/products/ManageProduct';
 import ManageSize from './Pages/admin/products/ManageSize';
 import ManageUsers from './Pages/admin/users/ManageUsers';
+// 404
+import page404 from './Pages/404 Page/404';
 
 function App() {
     const NotFilmPageArr = publicRoute.filter((item) => item.component !== FilmPage);
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <div className="App">
             <Router>
                 <Routes>
+                    {/* user */}
                     {NotFilmPageArr.map((RouteItem, index) => {
                         return <Route path={RouteItem.path} exact Component={RouteItem.component} key={index} />;
                     })}
@@ -33,22 +38,33 @@ function App() {
                     <Route path="/phim/:IntroMovie" Component={IntroMovie} />
                     <Route path="/xem-phim/:WatchMovie" Component={WatchMoviePage} />
 
+                    {/* error */}
+                    <Route path="/error/404" Component={page404} />
+
                     {/* admin */}
-                    <Route path="/admin" Component={IndexAdminHome}>
-                        {/* dashboard */}
-                        <Route index Component={AdminHome}></Route>
-                        {/* orders */}
-                        <Route path="/admin/orders" Component={ManageOrders}></Route>
-                        {/* products */}
-                        <Route path="/admin/category" Component={ManageCategory}></Route>
-                        <Route path="/admin/product" Component={ManageProduct}></Route>
-                        <Route path="/admin/color" Component={ManageColor}></Route>
-                        <Route path="/admin/size" Component={ManageSize}></Route>
-                        {/* coupon */}
-                        <Route path="/admin/coupon" Component={ManageCoupon}></Route>
-                        {/* users */}
-                        <Route path="/admin/users" Component={ManageUsers}></Route>
-                    </Route>
+                    {user && user.roles ? (
+                        user.roles.includes('ROLE_ADMIN') ? (
+                            <Route path="/admin" Component={IndexAdminHome}>
+                                {/* dashboard */}
+                                <Route index Component={AdminHome}></Route>
+                                {/* orders */}
+                                <Route path="/admin/orders" Component={ManageOrders}></Route>
+                                {/* products */}
+                                <Route path="/admin/category" Component={ManageCategory}></Route>
+                                <Route path="/admin/product" Component={ManageProduct}></Route>
+                                <Route path="/admin/color" Component={ManageColor}></Route>
+                                <Route path="/admin/size" Component={ManageSize}></Route>
+                                {/* coupon */}
+                                <Route path="/admin/coupon" Component={ManageCoupon}></Route>
+                                {/* users */}
+                                <Route path="/admin/users" Component={ManageUsers}></Route>
+                            </Route>
+                        ) : (
+                            <Route path="/admin/*" element={<Navigate to="/error/404" />} />
+                        )
+                    ) : (
+                        <Route path="/admin/*" element={<Navigate to="/login" />} />
+                    )}
                 </Routes>
             </Router>
         </div>
