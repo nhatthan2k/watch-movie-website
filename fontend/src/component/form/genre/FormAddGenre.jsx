@@ -3,34 +3,34 @@ import CloseIcon from '@mui/icons-material/Close';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import { post_add_category } from '../../../redux/thunk/genreThunk';
+import { post_add_genre } from '../../../redux/thunk/genreThunk';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { validateBlank } from '../../../utils/validate';
 
-function FormAddCategory({ handleCloseForm }) {
+function FormAddGenre({ handleCloseForm }) {
     const dispatch = useDispatch();
 
-    const [categoryName, setCategoryName] = useState('');
+    const [genreName, setGenreName] = useState('');
 
-    const [errorCategoryName, setErrorCategoryName] = useState('');
+    const [errorGenreName, setErrorGenreName] = useState('');
 
-    const handleAddCategory = () => {
-        const formCategory = {
-            categoryName,
+    const handleAddGenre = () => {
+        const formGenre = {
+            genreName,
             status: true,
         };
         // validate blank
-        if (validateBlank(formCategory.categoryName)) {
-            setErrorCategoryName("you can't blank category name");
+        if (validateBlank(formGenre.genreName)) {
+            setErrorGenreName("you can't blank genre name");
             return;
         }
-        // dispatch add new category
-        dispatch(post_add_category(formCategory)).then((resp) => {
+        // dispatch add new genre
+        dispatch(post_add_genre(formGenre)).then((resp) => {
             if (resp === true) {
                 handleCloseForm();
             } else {
-                setErrorCategoryName(resp);
+                setErrorGenreName(resp);
             }
         });
     };
@@ -42,21 +42,21 @@ function FormAddCategory({ handleCloseForm }) {
             </TableCell>
             <TableCell align="center">
                 <TextField
-                    error={errorCategoryName}
+                    error={errorGenreName}
                     autoFocus
                     fullWidth
                     size="small"
-                    label={errorCategoryName ? errorCategoryName : 'Category Name'}
-                    name="categoryName"
+                    label={errorGenreName ? errorGenreName : 'genre Name'}
+                    name="genreName"
                     variant="outlined"
-                    onChange={(e) => setCategoryName(e.target.value)}
+                    onChange={(e) => setGenreName(e.target.value)}
                 />
             </TableCell>
             <TableCell align="center">
                 <i className="fa-solid fa-lock-open"></i>
             </TableCell>
             <TableCell align="center">
-                <Button variant="contained" onClick={handleAddCategory}>
+                <Button variant="contained" onClick={handleAddGenre}>
                     ADD
                 </Button>
             </TableCell>
@@ -64,4 +64,4 @@ function FormAddCategory({ handleCloseForm }) {
     );
 }
 
-export default FormAddCategory;
+export default FormAddGenre;

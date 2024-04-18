@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import { GENRE } from '../../../redux/selectors/selectors';
 import CategoryIcon from '@mui/icons-material/Category';
 import EditIcon from '@mui/icons-material/Edit';
-import FormAddCategory from '../../../component/form/category/FormAddCategory';
-import FormEditCategory from '../../../component/form/category/FormEditCategory';
+import FormAddGenre from '../../../component/form/genre/FormAddGenre';
+import FormEditGenre from '../../../component/form/genre/FormEditGenre';
 import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -23,11 +23,11 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import { put_status_genre } from '../../../redux/thunk/genreThunk';
 
-function ManageCategory() {
+function ManageGenre() {
     const dispatch = useDispatch();
     const genre = useSelector(GENRE);
 
-    // handle add new category
+    // handle add new Genre
     const [toggle, setToggle] = useState(false);
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
@@ -82,11 +82,11 @@ function ManageCategory() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {toggle && <FormAddCategory handleCloseForm={handleCloseForm} />}
+                                {toggle && <FormAddGenre handleCloseForm={handleCloseForm} />}
                                 {genre.genre.map((item, index) => {
                                     if (item?.isEdit) {
                                         return (
-                                            <FormEditCategory
+                                            <FormEditGenre
                                                 key={item.id}
                                                 handleCloseForm={() => dispatch(disabledEditItem())}
                                                 edit={item}
@@ -103,7 +103,7 @@ function ManageCategory() {
                                                 <TableCell align="center">{index + 1}</TableCell>
                                                 <TableCell align="center">
                                                     <p className="text-blue-700 uppercase underline hover:cursor-pointer">
-                                                        {item?.categoryName.toUpperCase()}
+                                                        {item?.genreName.toUpperCase()}
                                                     </p>
                                                 </TableCell>
                                                 <TableCell align="center">
@@ -160,4 +160,4 @@ function ManageCategory() {
     );
 }
 
-export default ManageCategory;
+export default ManageGenre;

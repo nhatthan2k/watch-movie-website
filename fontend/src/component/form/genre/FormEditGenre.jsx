@@ -5,37 +5,37 @@ import CloseIcon from '@mui/icons-material/Close';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import { put_update_category } from '../../../redux/thunk/genreThunk';
+import { put_update_genre } from '../../../redux/thunk/genreThunk';
 import { useDispatch } from 'react-redux';
 import { validateBlank } from '../../../utils/validate';
 
-function FormEditCategory({ handleCloseForm, edit }) {
+function FormEditGenre({ handleCloseForm, edit }) {
     const dispatch = useDispatch();
 
-    const [categoryName, setCategoryName] = useState('');
+    const [genreName, setGenreName] = useState('');
 
-    const [errorCategoryName, setErrorCategoryName] = useState('');
+    const [errorGenreName, setErrorGenreName] = useState('');
 
-    const handleUpdateCategory = () => {
-        const formCategory = {
-            categoryName,
+    const handleUpdateGenre = () => {
+        const formGenre = {
+            genreName,
             status: true,
         };
-        if (validateBlank(formCategory.categoryName)) {
-            setErrorCategoryName("you can't blank category name");
+        if (validateBlank(formGenre.genreName)) {
+            setErrorGenreName("you can't blank genre name");
             return;
         }
-        dispatch(put_update_category({ formCategory, id: edit.id })).then((resp) => {
+        dispatch(put_update_genre({ formGenre, id: edit.id })).then((resp) => {
             if (resp === true) {
                 handleCloseForm();
             } else {
-                setErrorCategoryName(resp);
+                setErrorGenreName(resp);
             }
         });
     };
 
     useEffect(() => {
-        setCategoryName(edit.categoryName);
+        setGenreName(edit.genreName);
     }, []);
 
     return (
@@ -46,22 +46,22 @@ function FormEditCategory({ handleCloseForm, edit }) {
             </TableCell>
             <TableCell align="center">
                 <TextField
-                    error={errorCategoryName}
+                    error={errorGenreName}
                     autoFocus
                     fullWidth
                     size="small"
-                    label={errorCategoryName ? errorCategoryName : 'Category Name'}
-                    name="categoryName"
+                    label={errorGenreName ? errorGenreName : 'genre Name'}
+                    name="genreName"
                     variant="outlined"
-                    defaultValue={edit.categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
+                    defaultValue={edit.genreName}
+                    onChange={(e) => setGenreName(e.target.value)}
                 />
             </TableCell>
             <TableCell align="center">
                 <i className="fa-solid fa-lock-open"></i>
             </TableCell>
             <TableCell align="center">
-                <Button variant="contained" onClick={handleUpdateCategory}>
+                <Button variant="contained" onClick={handleUpdateGenre}>
                     UPDATE
                 </Button>
             </TableCell>
@@ -69,4 +69,4 @@ function FormEditCategory({ handleCloseForm, edit }) {
     );
 }
 
-export default FormEditCategory;
+export default FormEditGenre;

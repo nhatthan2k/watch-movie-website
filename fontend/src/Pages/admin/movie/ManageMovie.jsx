@@ -1,4 +1,4 @@
-import { CATEGORY, PRODUCT } from '../../../redux/selectors/selectors';
+import { GENRE, PRODUCT } from '../../../redux/selectors/selectors';
 import { TIME_OUT, debouncing } from '../../../utils/deboucing';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import FormAddProduct from '../../../component/form/product/FormAddProduct';
 import FormControl from '@mui/material/FormControl';
 import FormEditImageProduct from '../../../component/form/product/FormEditImageProduct';
 import FormEditProductInfo from '../../../component/form/product/FormEditProductInfo';
-import { GET_ALL_CATEGORY } from '../../../redux/api/service/categoryService';
+import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
 import { GET_ALL_PRODUCT } from '../../../redux/api/service/productService';
 import InputLabel from '@mui/material/InputLabel';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -34,7 +34,7 @@ import { put_status_product } from '../../../redux/thunk/productThunk';
 
 function ManageProduct() {
     const dispatch = useDispatch();
-    const categories = useSelector(CATEGORY);
+    const categories = useSelector(GENRE);
     const products = useSelector(PRODUCT);
 
     // handle add new product
@@ -76,10 +76,10 @@ function ManageProduct() {
     };
     const handleCloseProductDetail = () => setOpenProductDetail(false);
 
-    // handle filter by category
-    const [category, setCategory] = useState('ALL');
-    const handleChangeCategory = (event) => {
-        setCategory(event.target.value);
+    // handle filter by genre
+    const [genre, setGenre] = useState('ALL');
+    const handleChangeGenre = (event) => {
+        setGenre(event.target.value);
     };
 
     // handle search
@@ -93,13 +93,13 @@ function ManageProduct() {
 
     // handle load product
     const handleLoadProduct = (newPage) => {
-        dispatch(GET_ALL_PRODUCT({ search, category, page: newPage }));
+        dispatch(GET_ALL_PRODUCT({ search, genre, page: newPage }));
     };
 
     useEffect(() => {
-        dispatch(GET_ALL_CATEGORY(''));
+        dispatch(GET_ALL_GENRE(''));
         handleLoadProduct(products.current - 1);
-    }, [search, category, products.current]);
+    }, [search, genre, products.current]);
 
     return (
         <div>
@@ -118,15 +118,15 @@ function ManageProduct() {
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={category}
+                            value={genre}
                             label="Filter"
-                            onChange={handleChangeCategory}
+                            onChange={handleChangeGenre}
                             size="small"
                         >
                             <MenuItem value={'ALL'}>ALL</MenuItem>
                             {categories.categories.map((item) => (
-                                <MenuItem key={item.id} value={item.categoryName}>
-                                    {item.categoryName}
+                                <MenuItem key={item.id} value={item.genreName}>
+                                    {item.genreName}
                                 </MenuItem>
                             ))}
                         </Select>
@@ -149,7 +149,7 @@ function ManageProduct() {
                                     <TableCell align="left">PRODUCT NAME</TableCell>
                                     <TableCell align="left">DESCRIPTION</TableCell>
                                     <TableCell align="center">IMAGE</TableCell>
-                                    <TableCell align="center">CATEGORY</TableCell>
+                                    <TableCell align="center">GENRE</TableCell>
                                     <TableCell align="center">STATUS</TableCell>
                                     <TableCell align="center" sx={{ width: '300px' }}>
                                         ACTIONS
@@ -190,7 +190,7 @@ function ManageProduct() {
                                                 />
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
-                                                {item.category.categoryName}
+                                                {item.genre.genreName}
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
                                                 {item?.status ? (
