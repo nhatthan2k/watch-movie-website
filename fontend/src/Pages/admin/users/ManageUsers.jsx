@@ -83,7 +83,7 @@ function ManageUsers() {
                                     >
                                         <TableCell align="center">{index + 1}</TableCell>
                                         <TableCell align="center">{item.fullName}</TableCell>
-                                        <TableCell align="center">{item.userName}</TableCell>
+                                        <TableCell align="center">{item.username}</TableCell>
                                         <TableCell align="center">{item.email}</TableCell>
                                         <TableCell align="center">
                                             {item.roles.includes('ROLE_ADMIN') ? 'ADMIN' : item.address}
