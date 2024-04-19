@@ -2,7 +2,7 @@ export const AUTH = (state) => state.auth;
 
 export const GENRE = (state) => state.genre;
 
-export const MOVIE = (state) => state.product;
+export const MOVIE = (state) => state.movie;
 
 export const SEASON = (state) => state.color;
 
@@ -18,8 +18,6 @@ export const USERS_ADMIN = (state) => state.userAdmin;
 
 // delete
 export const COUPON = (state) => state.coupon;
-
-export const PRODUCT = (state) => state.product;
 
 export const COLOR = (state) => state.color;
 

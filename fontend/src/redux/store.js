@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 import genreSlice from './reducers/genreSlice';
 import colorSlice from './reducers/colorSlice';
-import productSlice from './reducers/productSlice';
+import movieSlice from './reducers/movieSlice';
 import sizeSlice from './reducers/sizeSlice';
 import userAdminSlice from './reducers/userAdminSlice';
 import userSlice from './reducers/userSlice';
@@ -20,7 +20,7 @@ const persistConfig = {
 const combinedReducer = combineReducers({
     auth: authReducer,
     genre: genreSlice,
-    product: productSlice,
+    movie: movieSlice,
     color: colorSlice,
     size: sizeSlice,
     user: userSlice,

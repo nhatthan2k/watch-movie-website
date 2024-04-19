@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import FormEditImageProduct from '../../../component/form/product/FormEditImageProduct';
 import FormEditProductInfo from '../../../component/form/product/FormEditProductInfo';
 import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
-import { GET_ALL_PRODUCT } from '../../../redux/api/service/productService';
+import { GET_ALL_PRODUCT } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -29,8 +29,8 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
-import { changeCurrentPage } from '../../../redux/reducers/productSlice';
-import { put_status_product } from '../../../redux/thunk/productThunk';
+import { changeCurrentPage } from '../../../redux/reducers/movieSlice';
+import { put_status_product } from '../../../redux/thunk/movieThunk';
 
 function ManageProduct() {
     const dispatch = useDispatch();
