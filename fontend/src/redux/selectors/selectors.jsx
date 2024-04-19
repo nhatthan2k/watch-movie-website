@@ -19,6 +19,8 @@ export const USERS_ADMIN = (state) => state.userAdmin;
 // delete
 export const COUPON = (state) => state.coupon;
 
+export const PRODUCT = (state) => state.product;
+
 export const COLOR = (state) => state.color;
 
 export const SIZE = (state) => state.size;

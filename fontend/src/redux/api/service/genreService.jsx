@@ -2,8 +2,8 @@ import { Cookies } from 'react-cookie';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import instance from '../axios';
 
-export const GET_ALL_GENRE = createAsyncThunk('genre/GET_ALL_GENRE', async (search) => {
-    let response = await instance.get(`/v1/admin/genres`, {
+export const GET_ALL_GENRE = createAsyncThunk('genre/GET_ALL_GENRE', async ({ search, page }) => {
+    let response = await instance.get(`/v1/admin/genres?search=${search}&?page=${page}`, {
         headers: {
             Authorization: `Bearer ${new Cookies().get('token')}`,
         },

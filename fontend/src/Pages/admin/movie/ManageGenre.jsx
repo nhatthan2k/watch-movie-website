@@ -1,5 +1,5 @@
 import { TIME_OUT, debouncing } from '../../../utils/deboucing';
-import { disabledEditItem, enableEditItem } from '../../../redux/reducers/genreSlice';
+import { disabledEditItem, enableEditItem, changeCurrentPage } from '../../../redux/reducers/genreSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +21,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import Pagination from '@mui/material/Pagination';
 import { put_status_genre } from '../../../redux/thunk/genreThunk';
 
 function ManageGenre() {
@@ -32,20 +33,28 @@ function ManageGenre() {
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
 
+    // change page
+    const handleChangePage = (e, value) => {
+        dispatch(changeCurrentPage(value));
+    };
+
+    // update
     const handleEditCatgory = (id) => {
         dispatch(enableEditItem(id));
     };
 
+    // change status
     const handleChangeStatusShip = (id) => {
         dispatch(put_status_genre(id));
     };
 
+    // search
     const [search, setSearch] = useState('');
     const handleChangeSearch = (e) => setSearch(e.target.value);
 
     useEffect(() => {
-        dispatch(GET_ALL_GENRE(search));
-    }, [search]);
+        dispatch(GET_ALL_GENRE({ search, page: genre.current - 1 }));
+    }, [search, genre.current]);
 
     return (
         <div>
@@ -154,6 +163,16 @@ function ManageGenre() {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                </div>
+                <div className="pagination flex justify-end py-5">
+                    <Pagination
+                        count={genre.totalPages}
+                        page={genre.current}
+                        color="primary"
+                        hideNextButton
+                        hidePrevButton
+                        onChange={handleChangePage}
+                    />
                 </div>
             </div>
         </div>
