@@ -3,8 +3,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import instance from '../axios';
 
 export const GET_ALL_GENRE = createAsyncThunk('genre/GET_ALL_GENRE', async (search) => {
-    let response = await instance.get(`/v1/admin/genres?search=${search}`);
-    return response.data;
+    let response = await instance.get(`/v1/admin/genres`, {
+        headers: {
+            Authorization: `Bearer ${new Cookies().get('token')}`,
+        },
+    });
+    console.log(response);
+    return response.data.content;
 });
 
 export const POST_ADD_GENRE = async (formGenre) => {
