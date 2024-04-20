@@ -33,19 +33,19 @@ function ManageGenre() {
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
 
-    // change page
-    const handleChangePage = (e, value) => {
-        dispatch(changeCurrentPage(value));
-    };
-
     // update
-    const handleEditCatgory = (id) => {
+    const handleEditGenre = (id) => {
         dispatch(enableEditItem(id));
     };
 
     // change status
     const handleChangeStatusShip = (id) => {
         dispatch(put_status_genre(id));
+    };
+
+    // change page
+    const handleChangePage = (e, value) => {
+        dispatch(changeCurrentPage(value));
     };
 
     // search
@@ -126,7 +126,7 @@ function ManageGenre() {
                                                     {item?.status ? (
                                                         <div className="flex gap-2 justify-center">
                                                             <Button
-                                                                onClick={() => handleEditCatgory(item?.id)}
+                                                                onClick={() => handleEditGenre(item?.id)}
                                                                 variant="contained"
                                                                 color="warning"
                                                             >

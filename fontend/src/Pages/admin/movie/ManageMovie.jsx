@@ -1,4 +1,4 @@
-import { GENRE, PRODUCT } from '../../../redux/selectors/selectors';
+import { GENRE, MOVIE } from '../../../redux/selectors/selectors';
 import { TIME_OUT, debouncing } from '../../../utils/deboucing';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterIcon from '@mui/icons-material/Filter';
-import FormAddProduct from '../../../component/form/product/FormAddProduct';
+import FormAddMovie from '../../../component/form/movie/FormAddMovie';
 import FormControl from '@mui/material/FormControl';
-import FormEditImageProduct from '../../../component/form/product/FormEditImageProduct';
-import FormEditProductInfo from '../../../component/form/product/FormEditProductInfo';
+import FormEditImageMovie from '../../../component/form/movie/FormEditImageMovie';
+import FormEditMovieInfo from '../../../component/form/movie/FormEditMovieInfo';
 import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
-import { GET_ALL_PRODUCT } from '../../../redux/api/service/movieService';
+import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
-import ShowProductDetail from '../../../component/modal/ShowProductDetail';
+import ShowMovieDetail from '../../../component/modal/ShowMovieDetail';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -30,21 +30,21 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { changeCurrentPage } from '../../../redux/reducers/movieSlice';
-import { put_status_product } from '../../../redux/thunk/movieThunk';
+import { put_status_movie } from '../../../redux/thunk/movieThunk';
 
-function ManageProduct() {
+function ManageMovie() {
     const dispatch = useDispatch();
-    const categories = useSelector(GENRE);
-    const products = useSelector(PRODUCT);
+    const genres = useSelector(GENRE);
+    const movies = useSelector(MOVIE);
 
-    // handle add new product
+    // handle add new movie
     const [toggle, setToggle] = useState(false);
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
 
     // data edit
     const [edit, setEdit] = useState(null);
-    // handle edit info product
+    // handle edit info movie
 
     const [openEditInfo, setOpenEditInfo] = useState(false);
     const handleOpenEditInfo = (item) => {
@@ -53,7 +53,7 @@ function ManageProduct() {
     };
     const handleCloseEditInfo = () => setOpenEditInfo(false);
 
-    // handle edit image product
+    // handle edit image movie
     const [openEditImage, setOpenEditImage] = useState(false);
     const handleOpenEditImage = (item) => {
         setEdit(item);
@@ -61,20 +61,20 @@ function ManageProduct() {
     };
     const handleCloseEditImage = () => setOpenEditImage(false);
 
-    // handle change status product
-    const handleChangeStatusProduct = (id) => {
-        dispatch(put_status_product(id));
+    // handle change status movie
+    const handleChangeStatusMovie = (id) => {
+        dispatch(put_status_movie(id));
     };
 
-    // handle open product detail
-    const [productDetail, setProductDetail] = useState(null);
+    // handle open movie detail
+    const [movieDetail, setMovieDetail] = useState(null);
 
-    const [openProductDetail, setOpenProductDetail] = useState(false);
-    const handleOpenProductDetail = (item) => {
-        setProductDetail(item);
-        setOpenProductDetail(true);
+    const [openMovieDetail, setOpenMovieDetail] = useState(false);
+    const handleOpenMovieDetail = (item) => {
+        setMovieDetail(item);
+        setOpenMovieDetail(true);
     };
-    const handleCloseProductDetail = () => setOpenProductDetail(false);
+    const handleCloseMovieDetail = () => setOpenMovieDetail(false);
 
     // handle filter by genre
     const [genre, setGenre] = useState('ALL');
@@ -91,23 +91,23 @@ function ManageProduct() {
         dispatch(changeCurrentPage(value));
     };
 
-    // handle load product
-    const handleLoadProduct = (newPage) => {
-        dispatch(GET_ALL_PRODUCT({ search, genre, page: newPage }));
+    // handle load movie
+    const handleLoadMovie = (newPage) => {
+        dispatch(GET_ALL_MOVIE({ search, genre, page: newPage }));
     };
 
     useEffect(() => {
         dispatch(GET_ALL_GENRE(''));
-        handleLoadProduct(products.current - 1);
-    }, [search, genre, products.current]);
+        handleLoadMovie(movies.current - 1);
+    }, [search, genre, movies.current]);
 
     return (
         <div>
-            <div className="flex justify-center text-3xl font-semibold uppercase">Manage Products</div>
+            <div className="flex justify-center text-3xl font-semibold uppercase">Manage Movies</div>
             <div className="flex justify-end">
                 <div className="add_manager">
                     <Button variant="contained" className="flex gap-2" onClick={handleCreateForm}>
-                        <WidgetsIcon /> <span>ADD PRODUCT</span>
+                        <WidgetsIcon /> <span>ADD MOVIE</span>
                     </Button>
                 </div>
             </div>
@@ -124,7 +124,7 @@ function ManageProduct() {
                             size="small"
                         >
                             <MenuItem value={'ALL'}>ALL</MenuItem>
-                            {categories.categories.map((item) => (
+                            {genres.genres.map((item) => (
                                 <MenuItem key={item.id} value={item.genreName}>
                                     {item.genreName}
                                 </MenuItem>
@@ -146,7 +146,7 @@ function ManageProduct() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="center">STT</TableCell>
-                                    <TableCell align="left">PRODUCT NAME</TableCell>
+                                    <TableCell align="left">MOVIE NAME</TableCell>
                                     <TableCell align="left">DESCRIPTION</TableCell>
                                     <TableCell align="center">IMAGE</TableCell>
                                     <TableCell align="center">GENRE</TableCell>
@@ -157,7 +157,7 @@ function ManageProduct() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {products.products.map((item, index) => {
+                                {movies.movies.map((item, index) => {
                                     return (
                                         <TableRow
                                             key={item?.id}
@@ -166,16 +166,16 @@ function ManageProduct() {
                                             }}
                                             className="hover:bg-slate-100 transition-all duration-300"
                                         >
-                                            <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
+                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
                                                 {index + 1}
                                             </TableCell>
-                                            <TableCell align="left" onClick={() => handleOpenProductDetail(item)}>
-                                                {item.productName.toUpperCase()}
+                                            <TableCell align="left" onClick={() => handleOpenMovieDetail(item)}>
+                                                {item.movieName.toUpperCase()}
                                             </TableCell>
-                                            <TableCell align="left" onClick={() => handleOpenProductDetail(item)}>
+                                            <TableCell align="left" onClick={() => handleOpenMovieDetail(item)}>
                                                 {item.description}
                                             </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
+                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
                                                 <img
                                                     src={item.image}
                                                     style={{
@@ -189,10 +189,10 @@ function ManageProduct() {
                                                     alt=""
                                                 />
                                             </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
+                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
                                                 {item.genre.genreName}
                                             </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenProductDetail(item)}>
+                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
                                                 {item?.status ? (
                                                     <i className="fa-solid fa-lock-open"></i>
                                                 ) : (
@@ -223,7 +223,7 @@ function ManageProduct() {
                                                         <Button
                                                             variant="contained"
                                                             color="error"
-                                                            onClick={() => handleChangeStatusProduct(item.id)}
+                                                            onClick={() => handleChangeStatusMovie(item.id)}
                                                         >
                                                             <Tooltip title="lock">
                                                                 <LockOutlinedIcon />
@@ -234,7 +234,7 @@ function ManageProduct() {
                                                     <Button
                                                         variant="contained"
                                                         color="success"
-                                                        onClick={() => handleChangeStatusProduct(item.id)}
+                                                        onClick={() => handleChangeStatusMovie(item.id)}
                                                     >
                                                         <Tooltip title="unlock">
                                                             <LockOpenOutlinedIcon />
@@ -251,8 +251,8 @@ function ManageProduct() {
                 </div>
                 <div className="pagination flex justify-end py-5">
                     <Pagination
-                        count={products.totalPages}
-                        page={products.current}
+                        count={movies.totalPages}
+                        page={movies.current}
                         color="primary"
                         hideNextButton
                         hidePrevButton
@@ -261,35 +261,31 @@ function ManageProduct() {
                 </div>
             </div>
             {toggle && (
-                <FormAddProduct
-                    toggle={toggle}
-                    handleCloseForm={handleCloseForm}
-                    handleLoadProduct={handleLoadProduct}
-                />
+                <FormAddMovie toggle={toggle} handleCloseForm={handleCloseForm} handleLoadMovie={handleLoadMovie} />
             )}
             {openEditInfo && (
-                <FormEditProductInfo
+                <FormEditMovieInfo
                     openEditInfo={openEditInfo}
                     handleCloseEditInfo={handleCloseEditInfo}
                     editInfo={edit}
                 />
             )}
             {openEditImage && (
-                <FormEditImageProduct
+                <FormEditImageMovie
                     openEditImage={openEditImage}
                     handleCloseEditImage={handleCloseEditImage}
                     editImage={edit}
                 />
             )}
-            {openProductDetail && (
-                <ShowProductDetail
-                    openProductDetail={openProductDetail}
-                    handleCloseProductDetail={handleCloseProductDetail}
-                    productDetail={productDetail}
+            {openMovieDetail && (
+                <ShowMovieDetail
+                    openMovieDetail={openMovieDetail}
+                    handleCloseMovieDetail={handleCloseMovieDetail}
+                    movieDetail={movieDetail}
                 />
             )}
         </div>
     );
 }
 
-export default ManageProduct;
+export default ManageMovie;

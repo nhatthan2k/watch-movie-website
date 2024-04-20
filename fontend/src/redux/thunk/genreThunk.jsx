@@ -28,6 +28,7 @@ export const put_update_genre = ({ formGenre, id }) => {
 export const put_status_genre = (id) => {
     return async function put_status_genre_thunk(dispatch) {
         let response = await PUT_STATUS_GENRE(id);
+        console.log(response);
         if (response.status === 200) {
             dispatch(updateGenre(response.data));
             return true;

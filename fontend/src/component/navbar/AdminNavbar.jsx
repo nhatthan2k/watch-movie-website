@@ -47,7 +47,7 @@ function AdminNavbar() {
                     minWidth: '130px',
                     borderRadius: '999px',
                 }}
-                label={user.fullName}
+                label={user ? user.fullName : 'admin'}
                 color="primary"
                 component="a"
                 clickable

@@ -1,18 +1,18 @@
 import {
-    DELETE_IMAGE_PRODUCT,
-    POST_ADD_PRODUCT,
-    POST_ADD_PRODUCT_DETAIL,
-    PUT_ADD_IMAGE_PRODUCT,
-    PUT_STATUS_PRODUCT,
-    PUT_STATUS_PRODUCT_DETAIL,
-    PUT_UPDATE_PRODUCT,
-    PUT_UPDATE_PRODUCT_DETAIL,
+    DELETE_IMAGE_MOVIE,
+    POST_ADD_MOVIE,
+    POST_ADD_MOVIE_DETAIL,
+    PUT_ADD_IMAGE_MOVIE,
+    PUT_STATUS_MOVIE,
+    PUT_STATUS_MOVIE_DETAIL,
+    PUT_UPDATE_MOVIE,
+    PUT_UPDATE_MOVIE_DETAIL,
 } from '../api/service/movieService';
-import { changeCurrentPage, updateProduct } from '../reducers/movieSlice';
+import { changeCurrentPage, updateMovie } from '../reducers/movieSlice';
 
-export const post_add_product = (formProduct) => {
-    return async function post_add_product_thunk(dispatch) {
-        let resp = await POST_ADD_PRODUCT(formProduct);
+export const post_add_movie = (formMovie) => {
+    return async function post_add_movie_thunk(dispatch) {
+        let resp = await POST_ADD_MOVIE(formMovie);
         if (resp.status === 201) {
             dispatch(changeCurrentPage(1));
             return true;
@@ -22,11 +22,11 @@ export const post_add_product = (formProduct) => {
     };
 };
 
-export const put_update_product = ({ formProduct, id }) => {
-    return async function put_update_product_thunk(dispatch) {
-        let resp = await PUT_UPDATE_PRODUCT({ formProduct, id });
+export const put_update_movie = ({ formMovie, id }) => {
+    return async function put_update_movie_thunk(dispatch) {
+        let resp = await PUT_UPDATE_MOVIE({ formMovie, id });
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return true;
         } else {
             return resp.data;
@@ -34,11 +34,11 @@ export const put_update_product = ({ formProduct, id }) => {
     };
 };
 
-export const put_status_product = (id) => {
-    return async function put_status_product_thunk(dispatch) {
-        let resp = await PUT_STATUS_PRODUCT(id);
+export const put_status_movie = (id) => {
+    return async function put_status_movie_thunk(dispatch) {
+        let resp = await PUT_STATUS_MOVIE(id);
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return true;
         } else {
             return resp.data;
@@ -46,11 +46,11 @@ export const put_status_product = (id) => {
     };
 };
 
-export const put_add_image_product = ({ formImageProduct, id }) => {
-    return async function put_add_image_product_thunk(dispatch) {
-        let resp = await PUT_ADD_IMAGE_PRODUCT({ formImageProduct, id });
+export const put_add_image_movie = ({ formImageMovie, id }) => {
+    return async function put_add_image_movie_thunk(dispatch) {
+        let resp = await PUT_ADD_IMAGE_MOVIE({ formImageMovie, id });
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return true;
         } else {
             return resp.data;
@@ -58,11 +58,11 @@ export const put_add_image_product = ({ formImageProduct, id }) => {
     };
 };
 
-export const delete_image_product = ({ idImage, idProduct }) => {
-    return async function delete_image_product_thunk(dispatch) {
-        let resp = await DELETE_IMAGE_PRODUCT({ idImage, idProduct });
+export const delete_image_movie = ({ idImage, idMovie }) => {
+    return async function delete_image_movie_thunk(dispatch) {
+        let resp = await DELETE_IMAGE_MOVIE({ idImage, idMovie });
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return true;
         } else {
             return resp.data;
@@ -70,11 +70,11 @@ export const delete_image_product = ({ idImage, idProduct }) => {
     };
 };
 
-export const post_add_product_detail = ({ formProductDetail, idProduct }) => {
-    return async function post_add_product_detail_thunk(dispatch) {
-        let resp = await POST_ADD_PRODUCT_DETAIL({ formProductDetail, idProduct });
+export const post_add_movie_detail = ({ formMovieDetail, idMovie }) => {
+    return async function post_add_movie_detail_thunk(dispatch) {
+        let resp = await POST_ADD_MOVIE_DETAIL({ formMovieDetail, idMovie });
         if (resp.status === 201) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return resp.data;
         } else {
             return resp.data;
@@ -82,15 +82,15 @@ export const post_add_product_detail = ({ formProductDetail, idProduct }) => {
     };
 };
 
-export const put_update_product_detail = ({ formProductDetail, idProductDetail, idProduct }) => {
-    return async function put_update_product_detail_thunk(dispatch) {
-        let resp = await PUT_UPDATE_PRODUCT_DETAIL({
-            formProductDetail,
-            idProductDetail,
-            idProduct,
+export const put_update_movie_detail = ({ formMovieDetail, idMovieDetail, idMovie }) => {
+    return async function put_update_movie_detail_thunk(dispatch) {
+        let resp = await PUT_UPDATE_MOVIE_DETAIL({
+            formMovieDetail,
+            idMovieDetail,
+            idMovie,
         });
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return resp.data;
         } else {
             return resp.data;
@@ -98,11 +98,11 @@ export const put_update_product_detail = ({ formProductDetail, idProductDetail, 
     };
 };
 
-export const put_status_product_detail = ({ idProductDetail, idProduct }) => {
-    return async function put_status_product_detail_thunk(dispatch) {
-        let resp = await PUT_STATUS_PRODUCT_DETAIL({ idProductDetail, idProduct });
+export const put_status_movie_detail = ({ idMovieDetail, idMovie }) => {
+    return async function put_status_movie_detail_thunk(dispatch) {
+        let resp = await PUT_STATUS_MOVIE_DETAIL({ idMovieDetail, idMovie });
         if (resp.status === 200) {
-            dispatch(updateProduct(resp.data));
+            dispatch(updateMovie(resp.data));
             return resp.data;
         } else {
             return resp.data;
