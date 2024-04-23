@@ -45,28 +45,3 @@ export const DELETE_IMAGE_SEASON = async ({ idImage, idSeason }) => {
     });
     return resp;
 };
-
-export const POST_ADD_SEASON_DETAIL = async ({ formSeasonDetail, idSeason }) => {
-    let resp = await instance.post(`/v1/admin/seasons/${idSeason}`, formSeasonDetail, {
-        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
-    });
-    return resp;
-};
-
-export const PUT_UPDATE_SEASON_DETAIL = async ({ formSeasonDetail, idSeasonDetail, idSeason }) => {
-    let resp = await instance.put(`/v1/admin/seasons/${idSeasonDetail}/in/${idSeason}`, formSeasonDetail, {
-        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
-    });
-    return resp;
-};
-
-export const PUT_STATUS_SEASON_DETAIL = async ({ idSeasonDetail, idSeason }) => {
-    let resp = await instance.put(
-        `/v1/admin/seasons/${idSeasonDetail}/in/${idSeason}/status`,
-        {},
-        {
-            headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
-        },
-    );
-    return resp;
-};

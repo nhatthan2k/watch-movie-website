@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { post_add_season_detail } from '../../../redux/thunk/seasonThunk';
+import { post_add_season } from '../../../redux/thunk/seasonThunk';
 
 const style = {
     position: 'absolute',
@@ -55,7 +55,7 @@ function FormAddEpisode({ toggleAdd, handleCloseAddEpisode, seasonId }) {
             return;
         }
         // dispatch
-        dispatch(post_add_season_detail(formEpisode)).then(() => {
+        dispatch(post_add_season(formEpisode)).then(() => {
             handleCloseAddEpisode();
         });
         resetError();

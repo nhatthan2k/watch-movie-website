@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { put_update_season_detail } from '../../../redux/thunk/seasonThunk';
+import { put_update_season } from '../../../redux/thunk/seasonThunk';
 
 const style = {
     position: 'absolute',
@@ -56,7 +56,7 @@ function FormEditEpisode({ toggleEdit, handleCloseEditEpisode, edit, seasonId })
         }
         // dispatch
         dispatch(
-            put_update_season_detail({
+            put_update_season({
                 formEpisode,
                 idEpisode: edit.id,
             }),
