@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { GENRE } from '../../../redux/selectors/selectors';
+import { MOVIE } from '../../../redux/selectors/selectors';
 import FormControl from '@mui/material/FormControl';
-import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
+import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import { put_update_movie } from '../../../redux/thunk/movieThunk';
+import { put_update_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
 
 const style = {
@@ -26,48 +26,48 @@ const style = {
     p: 2,
 };
 
-function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
+function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
     const dispatch = useDispatch();
 
-    const genres = useSelector(GENRE);
+    const movies = useSelector(MOVIE);
 
-    // handle select genreId
-    const [genreId, setGenreId] = useState(editInfo.genre.id);
-    const handleChangeGenreId = (event) => {
-        setGenreId(event.target.value);
+    // handle select movieId
+    const [movieId, setMovieId] = useState(editInfo.movie.id);
+    const handleChangeMovieId = (event) => {
+        setMovieId(event.target.value);
     };
 
-    const [errorMovieName, setErrorMovieName] = useState('');
+    const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
 
     const resetError = () => {
-        setErrorMovieName('');
+        setErrorSeasonName('');
         setErrorDescription('');
     };
 
-    const handleUpdateMovieInfo = (e) => {
+    const handleUpdateSeasonInfo = (e) => {
         e.preventDefault();
-        const formMovie = {
-            movieName: e.target.movieName.value,
+        const formSeason = {
+            seasonName: e.target.seasonName.value,
             description: e.target.description.value,
-            genreId: genreId,
+            movieId: movieId,
             status: true,
         };
         // validate
-        if (validateBlank(formMovie.movieName)) {
-            setErrorMovieName("movie Name can't blank");
+        if (validateBlank(formSeason.seasonName)) {
+            setErrorSeasonName("season Name can't blank");
             return;
         }
-        if (validateBlank(formMovie.description)) {
+        if (validateBlank(formSeason.description)) {
             setErrorDescription("Description can't blank");
             return;
         }
-        // dispatch update movie
-        dispatch(put_update_movie({ formMovie, id: editInfo.id })).then((resp) => {
+        // dispatch update season
+        dispatch(put_update_season({ formSeason, id: editInfo.id })).then((resp) => {
             if (resp === true) {
                 handleCloseEditInfo();
             } else {
-                setErrorMovieName(resp);
+                setErrorSeasonName(resp);
             }
         });
         resetError();
@@ -75,7 +75,7 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_GENRE(''));
+        dispatch(GET_ALL_MOVIE(''));
     }, []);
 
     return (
@@ -86,14 +86,14 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <form action="" className="flex flex-col gap-2" onSubmit={handleUpdateMovieInfo}>
+                <form action="" className="flex flex-col gap-2" onSubmit={handleUpdateSeasonInfo}>
                     <TextField
-                        error={errorMovieName}
-                        label={errorMovieName ? errorMovieName : 'Movie Name'}
+                        error={errorSeasonName}
+                        label={errorSeasonName ? errorSeasonName : 'Season Name'}
                         variant="filled"
                         size="small"
-                        name="movieName"
-                        defaultValue={editInfo.movieName}
+                        name="seasonName"
+                        defaultValue={editInfo.seasonName}
                         fullWidth
                     />
                     <TextField
@@ -107,21 +107,21 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
                         fullWidth
                     />
                     <FormControl fullWidth size="small">
-                        <InputLabel id="demo-simple-select-label">GENRE</InputLabel>
+                        <InputLabel id="demo-simple-select-label">MOVIE</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={genreId}
-                            label="Genre"
-                            onChange={handleChangeGenreId}
-                            defaultValue={editInfo.Genre.id}
+                            value={movieId}
+                            label="Movie"
+                            onChange={handleChangeMovieId}
+                            defaultValue={editInfo.Movie.id}
                             autoFocus
                         >
-                            {genres.genres.map((item) => {
+                            {movies.movies.map((item) => {
                                 if (item.status) {
                                     return (
                                         <MenuItem key={item.id} value={item.id}>
-                                            {item.genreName}
+                                            {item.movieName}
                                         </MenuItem>
                                     );
                                 }
@@ -137,4 +137,4 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
     );
 }
 
-export default FormEditMovieInfo;
+export default FormEditSeasonInfo;

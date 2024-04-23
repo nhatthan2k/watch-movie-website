@@ -1,12 +1,9 @@
 import {
     DELETE_IMAGE_MOVIE,
     POST_ADD_MOVIE,
-    POST_ADD_MOVIE_DETAIL,
     PUT_ADD_IMAGE_MOVIE,
     PUT_STATUS_MOVIE,
-    PUT_STATUS_MOVIE_DETAIL,
     PUT_UPDATE_MOVIE,
-    PUT_UPDATE_MOVIE_DETAIL,
 } from '../api/service/movieService';
 import { changeCurrentPage, updateMovie } from '../reducers/movieSlice';
 
@@ -64,46 +61,6 @@ export const delete_image_movie = ({ idImage, idMovie }) => {
         if (resp.status === 200) {
             dispatch(updateMovie(resp.data));
             return true;
-        } else {
-            return resp.data;
-        }
-    };
-};
-
-export const post_add_movie_detail = ({ formMovieDetail, idMovie }) => {
-    return async function post_add_movie_detail_thunk(dispatch) {
-        let resp = await POST_ADD_MOVIE_DETAIL({ formMovieDetail, idMovie });
-        if (resp.status === 201) {
-            dispatch(updateMovie(resp.data));
-            return resp.data;
-        } else {
-            return resp.data;
-        }
-    };
-};
-
-export const put_update_movie_detail = ({ formMovieDetail, idMovieDetail, idMovie }) => {
-    return async function put_update_movie_detail_thunk(dispatch) {
-        let resp = await PUT_UPDATE_MOVIE_DETAIL({
-            formMovieDetail,
-            idMovieDetail,
-            idMovie,
-        });
-        if (resp.status === 200) {
-            dispatch(updateMovie(resp.data));
-            return resp.data;
-        } else {
-            return resp.data;
-        }
-    };
-};
-
-export const put_status_movie_detail = ({ idMovieDetail, idMovie }) => {
-    return async function put_status_movie_detail_thunk(dispatch) {
-        let resp = await PUT_STATUS_MOVIE_DETAIL({ idMovieDetail, idMovie });
-        if (resp.status === 200) {
-            dispatch(updateMovie(resp.data));
-            return resp.data;
         } else {
             return resp.data;
         }

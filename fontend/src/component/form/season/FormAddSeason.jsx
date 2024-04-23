@@ -3,21 +3,19 @@ import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { GENRE } from '../../../redux/selectors/selectors';
+import { MOVIE } from '../../../redux/selectors/selectors';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FormControl from '@mui/material/FormControl';
-import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
+import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { firebase_multiple_upload } from '../../../firebase/firebaseService';
-import { post_add_movie } from '../../../redux/thunk/movieThunk';
+import { post_add_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
 
 const style = {
     position: 'absolute',
@@ -32,10 +30,10 @@ const style = {
     gap: '10px',
 };
 
-function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
+function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
     const dispatch = useDispatch();
 
-    const genres = useSelector(GENRE);
+    const movies = useSelector(MOVIE);
 
     // handle upload images
     const [images, setImages] = useState([]);
@@ -52,59 +50,59 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
         setImages(newImages);
     };
 
-    // handle select genreId
-    const [selectedGenreIds, setSelectedGenreIds] = useState([]);
-    const handleChangeGenreIds = (event) => {
-        setSelectedGenreIds(event.target.value);
+    // handle select movieId
+    const [movieId, setMovieId] = useState(null);
+    const handleChangeMovieId = (event) => {
+        setMovieId(event.target.value);
     };
 
-    const [errorMovieName, setErrorMovieName] = useState('');
+    const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
-    const [errorGenre, setErrorGenre] = useState('');
+    const [errorMovie, setErrorMovie] = useState('');
     const [errorImage, setErrorImage] = useState('');
 
     const resetError = () => {
-        setErrorMovieName('');
+        setErrorSeasonName('');
         setErrorDescription('');
-        setErrorGenre('');
+        setErrorMovie('');
         setErrorImage('');
     };
 
-    const handleAddMovie = (e) => {
+    const handleAddSeason = (e) => {
         e.preventDefault();
 
-        const formMovie = {
-            movieName: e.target.movieName.value,
+        const formSeason = {
+            seasonName: e.target.seasonName.value,
             description: e.target.description.value,
-            images: images,
-            GenreIds: selectedGenreIds,
+            avatar: images,
+            movieId: movieId,
             status: true,
         };
         // validate
-        if (validateBlank(formMovie.movieName)) {
-            setErrorMovieName("Movie Name can't blank");
+        if (validateBlank(formSeason.seasonName)) {
+            setErrorSeasonName("Season Name can't blank");
             return;
         }
-        if (validateBlank(formMovie.description)) {
+        if (validateBlank(formSeason.description)) {
             setErrorDescription("Description can't blank");
             return;
         }
-        if (formMovie.genreIds.length == 0) {
-            setErrorGenre("Genre can't blank");
+        if (formSeason.movieId === null) {
+            setErrorMovie("Movie can't blank");
             return;
         }
-        if (formMovie.images.length === 0) {
+        if (formSeason.images.length === 0) {
             setErrorImage("Image can't be empty");
             return;
         }
 
-        // dispatch add movie
-        dispatch(post_add_movie(formMovie)).then((resp) => {
+        // dispatch add season
+        dispatch(post_add_season(formSeason)).then((resp) => {
             if (resp === true) {
-                handleLoadMovie(0);
+                handleLoadSeason(0);
                 handleCloseForm();
             } else {
-                setErrorMovieName(resp);
+                setErrorSeasonName(resp);
             }
         });
 
@@ -113,7 +111,7 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_GENRE(''));
+        dispatch(GET_ALL_MOVIE(''));
     }, []);
 
     return (
@@ -137,14 +135,14 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
                         }}
                         action=""
                         className="flex flex-col gap-2"
-                        onSubmit={handleAddMovie}
+                        onSubmit={handleAddSeason}
                     >
                         <TextField
-                            error={errorMovieName}
-                            label={errorMovieName ? errorMovieName : 'Movie Name'}
+                            error={errorSeasonName}
+                            label={errorSeasonName ? errorSeasonName : 'Season Name'}
                             variant="filled"
                             size="small"
-                            name="movieName"
+                            name="seasonName"
                         />
                         <TextField
                             error={errorDescription}
@@ -154,22 +152,20 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
                             variant="filled"
                             name="description"
                         />
-                        <FormControl fullWidth size="small" error={errorGenre}>
-                            <InputLabel id="demo-multiple-select-label">Genre</InputLabel>
+                        <FormControl fullWidth size="small" error={errorMovie}>
+                            <InputLabel id="demo-simple-select-label">MOVIE</InputLabel>
                             <Select
-                                labelId="demo-multiple-select-label"
-                                id="demo-multiple-select"
-                                multiple
-                                value={selectedGenreIds}
-                                onChange={handleChangeGenreIds}
-                                renderValue={(selected) => selected.join(', ')}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={movieId}
+                                label="Movie"
+                                onChange={handleChangeMovieId}
                             >
-                                {genres.genres.map((item) => {
+                                {movies.movies.map((item) => {
                                     if (item.status) {
                                         return (
                                             <MenuItem key={item.id} value={item.id}>
-                                                <Checkbox checked={selectedGenreIds.includes(item.id)} />
-                                                <ListItemText primary={item.genreName} />
+                                                {item.movieName}
                                             </MenuItem>
                                         );
                                     }
@@ -272,4 +268,4 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
     );
 }
 
-export default FormAddMovie;
+export default FormAddSeason;

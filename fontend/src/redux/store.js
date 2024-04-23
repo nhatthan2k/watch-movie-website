@@ -4,8 +4,9 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage';
 
 import genreSlice from './reducers/genreSlice';
-import colorSlice from './reducers/colorSlice';
+import episodeSlice from './reducers/episodeSlice';
 import movieSlice from './reducers/movieSlice';
+import seasonSlice from './reducers/seasonSlice';
 import sizeSlice from './reducers/sizeSlice';
 import userAdminSlice from './reducers/userAdminSlice';
 import userSlice from './reducers/userSlice';
@@ -21,7 +22,8 @@ const combinedReducer = combineReducers({
     auth: authReducer,
     genre: genreSlice,
     movie: movieSlice,
-    color: colorSlice,
+    episode: episodeSlice,
+    season: seasonSlice,
     size: sizeSlice,
     user: userSlice,
     userAdmin: userAdminSlice,

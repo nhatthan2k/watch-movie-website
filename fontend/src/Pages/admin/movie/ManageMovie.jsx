@@ -19,7 +19,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
-import ShowMovieDetail from '../../../component/modal/ShowMovieDetail';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -44,8 +43,8 @@ function ManageMovie() {
 
     // data edit
     const [edit, setEdit] = useState(null);
-    // handle edit info movie
 
+    // handle edit info movie
     const [openEditInfo, setOpenEditInfo] = useState(false);
     const handleOpenEditInfo = (item) => {
         setEdit(item);
@@ -65,16 +64,6 @@ function ManageMovie() {
     const handleChangeStatusMovie = (id) => {
         dispatch(put_status_movie(id));
     };
-
-    // handle open movie detail
-    const [movieDetail, setMovieDetail] = useState(null);
-
-    const [openMovieDetail, setOpenMovieDetail] = useState(false);
-    const handleOpenMovieDetail = (item) => {
-        setMovieDetail(item);
-        setOpenMovieDetail(true);
-    };
-    const handleCloseMovieDetail = () => setOpenMovieDetail(false);
 
     // handle filter by genre
     const [genre, setGenre] = useState('ALL');
@@ -148,7 +137,7 @@ function ManageMovie() {
                                     <TableCell align="center">STT</TableCell>
                                     <TableCell align="left">MOVIE NAME</TableCell>
                                     <TableCell align="left">DESCRIPTION</TableCell>
-                                    <TableCell align="center">IMAGE</TableCell>
+                                    <TableCell align="center">POSTER</TableCell>
                                     <TableCell align="center">GENRE</TableCell>
                                     <TableCell align="center">STATUS</TableCell>
                                     <TableCell align="center" sx={{ width: '300px' }}>
@@ -166,18 +155,12 @@ function ManageMovie() {
                                             }}
                                             className="hover:bg-slate-100 transition-all duration-300"
                                         >
-                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
-                                                {index + 1}
-                                            </TableCell>
-                                            <TableCell align="left" onClick={() => handleOpenMovieDetail(item)}>
-                                                {item.movieName.toUpperCase()}
-                                            </TableCell>
-                                            <TableCell align="left" onClick={() => handleOpenMovieDetail(item)}>
-                                                {item.description}
-                                            </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
+                                            <TableCell align="center">{index + 1}</TableCell>
+                                            <TableCell align="left">{item.movieName.toUpperCase()}</TableCell>
+                                            <TableCell align="left">{item.description}</TableCell>
+                                            <TableCell align="center">
                                                 <img
-                                                    src={item.image}
+                                                    src={item.poster}
                                                     style={{
                                                         width: '100px',
                                                         height: '100px',
@@ -189,10 +172,8 @@ function ManageMovie() {
                                                     alt=""
                                                 />
                                             </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
-                                                {item.genre.genreName}
-                                            </TableCell>
-                                            <TableCell align="center" onClick={() => handleOpenMovieDetail(item)}>
+                                            <TableCell align="center">{item.genre.genreName}</TableCell>
+                                            <TableCell align="center">
                                                 {item?.status ? (
                                                     <i className="fa-solid fa-lock-open"></i>
                                                 ) : (
@@ -275,13 +256,6 @@ function ManageMovie() {
                     openEditImage={openEditImage}
                     handleCloseEditImage={handleCloseEditImage}
                     editImage={edit}
-                />
-            )}
-            {openMovieDetail && (
-                <ShowMovieDetail
-                    openMovieDetail={openMovieDetail}
-                    handleCloseMovieDetail={handleCloseMovieDetail}
-                    movieDetail={movieDetail}
                 />
             )}
         </div>

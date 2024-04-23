@@ -1,4 +1,4 @@
-import { delete_image_movie, put_add_image_movie } from '../../../redux/thunk/movieThunk';
+import { delete_image_season, put_add_image_season } from '../../../redux/thunk/seasonThunk';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,7 +23,7 @@ const style = {
     gap: '10px',
 };
 
-function FormEditImageMovie({ openEditImage, handleCloseEditImage, editImage }) {
+function FormEditImageSeason({ openEditImage, handleCloseEditImage, editImage }) {
     const dispatch = useDispatch();
 
     // handle upload images
@@ -45,9 +45,9 @@ function FormEditImageMovie({ openEditImage, handleCloseEditImage, editImage }) 
             copyImages.splice(index, 1);
             setImages(copyImages);
             dispatch(
-                delete_image_movie({
+                delete_image_season({
                     idImage: editImage.imageResponses.find((e) => e.url === item).id,
-                    idMovie: editImage.id,
+                    idSeason: editImage.id,
                 }),
             );
         } else {
@@ -62,10 +62,10 @@ function FormEditImageMovie({ openEditImage, handleCloseEditImage, editImage }) 
 
     // handle upload image API
     const handleUpdateImage = () => {
-        const formImageMovie = {
+        const formImageSeason = {
             images: newListImage,
         };
-        dispatch(put_add_image_movie({ formImageMovie, id: editImage.id }));
+        dispatch(put_add_image_season({ formImageSeason, id: editImage.id }));
         handleCloseEditImage();
     };
 
@@ -147,4 +147,4 @@ function FormEditImageMovie({ openEditImage, handleCloseEditImage, editImage }) 
     );
 }
 
-export default FormEditImageMovie;
+export default FormEditImageSeason;

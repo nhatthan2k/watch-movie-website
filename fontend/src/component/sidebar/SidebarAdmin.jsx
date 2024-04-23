@@ -32,7 +32,6 @@ function SidebarAdmin({ toggle, handleToggleNavbar, expanded, handleChange }) {
                 { id: 1, path: '/admin/genre', text: 'Genres' },
                 { id: 2, path: '/admin/movie', text: 'Movies' },
                 { id: 3, path: '/admin/season', text: 'Season' },
-                { id: 4, path: '/admin/episode', text: 'Episode' },
             ],
             text: 'Movies',
         },

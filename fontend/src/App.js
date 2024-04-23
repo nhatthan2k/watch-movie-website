@@ -15,7 +15,6 @@ import ManageSeason from './Pages/admin/movie/ManageSeason';
 // import ManageCoupon from './Pages/admin/coupon/ManageCoupon';
 // import ManageOrders from './Pages/admin/orders/ManageOrders';
 import ManageMovie from './Pages/admin/movie/ManageMovie';
-import ManageEpisode from './Pages/admin/movie/ManageEpisode';
 import ManageUsers from './Pages/admin/users/ManageUsers';
 // 404
 import page404 from './Pages/404 Page/404';
@@ -53,7 +52,6 @@ function App() {
                                 <Route path="/admin/genre" Component={ManageGenre}></Route>
                                 <Route path="/admin/movie" Component={ManageMovie}></Route>
                                 <Route path="/admin/season" Component={ManageSeason}></Route>
-                                <Route path="/admin/episode" Component={ManageEpisode}></Route>
                                 {/* coupon */}
                                 {/* <Route path="/admin/coupon" Component={ManageCoupon}></Route> */}
                                 {/* users */}
