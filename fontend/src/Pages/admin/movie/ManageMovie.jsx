@@ -115,7 +115,7 @@ function ManageMovie() {
                             size="small"
                         >
                             <MenuItem value={'ALL'}>ALL</MenuItem>
-                            {genres.genres.map((item) => (
+                            {genres?.genres?.map((item) => (
                                 <MenuItem key={item.id} value={item.genreName}>
                                     {item.genreName}
                                 </MenuItem>
