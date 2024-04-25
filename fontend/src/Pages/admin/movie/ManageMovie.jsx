@@ -10,7 +10,7 @@ import FormAddMovie from '../../../component/form/movie/FormAddMovie';
 import FormControl from '@mui/material/FormControl';
 import FormEditImageMovie from '../../../component/form/movie/FormEditImageMovie';
 import FormEditMovieInfo from '../../../component/form/movie/FormEditMovieInfo';
-import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
+import { GET_ALL_GENRE_NO_PAGE } from '../../../redux/api/service/genreService';
 import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -35,6 +35,8 @@ function ManageMovie() {
     const dispatch = useDispatch();
     const genres = useSelector(GENRE);
     const movies = useSelector(MOVIE);
+
+    console.log(genres);
 
     // handle add new movie
     const [toggle, setToggle] = useState(false);
@@ -86,7 +88,7 @@ function ManageMovie() {
     };
 
     useEffect(() => {
-        dispatch(GET_ALL_GENRE(''));
+        dispatch(GET_ALL_GENRE_NO_PAGE(''));
         handleLoadMovie(movies.current - 1);
     }, [search, genre, movies.current]);
 
