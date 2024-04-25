@@ -7,7 +7,7 @@ import { GENRE } from '../../../redux/selectors/selectors';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FormControl from '@mui/material/FormControl';
-import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
+import { GET_ALL_GENRE_NO_PAGE } from '../../../redux/api/service/genreService';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
@@ -76,8 +76,8 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
         const formMovie = {
             movieName: e.target.movieName.value,
             description: e.target.description.value,
-            images: images,
-            GenreIds: selectedGenreIds,
+            // poster: images,
+            genreId: selectedGenreIds,
             status: true,
         };
         // validate
@@ -89,14 +89,14 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
             setErrorDescription("Description can't blank");
             return;
         }
-        if (formMovie.genreIds.length == 0) {
+        if (formMovie.genreId.length == 0) {
             setErrorGenre("Genre can't blank");
             return;
         }
-        if (formMovie.images.length === 0) {
-            setErrorImage("Image can't be empty");
-            return;
-        }
+        // if (formMovie.poster.length === 0) {
+        //     setErrorImage("Image can't be empty");
+        //     return;
+        // }
 
         // dispatch add movie
         dispatch(post_add_movie(formMovie)).then((resp) => {
@@ -113,7 +113,7 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_GENRE(''));
+        dispatch(GET_ALL_GENRE_NO_PAGE(''));
     }, []);
 
     return (
@@ -164,7 +164,7 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
                                 onChange={handleChangeGenreIds}
                                 renderValue={(selected) => selected.join(', ')}
                             >
-                                {genres.genres.map((item) => {
+                                {genres.genre.map((item) => {
                                     if (item.status) {
                                         return (
                                             <MenuItem key={item.id} value={item.id}>

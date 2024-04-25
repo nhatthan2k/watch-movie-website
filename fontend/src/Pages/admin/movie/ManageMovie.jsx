@@ -115,7 +115,7 @@ function ManageMovie() {
                             size="small"
                         >
                             <MenuItem value={'ALL'}>ALL</MenuItem>
-                            {genres?.genres?.map((item) => (
+                            {genres?.genre?.map((item) => (
                                 <MenuItem key={item.id} value={item.genreName}>
                                     {item.genreName}
                                 </MenuItem>
@@ -148,21 +148,21 @@ function ManageMovie() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {movies.movies.map((item, index) => {
+                                {movies?.movies?.map((item, index) => {
                                     return (
                                         <TableRow
-                                            key={item?.id}
+                                            key={item.movie?.id}
                                             sx={{
                                                 '&:last-child td, &:last-child th': { border: 0 },
                                             }}
                                             className="hover:bg-slate-100 transition-all duration-300"
                                         >
                                             <TableCell align="center">{index + 1}</TableCell>
-                                            <TableCell align="left">{item.movieName.toUpperCase()}</TableCell>
-                                            <TableCell align="left">{item.description}</TableCell>
+                                            <TableCell align="left">{item.movie.movieName}</TableCell>
+                                            <TableCell align="left">{item.movie.description}</TableCell>
                                             <TableCell align="center">
                                                 <img
-                                                    src={item.poster}
+                                                    src={item.movie.poster}
                                                     style={{
                                                         width: '100px',
                                                         height: '100px',
@@ -174,21 +174,25 @@ function ManageMovie() {
                                                     alt=""
                                                 />
                                             </TableCell>
-                                            <TableCell align="center">{item.genre.genreName}</TableCell>
                                             <TableCell align="center">
-                                                {item?.status ? (
+                                                {item.genres.map((genre, index) => (
+                                                    <Button key={index}>{genre.genreName}</Button>
+                                                ))}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {item.movie?.status ? (
                                                     <i className="fa-solid fa-lock-open"></i>
                                                 ) : (
                                                     <i className="fa-solid fa-lock"></i>
                                                 )}
                                             </TableCell>
                                             <TableCell align="center">
-                                                {item?.status ? (
+                                                {item.movie?.status ? (
                                                     <div className="flex gap-2 justify-center">
                                                         <Button
                                                             variant="contained"
                                                             color="warning"
-                                                            onClick={() => handleOpenEditInfo(item)}
+                                                            onClick={() => handleOpenEditInfo(item.movie)}
                                                         >
                                                             <Tooltip title="edit info">
                                                                 <EditIcon />
@@ -197,7 +201,7 @@ function ManageMovie() {
                                                         <Button
                                                             variant="contained"
                                                             color="success"
-                                                            onClick={() => handleOpenEditImage(item)}
+                                                            onClick={() => handleOpenEditImage(item.movie)}
                                                         >
                                                             <Tooltip title="edit image">
                                                                 <FilterIcon />
@@ -206,7 +210,7 @@ function ManageMovie() {
                                                         <Button
                                                             variant="contained"
                                                             color="error"
-                                                            onClick={() => handleChangeStatusMovie(item.id)}
+                                                            onClick={() => handleChangeStatusMovie(item.movie.id)}
                                                         >
                                                             <Tooltip title="lock">
                                                                 <LockOutlinedIcon />
@@ -217,7 +221,7 @@ function ManageMovie() {
                                                     <Button
                                                         variant="contained"
                                                         color="success"
-                                                        onClick={() => handleChangeStatusMovie(item.id)}
+                                                        onClick={() => handleChangeStatusMovie(item.movie.id)}
                                                     >
                                                         <Tooltip title="unlock">
                                                             <LockOpenOutlinedIcon />

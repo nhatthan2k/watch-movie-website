@@ -1,4 +1,4 @@
-import { GET_ALL_GENRE } from '../api/service/genreService';
+import { GET_ALL_GENRE, GET_ALL_GENRE_NO_PAGE } from '../api/service/genreService';
 import { createSlice } from '@reduxjs/toolkit';
 
 const GenreSlice = createSlice({
@@ -51,6 +51,17 @@ const GenreSlice = createSlice({
             state.totalPages = action.payload.totalPages;
             state.size = action.payload.size;
             state.current = action.payload.number + 1;
+        });
+        builder.addCase(GET_ALL_GENRE_NO_PAGE.pending, (state) => {
+            state.status = 'pending';
+        });
+        builder.addCase(GET_ALL_GENRE_NO_PAGE.fulfilled, (state, action) => {
+            console.log(action);
+            state.status = '';
+            state.genre = action.payload.map((item) => ({
+                ...item,
+                isEdit: false,
+            }));
         });
     },
 });

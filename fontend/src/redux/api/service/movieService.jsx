@@ -6,7 +6,7 @@ export const GET_ALL_MOVIE = createAsyncThunk('movie/GET_ALL_MOVIE', async ({ se
     let response = await instance.get(`/v1/admin/movies?genre=${genre}&page=${page}&search=${search}`, {
         headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
     });
-    return response.data;
+    return response.data.content;
 });
 
 export const POST_ADD_MOVIE = async (formMovie) => {
