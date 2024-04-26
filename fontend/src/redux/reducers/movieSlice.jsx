@@ -1,4 +1,4 @@
-import { GET_ALL_MOVIE } from '../api/service/movieService';
+import { GET_ALL_MOVIE, GET_ALL_MOVIE_NO_PAGE } from '../api/service/movieService';
 import { createSlice } from '@reduxjs/toolkit';
 
 const movieSlice = createSlice({
@@ -35,6 +35,13 @@ const movieSlice = createSlice({
                 state.totalPages = action.payload.totalPages;
                 state.size = action.payload.size;
                 state.current = action.payload.number + 1;
+            })
+            .addCase(GET_ALL_MOVIE_NO_PAGE.pending, (state) => {
+                state.status = 'pending';
+            })
+            .addCase(GET_ALL_MOVIE_NO_PAGE.fulfilled, (state, action) => {
+                state.status = '';
+                state.movies = action.payload;
             });
     },
 });

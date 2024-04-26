@@ -9,6 +9,13 @@ export const GET_ALL_MOVIE = createAsyncThunk('movie/GET_ALL_MOVIE', async ({ se
     return response.data.content;
 });
 
+export const GET_ALL_MOVIE_NO_PAGE = createAsyncThunk('movie/GET_ALL_MOVIE_NO_PAGE', async (search) => {
+    let response = await instance.get(`/v1/admin/movies/no_page?search=${search}`, {
+        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
+    });
+    return response.data;
+});
+
 export const POST_ADD_MOVIE = async (formMovie) => {
     let resp = await instance.post(`/v1/admin/movies`, formMovie, {
         headers: { Authorization: `Bearer ${new Cookies().get('token')}` },

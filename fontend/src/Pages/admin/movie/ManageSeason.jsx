@@ -10,7 +10,7 @@ import FormAddSeason from '../../../component/form/season/FormAddSeason';
 import FormControl from '@mui/material/FormControl';
 import FormEditImageSeason from '../../../component/form/season/FormEditImageSeason';
 import FormEditSeasonInfo from '../../../component/form/season/FormEditSeasonInfo';
-import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
+import { GET_ALL_MOVIE_NO_PAGE } from '../../../redux/api/service/movieService';
 import { GET_ALL_SEASON } from '../../../redux/api/service/seasonService';
 import InputLabel from '@mui/material/InputLabel';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -97,7 +97,7 @@ function ManageSeason() {
     };
 
     useEffect(() => {
-        dispatch(GET_ALL_MOVIE(''));
+        dispatch(GET_ALL_MOVIE_NO_PAGE(''));
         handleLoadSeason(seasons.current - 1);
     }, [search, movie, seasons.current]);
 

@@ -1,15 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { GENRE } from '../../../redux/selectors/selectors';
-import FormControl from '@mui/material/FormControl';
-import { GET_ALL_GENRE } from '../../../redux/api/service/genreService';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
-import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { put_update_movie } from '../../../redux/thunk/movieThunk';
 import { validateBlank } from '../../../utils/validate';
@@ -29,14 +23,6 @@ const style = {
 function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
     const dispatch = useDispatch();
 
-    const genres = useSelector(GENRE);
-
-    // handle select genreId
-    const [genreId, setGenreId] = useState(editInfo.genre.id);
-    const handleChangeGenreId = (event) => {
-        setGenreId(event.target.value);
-    };
-
     const [errorMovieName, setErrorMovieName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
 
@@ -50,7 +36,6 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
         const formMovie = {
             movieName: e.target.movieName.value,
             description: e.target.description.value,
-            genreId: genreId,
             status: true,
         };
         // validate
@@ -75,7 +60,6 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_GENRE(''));
     }, []);
 
     return (
@@ -106,28 +90,6 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
                         defaultValue={editInfo.description}
                         fullWidth
                     />
-                    <FormControl fullWidth size="small">
-                        <InputLabel id="demo-simple-select-label">GENRE</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={genreId}
-                            label="Genre"
-                            onChange={handleChangeGenreId}
-                            defaultValue={editInfo.Genre.id}
-                            autoFocus
-                        >
-                            {genres.genres.map((item) => {
-                                if (item.status) {
-                                    return (
-                                        <MenuItem key={item.id} value={item.id}>
-                                            {item.genreName}
-                                        </MenuItem>
-                                    );
-                                }
-                            })}
-                        </Select>
-                    </FormControl>
                     <Button type="submit" variant="contained" fullWidth>
                         UPDATE
                     </Button>
