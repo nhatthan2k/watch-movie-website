@@ -3,6 +3,8 @@ import { TIME_OUT, debouncing } from '../../../utils/deboucing';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLockOpen, faLock } from '@fortawesome/free-solid-svg-icons';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterIcon from '@mui/icons-material/Filter';
@@ -35,8 +37,6 @@ function ManageMovie() {
     const dispatch = useDispatch();
     const genres = useSelector(GENRE);
     const movies = useSelector(MOVIE);
-
-    console.log(genres);
 
     // handle add new movie
     const [toggle, setToggle] = useState(false);
@@ -181,9 +181,9 @@ function ManageMovie() {
                                             </TableCell>
                                             <TableCell align="center">
                                                 {item.movie?.status ? (
-                                                    <i className="fa-solid fa-lock-open"></i>
+                                                    <FontAwesomeIcon icon={faLockOpen} />
                                                 ) : (
-                                                    <i className="fa-solid fa-lock"></i>
+                                                    <FontAwesomeIcon icon={faLock} />
                                                 )}
                                             </TableCell>
                                             <TableCell align="center">

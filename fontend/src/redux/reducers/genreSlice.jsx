@@ -56,7 +56,6 @@ const GenreSlice = createSlice({
             state.status = 'pending';
         });
         builder.addCase(GET_ALL_GENRE_NO_PAGE.fulfilled, (state, action) => {
-            console.log(action);
             state.status = '';
             state.genre = action.payload.map((item) => ({
                 ...item,
