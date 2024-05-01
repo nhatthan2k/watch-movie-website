@@ -68,5 +68,5 @@ export const DELETE_GENRE_TO_MOVIE = async ({ movieId, genreId }) => {
     let response = await instance.delete(`/v1/admin/movie/${movieId}/genre/${genreId}`, {
         headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
     });
-    return response.data;
+    return response;
 };

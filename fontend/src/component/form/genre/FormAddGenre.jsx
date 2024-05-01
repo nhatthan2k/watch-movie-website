@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { validateBlank } from '../../../utils/validate';
 
-function FormAddGenre({ handleCloseForm }) {
+function FormAddGenre({ handleCloseForm, setLoadGenrePage, loadGenrePage }) {
     const dispatch = useDispatch();
 
     const [genreName, setGenreName] = useState('');
@@ -28,6 +28,7 @@ function FormAddGenre({ handleCloseForm }) {
         // dispatch add new genre
         dispatch(post_add_genre(formGenre)).then((resp) => {
             if (resp === true) {
+                setLoadGenrePage(!loadGenrePage);
                 handleCloseForm();
             } else {
                 setErrorGenreName(resp);

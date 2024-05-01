@@ -20,7 +20,7 @@ const style = {
     p: 2,
 };
 
-function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
+function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo, currentPage, handleLoadMovie }) {
     const dispatch = useDispatch();
 
     const [errorMovieName, setErrorMovieName] = useState('');
@@ -50,6 +50,7 @@ function FormEditMovieInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
         // dispatch update movie
         dispatch(put_update_movie({ formMovie, id: editInfo.id })).then((resp) => {
             if (resp === true) {
+                handleLoadMovie(currentPage - 1);
                 handleCloseEditInfo();
             } else {
                 setErrorMovieName(resp);

@@ -33,6 +33,9 @@ function ManageGenre() {
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
 
+    // handle load Page
+    const [loadGenrePage, setLoadGenrePage] = useState(false);
+
     // update
     const handleEditGenre = (id) => {
         dispatch(enableEditItem(id));
@@ -40,7 +43,9 @@ function ManageGenre() {
 
     // change status
     const handleChangeStatusShip = (id) => {
-        dispatch(put_status_genre(id));
+        dispatch(put_status_genre(id)).then(() => {
+            setLoadGenrePage(!loadGenrePage);
+        });
     };
 
     // change page
@@ -54,7 +59,7 @@ function ManageGenre() {
 
     useEffect(() => {
         dispatch(GET_ALL_GENRE({ search, page: genre.current - 1 }));
-    }, [search, genre.current]);
+    }, [search, genre.current, loadGenrePage]);
 
     return (
         <div>
@@ -91,7 +96,13 @@ function ManageGenre() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {toggle && <FormAddGenre handleCloseForm={handleCloseForm} />}
+                                {toggle && (
+                                    <FormAddGenre
+                                        handleCloseForm={handleCloseForm}
+                                        setLoadGenrePage={setLoadGenrePage}
+                                        loadGenrePage={loadGenrePage}
+                                    />
+                                )}
                                 {genre.genre.map((item, index) => {
                                     if (item?.isEdit) {
                                         return (
@@ -99,6 +110,8 @@ function ManageGenre() {
                                                 key={item.id}
                                                 handleCloseForm={() => dispatch(disabledEditItem())}
                                                 edit={item}
+                                                setLoadGenrePage={setLoadGenrePage}
+                                                loadGenrePage={loadGenrePage}
                                             />
                                         );
                                     } else {
@@ -112,7 +125,7 @@ function ManageGenre() {
                                                 <TableCell align="center">{index + 1}</TableCell>
                                                 <TableCell align="center">
                                                     <p className="text-blue-700 uppercase underline hover:cursor-pointer">
-                                                        {item?.genreName.toUpperCase()}
+                                                        {item?.genreName}
                                                     </p>
                                                 </TableCell>
                                                 <TableCell align="center">

@@ -9,7 +9,7 @@ import { put_update_genre } from '../../../redux/thunk/genreThunk';
 import { useDispatch } from 'react-redux';
 import { validateBlank } from '../../../utils/validate';
 
-function FormEditGenre({ handleCloseForm, edit }) {
+function FormEditGenre({ handleCloseForm, edit, setLoadGenrePage, loadGenrePage }) {
     const dispatch = useDispatch();
 
     const [genreName, setGenreName] = useState('');
@@ -27,6 +27,7 @@ function FormEditGenre({ handleCloseForm, edit }) {
         }
         dispatch(put_update_genre({ formGenre, id: edit.id })).then((resp) => {
             if (resp === true) {
+                setLoadGenrePage(!loadGenrePage);
                 handleCloseForm();
             } else {
                 setErrorGenreName(resp);

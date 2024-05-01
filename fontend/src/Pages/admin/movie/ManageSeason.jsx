@@ -31,11 +31,16 @@ import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { changeCurrentPage } from '../../../redux/reducers/seasonSlice';
 import { put_status_season } from '../../../redux/thunk/seasonThunk';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ManageSeason() {
     const dispatch = useDispatch();
     const movies = useSelector(MOVIE);
     const seasons = useSelector(SEASON);
+
+    console.log('season-->', seasons);
+    console.log('movie-->', movies);
 
     // handle add new season
     const [toggle, setToggle] = useState(false);
@@ -194,9 +199,9 @@ function ManageSeason() {
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
                                                 {item?.status ? (
-                                                    <i className="fa-solid fa-lock-open"></i>
+                                                    <FontAwesomeIcon icon={faLockOpen} />
                                                 ) : (
-                                                    <i className="fa-solid fa-lock"></i>
+                                                    <FontAwesomeIcon icon={faLock} />
                                                 )}
                                             </TableCell>
                                             <TableCell align="center">

@@ -76,7 +76,7 @@ export const post_add_genre_to_movie = ({ formAddGenreToMovie, movieDetailId }) 
             dispatch(changeGenre());
             return true;
         } else {
-            return resp.data;
+            return resp.data.content;
         }
     };
 };
@@ -88,7 +88,7 @@ export const delete_genre_to_movie = ({ movieId, genreId }) => {
             dispatch(changeGenre());
             return true;
         } else {
-            return resp.data;
+            return resp.data.content;
         }
     };
 };

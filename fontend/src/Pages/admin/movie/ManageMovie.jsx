@@ -36,6 +36,8 @@ import { put_status_movie, delete_genre_to_movie } from '../../../redux/thunk/mo
 
 function ManageMovie() {
     const dispatch = useDispatch();
+
+    // State
     const genres = useSelector(GENRE);
     const movies = useSelector(MOVIE);
 
@@ -59,7 +61,11 @@ function ManageMovie() {
 
     // handle delete genre
     const handleDeleteGenre = (genreId, movieId) => {
-        dispatch(delete_genre_to_movie({ movieId, genreId }));
+        dispatch(delete_genre_to_movie({ movieId, genreId })).then((resp) => {
+            if (resp === true) {
+                handleLoadMovie(movies.current - 1);
+            }
+        });
     };
 
     // data edit
@@ -83,7 +89,11 @@ function ManageMovie() {
 
     // handle change status movie
     const handleChangeStatusMovie = (id) => {
-        dispatch(put_status_movie(id));
+        dispatch(put_status_movie(id)).then((resp) => {
+            if (resp === true) {
+                handleLoadMovie(movies.current - 1);
+            }
+        });
     };
 
     // handle filter by genre
@@ -300,6 +310,7 @@ function ManageMovie() {
                     handleCloseForm={handleCloseAddGenre}
                     handleLoadMovie={handleLoadMovie}
                     movieDetailId={movieDetailId}
+                    currentPage={movies.current}
                 />
             )}
             {openEditInfo && (
@@ -307,6 +318,8 @@ function ManageMovie() {
                     openEditInfo={openEditInfo}
                     handleCloseEditInfo={handleCloseEditInfo}
                     editInfo={edit}
+                    currentPage={movies.current}
+                    handleLoadMovie={handleLoadMovie}
                 />
             )}
             {openEditImage && (

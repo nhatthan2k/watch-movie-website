@@ -26,7 +26,7 @@ const style = {
     gap: '10px',
 };
 
-function FormAddGenreToMovie({ openAddGenre, handleCloseForm, handleLoadMovie, movieDetailId }) {
+function FormAddGenreToMovie({ openAddGenre, handleCloseForm, handleLoadMovie, movieDetailId, currentPage }) {
     const dispatch = useDispatch();
 
     const genres = useSelector(GENRE);
@@ -57,9 +57,13 @@ function FormAddGenreToMovie({ openAddGenre, handleCloseForm, handleLoadMovie, m
         }
 
         // dispatch add movie
-        dispatch(post_add_genre_to_movie({ formAddGenreToMovie, movieDetailId })).then(() => {
-            handleLoadMovie(0);
-            handleCloseForm();
+        dispatch(post_add_genre_to_movie({ formAddGenreToMovie, movieDetailId })).then((resp) => {
+            if (resp == true) {
+                handleLoadMovie(currentPage - 1);
+                handleCloseForm();
+            } else {
+                setErrorGenre(resp);
+            }
         });
 
         resetError();
