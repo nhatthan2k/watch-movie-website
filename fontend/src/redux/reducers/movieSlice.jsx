@@ -23,6 +23,7 @@ const movieSlice = createSlice({
         changeCurrentPage: (state, action) => {
             state.current = action.payload;
         },
+        changeGenre: (state) => {},
     },
     extraReducers: (builder) => {
         builder
@@ -46,5 +47,5 @@ const movieSlice = createSlice({
     },
 });
 
-export const { changeCurrentPage, updateMovie } = movieSlice.actions;
+export const { changeCurrentPage, updateMovie, changeGenre } = movieSlice.actions;
 export default movieSlice.reducer;

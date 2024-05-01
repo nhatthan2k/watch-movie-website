@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLockOpen, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faLockOpen, faLock, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterIcon from '@mui/icons-material/Filter';
 import FormAddMovie from '../../../component/form/movie/FormAddMovie';
+import FormAddGenreToMovie from '../../../component/form/movie/FormAddGenreToMovie';
 import FormControl from '@mui/material/FormControl';
 import FormEditImageMovie from '../../../component/form/movie/FormEditImageMovie';
 import FormEditMovieInfo from '../../../component/form/movie/FormEditMovieInfo';
@@ -31,17 +32,35 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { changeCurrentPage } from '../../../redux/reducers/movieSlice';
-import { put_status_movie } from '../../../redux/thunk/movieThunk';
+import { put_status_movie, delete_genre_to_movie } from '../../../redux/thunk/movieThunk';
 
 function ManageMovie() {
     const dispatch = useDispatch();
     const genres = useSelector(GENRE);
     const movies = useSelector(MOVIE);
 
+    // console.log('genre-->', genres);
+    // console.log('movie-->', movies);
+
     // handle add new movie
     const [toggle, setToggle] = useState(false);
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
+
+    // handle add genre to movie
+    const [movieDetailId, setMovieDetailId] = useState(null);
+
+    const [openAddGenre, setOpenAddGenre] = useState(false);
+    const handleAddGenreForm = (id) => {
+        setMovieDetailId(id);
+        setOpenAddGenre(true);
+    };
+    const handleCloseAddGenre = () => setOpenAddGenre(false);
+
+    // handle delete genre
+    const handleDeleteGenre = (genreId, movieId) => {
+        dispatch(delete_genre_to_movie({ movieId, genreId }));
+    };
 
     // data edit
     const [edit, setEdit] = useState(null);
@@ -174,10 +193,35 @@ function ManageMovie() {
                                                     alt=""
                                                 />
                                             </TableCell>
-                                            <TableCell align="center">
+                                            <TableCell align="center" style={{ maxWidth: '150px' }}>
                                                 {item.genres.map((genre, index) => (
-                                                    <Button key={index}>{genre.genreName}</Button>
+                                                    <div
+                                                        key={index}
+                                                        className="inline-flex items-center justify-center border border-gray-400 mb-1"
+                                                        style={{
+                                                            height: '20px',
+                                                            borderRadius: '16px',
+                                                        }}
+                                                    >
+                                                        <span className="ml-4">{genre.genreName}</span>
+                                                        <FontAwesomeIcon
+                                                            className="hover:cursor-pointer text-red-500 text-sm"
+                                                            onClick={() => handleDeleteGenre(genre.id, item.movie.id)}
+                                                            style={{ padding: '5px' }}
+                                                            icon={faTrash}
+                                                        />
+                                                    </div>
                                                 ))}
+                                                <div
+                                                    className="border border-gray-400 rounded-lg text-center bg-green-500 hover:cursor-pointer m-auto"
+                                                    style={{
+                                                        width: '50px',
+                                                    }}
+                                                    onClick={() => handleAddGenreForm(item.movie.id)}
+                                                >
+                                                    Add
+                                                    <FontAwesomeIcon icon={faPlus} />
+                                                </div>
                                             </TableCell>
                                             <TableCell align="center">
                                                 {item.movie?.status ? (
@@ -249,6 +293,14 @@ function ManageMovie() {
             </div>
             {toggle && (
                 <FormAddMovie toggle={toggle} handleCloseForm={handleCloseForm} handleLoadMovie={handleLoadMovie} />
+            )}
+            {openAddGenre && (
+                <FormAddGenreToMovie
+                    openAddGenre={openAddGenre}
+                    handleCloseForm={handleCloseAddGenre}
+                    handleLoadMovie={handleLoadMovie}
+                    movieDetailId={movieDetailId}
+                />
             )}
             {openEditInfo && (
                 <FormEditMovieInfo

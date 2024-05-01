@@ -124,8 +124,8 @@ function ManageSeason() {
                             size="small"
                         >
                             <MenuItem value={'ALL'}>ALL</MenuItem>
-                            {movies.movies.map((item) => (
-                                <MenuItem key={item.id} value={item.movieName}>
+                            {movies.movies.map((item, index) => (
+                                <MenuItem key={index} value={item.movieName}>
                                     {item.movieName}
                                 </MenuItem>
                             ))}
