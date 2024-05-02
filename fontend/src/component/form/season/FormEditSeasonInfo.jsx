@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { MOVIE } from '../../../redux/selectors/selectors';
 import FormControl from '@mui/material/FormControl';
-import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
+import { GET_ALL_MOVIE_NO_PAGE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
@@ -13,6 +13,8 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { put_update_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
+import { Checkbox, ListItemText } from '@mui/material';
+import { seasonTypes, seasonStatuses, dayShowing } from './FormAddSeason';
 
 const style = {
     position: 'absolute',
@@ -26,7 +28,9 @@ const style = {
     p: 2,
 };
 
-function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
+function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handleLoadSeason, currentPage }) {
+    console.log(editInfo);
+
     const dispatch = useDispatch();
 
     const movies = useSelector(MOVIE);
@@ -37,10 +41,30 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
         setMovieId(event.target.value);
     };
 
+    // handle select seasonStatus
+    const [seasonStatus, setSeasonStatus] = useState(editInfo.seasonStatus);
+    const handleChangeSeasonStatus = (event) => {
+        setSeasonStatus(event.target.value);
+    };
+
+    // handle select seasonType
+    const [seasonType, setSeasonType] = useState(editInfo.seasonType);
+    const handleChangeSeasonType = (event) => {
+        setSeasonType(event.target.value);
+    };
+
+    // handle select Days
+    const [selectedDays, setSelectedDays] = useState(editInfo.days);
+    const handleChangeDays = (event) => {
+        setSelectedDays(event.target.value);
+    };
+
+    const [errorNickName, setErrorNickName] = useState('');
     const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
 
     const resetError = () => {
+        setErrorNickName('');
         setErrorSeasonName('');
         setErrorDescription('');
     };
@@ -48,12 +72,20 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
     const handleUpdateSeasonInfo = (e) => {
         e.preventDefault();
         const formSeason = {
+            nickName: e.target.nickName.value,
             seasonName: e.target.seasonName.value,
             description: e.target.description.value,
             movieId: movieId,
             status: true,
+            seasonType: seasonType,
+            seasonStatus: seasonStatus,
+            days: selectedDays,
         };
         // validate
+        if (validateBlank(formSeason.nickName)) {
+            setErrorNickName("Nick Name can't blank");
+            return;
+        }
         if (validateBlank(formSeason.seasonName)) {
             setErrorSeasonName("season Name can't blank");
             return;
@@ -65,6 +97,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
         // dispatch update season
         dispatch(put_update_season({ formSeason, id: editInfo.id })).then((resp) => {
             if (resp === true) {
+                handleLoadSeason(currentPage - 1);
                 handleCloseEditInfo();
             } else {
                 setErrorSeasonName(resp);
@@ -75,7 +108,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_MOVIE(''));
+        dispatch(GET_ALL_MOVIE_NO_PAGE(''));
     }, []);
 
     return (
@@ -87,6 +120,15 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
         >
             <Box sx={style}>
                 <form action="" className="flex flex-col gap-2" onSubmit={handleUpdateSeasonInfo}>
+                    <TextField
+                        error={errorNickName}
+                        label={errorNickName ? errorNickName : 'Nick Name'}
+                        variant="filled"
+                        size="small"
+                        name="nickName"
+                        defaultValue={editInfo.nickName}
+                        fullWidth
+                    />
                     <TextField
                         error={errorSeasonName}
                         label={errorSeasonName ? errorSeasonName : 'Season Name'}
@@ -114,7 +156,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
                             value={movieId}
                             label="Movie"
                             onChange={handleChangeMovieId}
-                            defaultValue={editInfo.Movie.id}
+                            defaultValue={editInfo.movie.id}
                             autoFocus
                         >
                             {movies.movies.map((item) => {
@@ -125,6 +167,68 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo }) {
                                         </MenuItem>
                                     );
                                 }
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="demo-simple-select-label">Season Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={seasonType}
+                            label="seasonType"
+                            onChange={handleChangeSeasonType}
+                            defaultValue={editInfo.seasonType}
+                            autoFocus
+                        >
+                            {seasonTypes.map((item, index) => {
+                                return (
+                                    <MenuItem key={index} value={item}>
+                                        {item}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="demo-simple-select-label">Season Status</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={seasonStatus}
+                            label="seasonStatus"
+                            onChange={handleChangeSeasonStatus}
+                            defaultValue={editInfo.seasonStatus}
+                            autoFocus
+                        >
+                            {seasonStatuses.map((item, index) => {
+                                return (
+                                    <MenuItem key={index} value={item}>
+                                        {item}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="demo-multiple-select-label">Day showing</InputLabel>
+                        <Select
+                            labelId="demo-multiple-select-label"
+                            id="demo-multiple-select"
+                            multiple
+                            value={selectedDays}
+                            onChange={handleChangeDays}
+                            renderValue={(selected) => selected.join(', ')}
+                            defaultValue={editInfo.days}
+                            autoFocus
+                        >
+                            {dayShowing.map((item, index) => {
+                                return (
+                                    <MenuItem key={index} value={item}>
+                                        <Checkbox checked={selectedDays.includes(item)} />
+                                        <ListItemText primary={item} />
+                                    </MenuItem>
+                                );
                             })}
                         </Select>
                     </FormControl>

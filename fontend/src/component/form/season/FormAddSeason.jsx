@@ -7,7 +7,7 @@ import { MOVIE } from '../../../redux/selectors/selectors';
 import CloseIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FormControl from '@mui/material/FormControl';
-import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
+import { GET_ALL_MOVIE_NO_PAGE } from '../../../redux/api/service/movieService';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import { firebase_multiple_upload } from '../../../firebase/firebaseService';
 import { post_add_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
+import { Checkbox, ListItemText } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -29,6 +30,10 @@ const style = {
     display: 'flex',
     gap: '10px',
 };
+
+export const seasonTypes = ['MULTIPLE', 'SINGLE'];
+export const seasonStatuses = ['COMING', 'SHOWING', 'COMPLETE'];
+export const dayShowing = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
 function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
     const dispatch = useDispatch();
@@ -56,29 +61,63 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
         setMovieId(event.target.value);
     };
 
+    // handle select seasonStatus
+    const [seasonStatus, setSeasonStatus] = useState('');
+    const handleChangeSeasonStatus = (event) => {
+        setSeasonStatus(event.target.value);
+    };
+
+    // handle select seasonType
+    const [seasonType, setSeasonType] = useState('');
+    const handleChangeSeasonType = (event) => {
+        setSeasonType(event.target.value);
+    };
+
+    // handle select Days
+    const [selectedDays, setSelectedDays] = useState([]);
+    const handleChangeDays = (event) => {
+        setSelectedDays(event.target.value);
+    };
+
+    const [errorNickName, setErrorNickName] = useState('');
     const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
     const [errorMovie, setErrorMovie] = useState('');
     const [errorImage, setErrorImage] = useState('');
+    const [errorSeasonType, setErrorSeasonType] = useState('');
+    const [errorSeasonStatus, setErrorSeasonStatus] = useState('');
+    const [errorDays, setErrorDays] = useState('');
 
     const resetError = () => {
+        setErrorNickName('');
         setErrorSeasonName('');
         setErrorDescription('');
         setErrorMovie('');
         setErrorImage('');
+        setErrorSeasonType('');
+        setErrorSeasonStatus('');
+        setErrorDays('');
     };
 
     const handleAddSeason = (e) => {
         e.preventDefault();
 
         const formSeason = {
+            nickName: e.target.nickName.value,
             seasonName: e.target.seasonName.value,
             description: e.target.description.value,
-            avatar: images,
+            // avatar: images,
             movieId: movieId,
             status: true,
+            seasonType: seasonType,
+            seasonStatus: seasonStatus,
+            days: selectedDays,
         };
         // validate
+        if (validateBlank(formSeason.nickName)) {
+            setErrorNickName("Nick Name can't blank");
+            return;
+        }
         if (validateBlank(formSeason.seasonName)) {
             setErrorSeasonName("Season Name can't blank");
             return;
@@ -91,8 +130,20 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
             setErrorMovie("Movie can't blank");
             return;
         }
-        if (formSeason.images.length === 0) {
-            setErrorImage("Image can't be empty");
+        // if (formSeason.images.length === 0) {
+        //     setErrorImage("Image can't be empty");
+        //     return;
+        // }
+        if (validateBlank(formSeason.seasonType)) {
+            setErrorSeasonType("Season Type can't blank");
+            return;
+        }
+        if (validateBlank(formSeason.seasonStatus)) {
+            setErrorSeasonStatus("Season Status can't blank");
+            return;
+        }
+        if (formSeason.days.length === 0) {
+            setErrorDays("Days can't blank");
             return;
         }
 
@@ -102,7 +153,7 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
                 handleLoadSeason(0);
                 handleCloseForm();
             } else {
-                setErrorSeasonName(resp);
+                setErrorNickName(resp);
             }
         });
 
@@ -111,7 +162,7 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
 
     useEffect(() => {
         resetError();
-        dispatch(GET_ALL_MOVIE(''));
+        dispatch(GET_ALL_MOVIE_NO_PAGE(''));
     }, []);
 
     return (
@@ -138,6 +189,13 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
                         onSubmit={handleAddSeason}
                     >
                         <TextField
+                            error={errorNickName}
+                            label={errorNickName ? errorNickName : 'Nick Name'}
+                            variant="filled"
+                            size="small"
+                            name="nickName"
+                        />
+                        <TextField
                             error={errorSeasonName}
                             label={errorSeasonName ? errorSeasonName : 'Season Name'}
                             variant="filled"
@@ -153,7 +211,7 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
                             name="description"
                         />
                         <FormControl fullWidth size="small" error={errorMovie}>
-                            <InputLabel id="demo-simple-select-label">MOVIE</InputLabel>
+                            <InputLabel id="demo-simple-select-label">Movie</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
@@ -169,6 +227,62 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
                                             </MenuItem>
                                         );
                                     }
+                                })}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth size="small" error={errorSeasonType}>
+                            <InputLabel id="demo-simple-select-label">Season Type</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={seasonType}
+                                label="seasonType"
+                                onChange={handleChangeSeasonType}
+                            >
+                                {seasonTypes.map((item, index) => {
+                                    return (
+                                        <MenuItem key={index} value={item}>
+                                            {item}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth size="small" error={errorSeasonStatus}>
+                            <InputLabel id="demo-simple-select-label">Season Status</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={seasonStatus}
+                                label="seasonStatus"
+                                onChange={handleChangeSeasonStatus}
+                            >
+                                {seasonStatuses.map((item, index) => {
+                                    return (
+                                        <MenuItem key={index} value={item}>
+                                            {item}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth size="small" error={errorDays}>
+                            <InputLabel id="demo-multiple-select-label">Day showing</InputLabel>
+                            <Select
+                                labelId="demo-multiple-select-label"
+                                id="demo-multiple-select"
+                                multiple
+                                value={selectedDays}
+                                onChange={handleChangeDays}
+                                renderValue={(selected) => selected.join(', ')}
+                            >
+                                {dayShowing.map((item, index) => {
+                                    return (
+                                        <MenuItem key={index} value={item}>
+                                            <Checkbox checked={selectedDays.includes(item)} />
+                                            <ListItemText primary={item} />
+                                        </MenuItem>
+                                    );
                                 })}
                             </Select>
                         </FormControl>

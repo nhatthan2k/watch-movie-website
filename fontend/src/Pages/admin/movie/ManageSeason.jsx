@@ -31,7 +31,7 @@ import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { changeCurrentPage } from '../../../redux/reducers/seasonSlice';
 import { put_status_season } from '../../../redux/thunk/seasonThunk';
-import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faLockOpen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ManageSeason() {
@@ -151,10 +151,14 @@ function ManageSeason() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="center">STT</TableCell>
+                                    <TableCell align="left">NICK NAME</TableCell>
                                     <TableCell align="left">SEASON NAME</TableCell>
                                     <TableCell align="left">DESCRIPTION</TableCell>
                                     <TableCell align="center">IMAGE</TableCell>
                                     <TableCell align="center">MOVIE</TableCell>
+                                    <TableCell align="center">SEASON TYPE</TableCell>
+                                    <TableCell align="center">SEASON STATUS</TableCell>
+                                    <TableCell align="center">DAYS</TableCell>
                                     <TableCell align="center">STATUS</TableCell>
                                     <TableCell align="center" sx={{ width: '300px' }}>
                                         ACTIONS
@@ -173,6 +177,9 @@ function ManageSeason() {
                                         >
                                             <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
                                                 {index + 1}
+                                            </TableCell>
+                                            <TableCell align="left" onClick={() => handleOpenEpisode(item)}>
+                                                {item.nickName}
                                             </TableCell>
                                             <TableCell align="left" onClick={() => handleOpenEpisode(item)}>
                                                 {item.seasonName.toUpperCase()}
@@ -196,6 +203,42 @@ function ManageSeason() {
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
                                                 {item.movie.movieName}
+                                            </TableCell>
+                                            <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
+                                                {item.seasonType}
+                                            </TableCell>
+                                            <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
+                                                {item.seasonStatus}
+                                            </TableCell>
+                                            <TableCell align="center" style={{ maxWidth: '100px' }}>
+                                                {item.days.map((day, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="inline-flex items-center justify-center border border-gray-400 mb-1"
+                                                        style={{
+                                                            height: '20px',
+                                                            borderRadius: '16px',
+                                                        }}
+                                                    >
+                                                        <span className="ml-4">{day.dayName}</span>
+                                                        <FontAwesomeIcon
+                                                            className="hover:cursor-pointer text-red-500 text-sm"
+                                                            // onClick={() => handleDeleteDay(day.id, item.movie.id)}
+                                                            style={{ padding: '5px' }}
+                                                            icon={faTrash}
+                                                        />
+                                                    </div>
+                                                ))}
+                                                <div
+                                                    className="border border-gray-400 rounded-lg text-center bg-green-500 hover:cursor-pointer m-auto"
+                                                    style={{
+                                                        width: '50px',
+                                                    }}
+                                                    // onClick={() => handleAddDayForm(item.movie.id)}
+                                                >
+                                                    Add
+                                                    <FontAwesomeIcon icon={faPlus} />
+                                                </div>
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
                                                 {item?.status ? (
@@ -273,6 +316,8 @@ function ManageSeason() {
                     openEditInfo={openEditInfo}
                     handleCloseEditInfo={handleCloseEditInfo}
                     editInfo={edit}
+                    handleLoadSeason={handleLoadSeason}
+                    currentPage={seasons.current}
                 />
             )}
             {openEditImage && (
