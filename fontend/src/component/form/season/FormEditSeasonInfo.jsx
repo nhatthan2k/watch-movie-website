@@ -13,8 +13,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { put_update_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
-import { Checkbox, ListItemText } from '@mui/material';
-import { seasonTypes, seasonStatuses, dayShowing } from './FormAddSeason';
+import { seasonTypes, seasonStatuses } from './FormAddSeason';
 
 const style = {
     position: 'absolute',
@@ -53,12 +52,6 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
         setSeasonType(event.target.value);
     };
 
-    // handle select Days
-    const [selectedDays, setSelectedDays] = useState(editInfo.days);
-    const handleChangeDays = (event) => {
-        setSelectedDays(event.target.value);
-    };
-
     const [errorNickName, setErrorNickName] = useState('');
     const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
@@ -79,7 +72,6 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
             status: true,
             seasonType: seasonType,
             seasonStatus: seasonStatus,
-            days: selectedDays,
         };
         // validate
         if (validateBlank(formSeason.nickName)) {
@@ -100,7 +92,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                 handleLoadSeason(currentPage - 1);
                 handleCloseEditInfo();
             } else {
-                setErrorSeasonName(resp);
+                setErrorNickName(resp);
             }
         });
         resetError();
@@ -205,28 +197,6 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                                 return (
                                     <MenuItem key={index} value={item}>
                                         {item}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
-                    <FormControl fullWidth size="small">
-                        <InputLabel id="demo-multiple-select-label">Day showing</InputLabel>
-                        <Select
-                            labelId="demo-multiple-select-label"
-                            id="demo-multiple-select"
-                            multiple
-                            value={selectedDays}
-                            onChange={handleChangeDays}
-                            renderValue={(selected) => selected.join(', ')}
-                            defaultValue={editInfo.days}
-                            autoFocus
-                        >
-                            {dayShowing.map((item, index) => {
-                                return (
-                                    <MenuItem key={index} value={item}>
-                                        <Checkbox checked={selectedDays.includes(item)} />
-                                        <ListItemText primary={item} />
                                     </MenuItem>
                                 );
                             })}

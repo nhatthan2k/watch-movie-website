@@ -12,7 +12,7 @@ const seasonSlice = createSlice({
     },
     reducers: {
         updateSeason: (state, action) => {
-            state.Seasons = state.Seasons.map((item) => {
+            state.seasons = state.seasons.map((item) => {
                 if (item.id === action.payload.id) {
                     return (item = action.payload);
                 } else {
