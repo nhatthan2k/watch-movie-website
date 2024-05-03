@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { put_update_season } from '../../../redux/thunk/seasonThunk';
+import { put_update_episode } from '../../../redux/thunk/episodeThunk';
 
 const style = {
     position: 'absolute',
@@ -36,7 +36,7 @@ function FormEditEpisode({ toggleEdit, handleCloseEditEpisode, edit, seasonId })
     const handleUpdateEpisode = (e) => {
         e.preventDefault();
         const formEpisode = {
-            numberEpisode: e.target.numberEpisode.value,
+            numberEpisode: parseInt(e.target.numberEpisode.value),
             source: e.target.source.value,
             seasonId: seasonId,
             status: true,
@@ -54,11 +54,14 @@ function FormEditEpisode({ toggleEdit, handleCloseEditEpisode, edit, seasonId })
             setErrorNumberEpisode('numberEpisode must be than 0');
             return;
         }
+
+        console.log(formEpisode);
+
         // dispatch
         dispatch(
-            put_update_season({
+            put_update_episode({
                 formEpisode,
-                idEpisode: edit.id,
+                id: edit.id,
             }),
         ).then((resp) => {
             handleCloseEditEpisode();
@@ -91,8 +94,7 @@ function FormEditEpisode({ toggleEdit, handleCloseEditEpisode, edit, seasonId })
                         label={errorSource ? errorSource : 'Source'}
                         variant="filled"
                         size="small"
-                        type="number"
-                        defaultValue={edit.Source}
+                        defaultValue={edit.source}
                         fullWidth
                     />
                     <Button type="submit" variant="contained" fullWidth>

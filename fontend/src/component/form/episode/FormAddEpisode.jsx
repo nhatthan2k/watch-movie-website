@@ -1,12 +1,12 @@
 import { numberPrice, validateBlank } from '../../../utils/validate';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { post_add_season } from '../../../redux/thunk/seasonThunk';
+import { post_add_episode } from '../../../redux/thunk/episodeThunk';
 
 const style = {
     position: 'absolute',
@@ -36,7 +36,7 @@ function FormAddEpisode({ toggleAdd, handleCloseAddEpisode, seasonId }) {
     const handleAddEpisode = (e) => {
         e.preventDefault();
         const formEpisode = {
-            numberEpisode: e.target.numberEpisode.value,
+            numberEpisode: parseInt(e.target.numberEpisode.value),
             source: e.target.source.value,
             seasonId: seasonId,
             status: true,
@@ -54,8 +54,10 @@ function FormAddEpisode({ toggleAdd, handleCloseAddEpisode, seasonId }) {
             setErrorNumberEpisode('numberEpisode must be than 0');
             return;
         }
+
+        console.log(formEpisode);
         // dispatch
-        dispatch(post_add_season(formEpisode)).then(() => {
+        dispatch(post_add_episode(formEpisode)).then(() => {
             handleCloseAddEpisode();
         });
         resetError();
@@ -85,7 +87,6 @@ function FormAddEpisode({ toggleAdd, handleCloseAddEpisode, seasonId }) {
                         label={errorSource ? errorSource : 'Source'}
                         variant="filled"
                         size="small"
-                        type="number"
                         fullWidth
                     />
                     <Button type="submit" variant="contained" fullWidth>

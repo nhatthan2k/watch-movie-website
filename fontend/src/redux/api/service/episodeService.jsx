@@ -3,8 +3,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import instance from '../axios';
 
 export const GET_ALL_EPISODE = createAsyncThunk('episode/GET_ALL_EPISODE', async (seasonId) => {
-    let response = await instance.get(`/v1/admin/episode/season/${seasonId}`);
-    return response.data;
+    let response = await instance.get(`/v1/admin/episode/season/${seasonId}`, {
+        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
+    });
+    console.log(response);
+    return response.data.content;
 });
 
 export const POST_ADD_EPISODE = async (formEpisode) => {

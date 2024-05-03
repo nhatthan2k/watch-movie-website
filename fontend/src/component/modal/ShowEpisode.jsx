@@ -18,6 +18,8 @@ import { GET_ALL_EPISODE } from '../../redux/api/service/episodeService';
 import { useDispatch, useSelector } from 'react-redux';
 import { EPISODE } from '../../redux/selectors/selectors';
 import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 const style = {
     position: 'absolute',
@@ -57,7 +59,11 @@ function ShowEpisode({ openEpisode, handleCloseEpisode, seasonId }) {
 
     // handle change status episode
     const handleChangeStatusEpisode = (idEpisode) => {
-        dispatch(put_status_episode(idEpisode));
+        dispatch(put_status_episode(idEpisode)).then((resp) => {
+            if (resp === true) {
+                dispatch(GET_ALL_EPISODE(seasonId));
+            }
+        });
     };
 
     return (
@@ -82,7 +88,7 @@ function ShowEpisode({ openEpisode, handleCloseEpisode, seasonId }) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listEpisode.map((item, index) => {
+                            {listEpisode.episodes?.map((item, index) => {
                                 return (
                                     <TableRow key={item.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                         <TableCell align="center">{index + 1}</TableCell>
@@ -90,9 +96,9 @@ function ShowEpisode({ openEpisode, handleCloseEpisode, seasonId }) {
                                         <TableCell align="center">{item.source}</TableCell>
                                         <TableCell align="center">
                                             {item?.status ? (
-                                                <i className="fa-solid fa-lock-open"></i>
+                                                <FontAwesomeIcon icon={faLockOpen} />
                                             ) : (
-                                                <i className="fa-solid fa-lock"></i>
+                                                <FontAwesomeIcon icon={faLock} />
                                             )}
                                         </TableCell>
                                         <TableCell align="center">

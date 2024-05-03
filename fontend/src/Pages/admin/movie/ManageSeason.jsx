@@ -39,8 +39,8 @@ function ManageSeason() {
     const movies = useSelector(MOVIE);
     const seasons = useSelector(SEASON);
 
-    console.log('season-->', seasons);
-    console.log('movie-->', movies);
+    // console.log('season-->', seasons);
+    // console.log('movie-->', movies);
 
     // handle add new season
     const [toggle, setToggle] = useState(false);
