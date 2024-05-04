@@ -47,3 +47,17 @@ export const DELETE_IMAGE_SEASON = async ({ idImage, idSeason }) => {
     });
     return resp;
 };
+
+export const ADD_DAY_TO_SEASON = async ({ formAddDayToSeason, seasonDetailId }) => {
+    let response = await instance.post(`/v1/admin/seasons/${seasonDetailId}/day`, formAddDayToSeason, {
+        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
+    });
+    return response;
+};
+
+export const DELETE_DAY_TO_SEASON = async ({ seasonId, dayId }) => {
+    let response = await instance.delete(`/v1/admin/seasons/${seasonId}/day/${dayId}`, {
+        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
+    });
+    return response;
+};

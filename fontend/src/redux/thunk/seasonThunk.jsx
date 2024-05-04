@@ -4,6 +4,8 @@ import {
     PUT_ADD_IMAGE_SEASON,
     PUT_STATUS_SEASON,
     PUT_UPDATE_SEASON,
+    ADD_DAY_TO_SEASON,
+    DELETE_DAY_TO_SEASON,
 } from '../api/service/seasonService';
 import { changeCurrentPage, updateSeason } from '../reducers/seasonSlice';
 
@@ -58,6 +60,30 @@ export const put_add_image_season = ({ formImageSeason, id }) => {
 export const delete_image_season = ({ idImage, idSeason }) => {
     return async function delete_image_season_thunk(dispatch) {
         let resp = await DELETE_IMAGE_SEASON({ idImage, idSeason });
+        if (resp.status === 200) {
+            dispatch(updateSeason(resp.data.content));
+            return true;
+        } else {
+            return resp.data.content;
+        }
+    };
+};
+
+export const post_add_day_to_season = ({ formAddDayToSeason, seasonDetailId }) => {
+    return async function post_add_day_to_season_thunk(dispatch) {
+        let resp = await ADD_DAY_TO_SEASON({ formAddDayToSeason, seasonDetailId });
+        if (resp.status === 201) {
+            dispatch(updateSeason(resp.data.content));
+            return true;
+        } else {
+            return resp.data.content;
+        }
+    };
+};
+
+export const delete_day_to_season = ({ seasonId, dayId }) => {
+    return async function delete_day_to_season_thunk(dispatch) {
+        let resp = await DELETE_DAY_TO_SEASON({ seasonId, dayId });
         if (resp.status === 200) {
             dispatch(updateSeason(resp.data.content));
             return true;

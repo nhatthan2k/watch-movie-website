@@ -30,9 +30,10 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { changeCurrentPage } from '../../../redux/reducers/seasonSlice';
-import { put_status_season } from '../../../redux/thunk/seasonThunk';
+import { delete_day_to_season, put_status_season } from '../../../redux/thunk/seasonThunk';
 import { faLock, faLockOpen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FormAddDayToSeason from '../../../component/form/season/FormAddDayToSeason';
 
 function ManageSeason() {
     const dispatch = useDispatch();
@@ -46,6 +47,25 @@ function ManageSeason() {
     const [toggle, setToggle] = useState(false);
     const handleCreateForm = () => setToggle(true);
     const handleCloseForm = () => setToggle(false);
+
+    // handle add day to season
+    const [seasonDetailId, setSeasonDetailId] = useState(null);
+
+    const [openAddDay, setOpenAddDay] = useState(false);
+    const handleAddDayForm = (id) => {
+        setSeasonDetailId(id);
+        setOpenAddDay(true);
+    };
+    const handleCloseAddDay = () => setOpenAddDay(false);
+
+    // handle delete day
+    const handleDeleteDay = (dayId, seasonId) => {
+        dispatch(delete_day_to_season({ seasonId, dayId })).then((resp) => {
+            if (resp === true) {
+                handleLoadSeason(seasons.current - 1);
+            }
+        });
+    };
 
     // data edit
     const [edit, setEdit] = useState(null);
@@ -223,7 +243,7 @@ function ManageSeason() {
                                                         <span className="ml-4">{day.dayName}</span>
                                                         <FontAwesomeIcon
                                                             className="hover:cursor-pointer text-red-500 text-sm"
-                                                            // onClick={() => handleDeleteDay(day.id, item.movie.id)}
+                                                            onClick={() => handleDeleteDay(day.id, item.movie.id)}
                                                             style={{ padding: '5px' }}
                                                             icon={faTrash}
                                                         />
@@ -234,7 +254,7 @@ function ManageSeason() {
                                                     style={{
                                                         width: '50px',
                                                     }}
-                                                    // onClick={() => handleAddDayForm(item.movie.id)}
+                                                    onClick={() => handleAddDayForm(item.movie.id)}
                                                 >
                                                     Add
                                                     <FontAwesomeIcon icon={faPlus} />
@@ -310,6 +330,15 @@ function ManageSeason() {
             </div>
             {toggle && (
                 <FormAddSeason toggle={toggle} handleCloseForm={handleCloseForm} handleLoadSeason={handleLoadSeason} />
+            )}
+            {openAddDay && (
+                <FormAddDayToSeason
+                    openAddDay={openAddDay}
+                    handleCloseForm={handleCloseAddDay}
+                    handleLoadSeason={handleLoadSeason}
+                    seasonDetailId={seasonDetailId}
+                    currentPage={seasons.current}
+                />
             )}
             {openEditInfo && (
                 <FormEditSeasonInfo
