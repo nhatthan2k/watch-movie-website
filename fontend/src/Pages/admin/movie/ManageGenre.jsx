@@ -23,6 +23,8 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Pagination from '@mui/material/Pagination';
 import { put_status_genre } from '../../../redux/thunk/genreThunk';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 function ManageGenre() {
     const dispatch = useDispatch();
@@ -130,9 +132,9 @@ function ManageGenre() {
                                                 </TableCell>
                                                 <TableCell align="center">
                                                     {item?.status ? (
-                                                        <i className="fa-solid fa-lock-open"></i>
+                                                        <FontAwesomeIcon icon={faLockOpen} />
                                                     ) : (
-                                                        <i className="fa-solid fa-lock"></i>
+                                                        <FontAwesomeIcon icon={faLock} />
                                                     )}
                                                 </TableCell>
                                                 <TableCell align="center">

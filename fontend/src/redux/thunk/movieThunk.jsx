@@ -45,30 +45,6 @@ export const put_status_movie = (id) => {
     };
 };
 
-export const put_add_image_movie = ({ formImageMovie, id }) => {
-    return async function put_add_image_movie_thunk(dispatch) {
-        let resp = await PUT_ADD_IMAGE_MOVIE({ formImageMovie, id });
-        if (resp.status === 200) {
-            dispatch(updateMovie(resp.data.content));
-            return true;
-        } else {
-            return resp.data.content;
-        }
-    };
-};
-
-export const delete_image_movie = ({ idImage, idMovie }) => {
-    return async function delete_image_movie_thunk(dispatch) {
-        let resp = await DELETE_IMAGE_MOVIE({ idImage, idMovie });
-        if (resp.status === 200) {
-            dispatch(updateMovie(resp.data.content));
-            return true;
-        } else {
-            return resp.data.content;
-        }
-    };
-};
-
 export const post_add_genre_to_movie = ({ formAddGenreToMovie, movieDetailId }) => {
     return async function post_add_genre_to_movie_thunk(dispatch) {
         let resp = await ADD_GENRE_TO_MOVIE({ formAddGenreToMovie, movieDetailId });

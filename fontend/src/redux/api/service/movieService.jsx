@@ -43,20 +43,6 @@ export const PUT_STATUS_MOVIE = async (id) => {
     return resp;
 };
 
-export const PUT_ADD_IMAGE_MOVIE = async ({ formImageMovie, id }) => {
-    let resp = await instance.put(`/v1/admin/movies/${id}/image`, formImageMovie, {
-        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
-    });
-    return resp;
-};
-
-export const DELETE_IMAGE_MOVIE = async ({ idImage, idMovie }) => {
-    let resp = await instance.delete(`/v1/admin/movies/${idImage}/in/${idMovie}`, {
-        headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
-    });
-    return resp;
-};
-
 export const ADD_GENRE_TO_MOVIE = async ({ formAddGenreToMovie, movieDetailId }) => {
     let response = await instance.post(`/v1/admin/movie/${movieDetailId}/genre`, formAddGenreToMovie, {
         headers: { Authorization: `Bearer ${new Cookies().get('token')}` },

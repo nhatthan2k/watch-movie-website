@@ -11,7 +11,6 @@ import FilterIcon from '@mui/icons-material/Filter';
 import FormAddMovie from '../../../component/form/movie/FormAddMovie';
 import FormAddGenreToMovie from '../../../component/form/movie/FormAddGenreToMovie';
 import FormControl from '@mui/material/FormControl';
-import FormEditImageMovie from '../../../component/form/movie/FormEditImageMovie';
 import FormEditMovieInfo from '../../../component/form/movie/FormEditMovieInfo';
 import { GET_ALL_GENRE_NO_PAGE } from '../../../redux/api/service/genreService';
 import { GET_ALL_MOVIE } from '../../../redux/api/service/movieService';
@@ -78,14 +77,6 @@ function ManageMovie() {
         setOpenEditInfo(true);
     };
     const handleCloseEditInfo = () => setOpenEditInfo(false);
-
-    // handle edit image movie
-    const [openEditImage, setOpenEditImage] = useState(false);
-    const handleOpenEditImage = (item) => {
-        setEdit(item);
-        setOpenEditImage(true);
-    };
-    const handleCloseEditImage = () => setOpenEditImage(false);
 
     // handle change status movie
     const handleChangeStatusMovie = (id) => {
@@ -254,15 +245,6 @@ function ManageMovie() {
                                                         </Button>
                                                         <Button
                                                             variant="contained"
-                                                            color="success"
-                                                            onClick={() => handleOpenEditImage(item.movie)}
-                                                        >
-                                                            <Tooltip title="edit image">
-                                                                <FilterIcon />
-                                                            </Tooltip>
-                                                        </Button>
-                                                        <Button
-                                                            variant="contained"
                                                             color="error"
                                                             onClick={() => handleChangeStatusMovie(item.movie.id)}
                                                         >
@@ -320,13 +302,6 @@ function ManageMovie() {
                     editInfo={edit}
                     currentPage={movies.current}
                     handleLoadMovie={handleLoadMovie}
-                />
-            )}
-            {openEditImage && (
-                <FormEditImageMovie
-                    openEditImage={openEditImage}
-                    handleCloseEditImage={handleCloseEditImage}
-                    editImage={edit}
                 />
             )}
         </div>

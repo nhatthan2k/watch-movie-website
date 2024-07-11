@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import { firebase_multiple_upload } from '../../../firebase/firebaseService';
+import { firebase_single_upload } from '../../../firebase/firebaseService';
 import { post_add_movie } from '../../../redux/thunk/movieThunk';
 import { validateBlank } from '../../../utils/validate';
 import Checkbox from '@mui/material/Checkbox';
@@ -38,18 +38,16 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
     const genres = useSelector(GENRE);
 
     // handle upload images
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState("");
     const handleChangeUploadImage = (e) => {
-        firebase_multiple_upload(e.target.files).then((resp) => {
-            setImages([...images, ...resp]);
+        firebase_single_upload(e.target.files[0]).then((resp) => {
+            setImages(resp);
         });
     };
 
     // handle delete image
-    const handleDeleteImage = (index) => {
-        let newImages = [...images];
-        newImages.splice(index, 1);
-        setImages(newImages);
+    const handleDeleteImage = () => {
+        setImages("");
     };
 
     // handle select genreId
@@ -76,7 +74,7 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
         const formMovie = {
             movieName: e.target.movieName.value,
             description: e.target.description.value,
-            // poster: images,
+            poster: images,
             genreId: selectedGenreIds,
             status: true,
         };
@@ -93,10 +91,10 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
             setErrorGenre("Genre can't blank");
             return;
         }
-        // if (formMovie.poster.length === 0) {
-        //     setErrorImage("Image can't be empty");
-        //     return;
-        // }
+        if (formMovie.poster.length === 0) {
+            setErrorImage("Image can't be empty");
+            return;
+        }
 
         // dispatch add movie
         dispatch(post_add_movie(formMovie)).then((resp) => {
@@ -201,34 +199,30 @@ function FormAddMovie({ toggle, handleCloseForm, handleLoadMovie }) {
                 >
                     {images.length > 0 ? (
                         <div className="flex gap-2 flex-wrap">
-                            {images.map((item, index) => {
-                                return (
-                                    <div key={index} className="relative">
-                                        <img
-                                            style={{
-                                                width: '100px',
-                                                height: '100px',
-                                                objectFit: 'cover',
-                                                display: 'block',
-                                                border: '1px solid #000',
-                                                borderRadius: '4px',
-                                            }}
-                                            src={item}
-                                            alt=""
-                                        />
-                                        <div
-                                            onClick={() => handleDeleteImage(index)}
-                                            className="inset-0 absolute flex justify-center items-center opacity-0 hover:cursor-pointer hover:opacity-100 transition-all duration-300"
-                                            style={{
-                                                backgroundColor: 'rgba(0,0,0,0.4)',
-                                                borderRadius: '4px',
-                                            }}
-                                        >
-                                            <CloseIcon sx={{ color: 'red', fontSize: '30px' }} />
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            <div className="relative">
+                                <img
+                                    style={{
+                                        width: '100px',
+                                        height: '100px',
+                                        objectFit: 'cover',
+                                        display: 'block',
+                                        border: '1px solid #000',
+                                        borderRadius: '4px',
+                                    }}
+                                    src={images}
+                                    alt=""
+                                />
+                                <div
+                                    onClick={() => handleDeleteImage()}
+                                    className="inset-0 absolute flex justify-center items-center opacity-0 hover:cursor-pointer hover:opacity-100 transition-all duration-300"
+                                    style={{
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                        borderRadius: '4px',
+                                    }}
+                                >
+                                    <CloseIcon sx={{ color: 'red', fontSize: '30px' }} />
+                                </div>
+                            </div>
                             <div
                                 style={{
                                     width: '100px',
