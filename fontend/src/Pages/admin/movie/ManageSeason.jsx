@@ -5,10 +5,8 @@ import { useEffect, useState } from 'react';
 
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
-import FilterIcon from '@mui/icons-material/Filter';
 import FormAddSeason from '../../../component/form/season/FormAddSeason';
 import FormControl from '@mui/material/FormControl';
-import FormEditImageSeason from '../../../component/form/season/FormEditImageSeason';
 import FormEditSeasonInfo from '../../../component/form/season/FormEditSeasonInfo';
 import { GET_ALL_MOVIE_NO_PAGE } from '../../../redux/api/service/movieService';
 import { GET_ALL_SEASON } from '../../../redux/api/service/seasonService';
@@ -77,14 +75,6 @@ function ManageSeason() {
         setOpenEditInfo(true);
     };
     const handleCloseEditInfo = () => setOpenEditInfo(false);
-
-    // handle edit image season
-    const [openEditImage, setOpenEditImage] = useState(false);
-    const handleOpenEditImage = (item) => {
-        setEdit(item);
-        setOpenEditImage(true);
-    };
-    const handleCloseEditImage = () => setOpenEditImage(false);
 
     // handle change status season
     const handleChangeStatusSeason = (id) => {
@@ -209,7 +199,7 @@ function ManageSeason() {
                                             </TableCell>
                                             <TableCell align="center" onClick={() => handleOpenEpisode(item)}>
                                                 <img
-                                                    src={item.image}
+                                                    src={item.avatar}
                                                     style={{
                                                         width: '100px',
                                                         height: '100px',
@@ -281,15 +271,6 @@ function ManageSeason() {
                                                         </Button>
                                                         <Button
                                                             variant="contained"
-                                                            color="success"
-                                                            onClick={() => handleOpenEditImage(item)}
-                                                        >
-                                                            <Tooltip title="edit image">
-                                                                <FilterIcon />
-                                                            </Tooltip>
-                                                        </Button>
-                                                        <Button
-                                                            variant="contained"
                                                             color="error"
                                                             onClick={() => handleChangeStatusSeason(item.id)}
                                                         >
@@ -347,13 +328,6 @@ function ManageSeason() {
                     editInfo={edit}
                     handleLoadSeason={handleLoadSeason}
                     currentPage={seasons.current}
-                />
-            )}
-            {openEditImage && (
-                <FormEditImageSeason
-                    openEditImage={openEditImage}
-                    handleCloseEditImage={handleCloseEditImage}
-                    editImage={edit}
                 />
             )}
             {openEpisode && (

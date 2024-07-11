@@ -19,6 +19,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { USERS_ADMIN } from '../../../redux/selectors/selectors';
 import { changeCurrentPage } from '../../../redux/reducers/userAdminSlice';
 import { put_status_user } from '../../../redux/thunk/userAdminThunk';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 function ManageUsers() {
     const dispatch = useDispatch();
@@ -93,9 +95,9 @@ function ManageUsers() {
                                         </TableCell>
                                         <TableCell align="center">
                                             {item.status ? (
-                                                <i className="fa-solid fa-lock-open"></i>
+                                                <FontAwesomeIcon icon={faLockOpen} />
                                             ) : (
-                                                <i className="fa-solid fa-lock"></i>
+                                                <FontAwesomeIcon icon={faLock} />
                                             )}
                                         </TableCell>
                                         <TableCell align="center">

@@ -14,6 +14,9 @@ import TextField from '@mui/material/TextField';
 import { put_update_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
 import { seasonTypes, seasonStatuses } from './FormAddSeason';
+import { firebase_single_upload } from '../../../firebase/firebaseService';
+import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const style = {
     position: 'absolute',
@@ -22,9 +25,10 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    width: 350,
     borderRadius: '8px',
     p: 2,
+    display: 'flex',
+    gap: '10px',
 };
 
 function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handleLoadSeason, currentPage }) {
@@ -33,6 +37,19 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
     const dispatch = useDispatch();
 
     const movies = useSelector(MOVIE);
+
+    // handle upload images
+    const [images, setImages] = useState(editInfo.avatar);
+    const handleChangeUploadImage = (e) => {
+        firebase_single_upload(e.target.files[0]).then((resp) => {
+            setImages(resp);
+        });
+    };
+
+    // handle delete image
+    const handleDeleteImage = () => {
+        setImages("");
+    };
 
     // handle select movieId
     const [movieId, setMovieId] = useState(editInfo.movie.id);
@@ -55,11 +72,19 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
     const [errorNickName, setErrorNickName] = useState('');
     const [errorSeasonName, setErrorSeasonName] = useState('');
     const [errorDescription, setErrorDescription] = useState('');
+    const [errorMovie, setErrorMovie] = useState('');
+    const [errorImage, setErrorImage] = useState('');
+    const [errorSeasonType, setErrorSeasonType] = useState('');
+    const [errorSeasonStatus, setErrorSeasonStatus] = useState('');
 
     const resetError = () => {
         setErrorNickName('');
         setErrorSeasonName('');
         setErrorDescription('');
+        setErrorMovie('');
+        setErrorImage('');
+        setErrorSeasonType('');
+        setErrorSeasonStatus('');
     };
 
     const handleUpdateSeasonInfo = (e) => {
@@ -68,6 +93,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
             nickName: e.target.nickName.value,
             seasonName: e.target.seasonName.value,
             description: e.target.description.value,
+            avatar: images,
             movieId: movieId,
             status: true,
             seasonType: seasonType,
@@ -84,6 +110,22 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
         }
         if (validateBlank(formSeason.description)) {
             setErrorDescription("Description can't blank");
+            return;
+        }
+        if (formSeason.movieId === null) {
+            setErrorMovie("Movie can't blank");
+            return;
+        }
+        if (formSeason.avatar.length === 0) {
+            setErrorImage("Image can't be empty");
+            return;
+        }
+        if (validateBlank(formSeason.seasonType)) {
+            setErrorSeasonType("Season Type can't blank");
+            return;
+        }
+        if (validateBlank(formSeason.seasonStatus)) {
+            setErrorSeasonStatus("Season Status can't blank");
             return;
         }
         // dispatch update season
@@ -111,7 +153,12 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <form action="" className="flex flex-col gap-2" onSubmit={handleUpdateSeasonInfo}>
+                <Box
+                    sx={{
+                        width: '300px',
+                    }}
+                >
+                    <form action="" className="flex flex-col gap-2" onSubmit={handleUpdateSeasonInfo}>
                     <TextField
                         error={errorNickName}
                         label={errorNickName ? errorNickName : 'Nick Name'}
@@ -140,7 +187,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                         defaultValue={editInfo.description}
                         fullWidth
                     />
-                    <FormControl fullWidth size="small">
+                    <FormControl fullWidth size="small" error={errorMovie}>
                         <InputLabel id="demo-simple-select-label">MOVIE</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -162,7 +209,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                             })}
                         </Select>
                     </FormControl>
-                    <FormControl fullWidth size="small">
+                    <FormControl fullWidth size="small" error={errorSeasonType}>
                         <InputLabel id="demo-simple-select-label">Season Type</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -182,7 +229,7 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                             })}
                         </Select>
                     </FormControl>
-                    <FormControl fullWidth size="small">
+                    <FormControl fullWidth size="small" error={errorSeasonStatus}>
                         <InputLabel id="demo-simple-select-label">Season Status</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -205,7 +252,90 @@ function FormEditSeasonInfo({ openEditInfo, handleCloseEditInfo, editInfo, handl
                     <Button type="submit" variant="contained" fullWidth>
                         UPDATE
                     </Button>
-                </form>
+                    </form>
+                </Box>
+                <Box
+                    sx={
+                        errorImage
+                            ? {
+                                  width: '436px',
+                                  border: '2px dashed red',
+                                  padding: '5px',
+                                  borderRadius: '4px',
+                              }
+                            : {
+                                  width: '436px',
+                                  border: '2px dashed #000',
+                                  padding: '5px',
+                                  borderRadius: '4px',
+                              }
+                    }
+                    className="bg-slate-100"
+                >
+                    {images.length > 0 ? (
+                        <div className="flex gap-2 flex-wrap">    
+                            <div className="relative">
+                                <img
+                                    style={{
+                                        width: '100px',
+                                        height: '100px',
+                                        objectFit: 'cover',
+                                        display: 'block',
+                                        border: '1px solid #000',
+                                        borderRadius: '4px',
+                                    }}
+                                    src={images}
+                                    alt=""
+                                />
+                                <div
+                                    onClick={() => handleDeleteImage()}
+                                    className="inset-0 absolute flex justify-center items-center opacity-0 hover:cursor-pointer hover:opacity-100 transition-all duration-300"
+                                    style={{
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                        borderRadius: '4px',
+                                    }}
+                                >
+                                    <CloseIcon sx={{ color: 'red', fontSize: '30px' }} />
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    width: '100px',
+                                    height: '100px',
+                                    border: '1px dashed #000',
+                                    borderRadius: '4px',
+                                }}
+                                className="flex justify-center items-center bg-white"
+                            >
+                                <label htmlFor="images" className="hover:cursor-pointer">
+                                    <CloudUploadIcon />
+                                </label>
+                                <input
+                                    type="file"
+                                    name="file"
+                                    id="images"
+                                    multiple
+                                    style={{ display: 'none' }}
+                                    onChange={handleChangeUploadImage}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex justify-center items-center h-full">
+                            <label htmlFor="images" className="hover:cursor-pointer">
+                                <CloudUploadIcon sx={{ fontSize: '70px' }} />
+                            </label>
+                            <input
+                                type="file"
+                                name="file"
+                                id="images"
+                                multiple
+                                style={{ display: 'none' }}
+                                onChange={handleChangeUploadImage}
+                            />
+                        </div>
+                    )}
+                </Box>            
             </Box>
         </Modal>
     );

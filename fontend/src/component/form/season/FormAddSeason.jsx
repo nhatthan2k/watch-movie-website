@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import { firebase_multiple_upload } from '../../../firebase/firebaseService';
+import { firebase_single_upload } from '../../../firebase/firebaseService';
 import { post_add_season } from '../../../redux/thunk/seasonThunk';
 import { validateBlank } from '../../../utils/validate';
 import { Checkbox, ListItemText } from '@mui/material';
@@ -41,18 +41,16 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
     const movies = useSelector(MOVIE);
 
     // handle upload images
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState("");
     const handleChangeUploadImage = (e) => {
-        firebase_multiple_upload(e.target.files).then((resp) => {
-            setImages([...images, ...resp]);
+        firebase_single_upload(e.target.files[0]).then((resp) => {
+            setImages(resp);
         });
     };
 
     // handle delete image
-    const handleDeleteImage = (index) => {
-        let newImages = [...images];
-        newImages.splice(index, 1);
-        setImages(newImages);
+    const handleDeleteImage = () => {
+        setImages("");
     };
 
     // handle select movieId
@@ -106,7 +104,7 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
             nickName: e.target.nickName.value,
             seasonName: e.target.seasonName.value,
             description: e.target.description.value,
-            // avatar: images,
+            avatar: images,
             movieId: movieId,
             status: true,
             seasonType: seasonType,
@@ -130,10 +128,10 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
             setErrorMovie("Movie can't blank");
             return;
         }
-        // if (formSeason.images.length === 0) {
-        //     setErrorImage("Image can't be empty");
-        //     return;
-        // }
+        if (formSeason.avatar.length === 0) {
+            setErrorImage("Image can't be empty");
+            return;
+        }
         if (validateBlank(formSeason.seasonType)) {
             setErrorSeasonType("Season Type can't blank");
             return;
@@ -310,35 +308,31 @@ function FormAddSeason({ toggle, handleCloseForm, handleLoadSeason }) {
                     className="bg-slate-100"
                 >
                     {images.length > 0 ? (
-                        <div className="flex gap-2 flex-wrap">
-                            {images.map((item, index) => {
-                                return (
-                                    <div key={index} className="relative">
-                                        <img
-                                            style={{
-                                                width: '100px',
-                                                height: '100px',
-                                                objectFit: 'cover',
-                                                display: 'block',
-                                                border: '1px solid #000',
-                                                borderRadius: '4px',
-                                            }}
-                                            src={item}
-                                            alt=""
-                                        />
-                                        <div
-                                            onClick={() => handleDeleteImage(index)}
-                                            className="inset-0 absolute flex justify-center items-center opacity-0 hover:cursor-pointer hover:opacity-100 transition-all duration-300"
-                                            style={{
-                                                backgroundColor: 'rgba(0,0,0,0.4)',
-                                                borderRadius: '4px',
-                                            }}
-                                        >
-                                            <CloseIcon sx={{ color: 'red', fontSize: '30px' }} />
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                        <div className="flex gap-2 flex-wrap">    
+                            <div className="relative">
+                                <img
+                                    style={{
+                                        width: '100px',
+                                        height: '100px',
+                                        objectFit: 'cover',
+                                        display: 'block',
+                                        border: '1px solid #000',
+                                        borderRadius: '4px',
+                                    }}
+                                    src={images}
+                                    alt=""
+                                />
+                                <div
+                                    onClick={() => handleDeleteImage()}
+                                    className="inset-0 absolute flex justify-center items-center opacity-0 hover:cursor-pointer hover:opacity-100 transition-all duration-300"
+                                    style={{
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                        borderRadius: '4px',
+                                    }}
+                                >
+                                    <CloseIcon sx={{ color: 'red', fontSize: '30px' }} />
+                                </div>
+                            </div>
                             <div
                                 style={{
                                     width: '100px',
