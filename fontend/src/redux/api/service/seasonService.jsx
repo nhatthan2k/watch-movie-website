@@ -2,6 +2,7 @@ import { Cookies } from 'react-cookie';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import instance from '../axios';
 
+// Admin
 export const GET_ALL_SEASON = createAsyncThunk('season/GET_ALL_SEASON', async ({ search, movie, page }) => {
     let response = await instance.get(`/v1/admin/seasons?movie=${movie}&page=${page}&search=${search}`, {
         headers: { Authorization: `Bearer ${new Cookies().get('token')}` },
@@ -61,3 +62,9 @@ export const DELETE_DAY_TO_SEASON = async ({ seasonId, dayId }) => {
     });
     return response;
 };
+
+// User
+export const GET_ALL_SEASON_HOME = createAsyncThunk('season/GET_ALL_SEASON_HOME', async ({ page }) => {
+    let response = await instance.get(`/v1/permit/seasons?page=${page}`);
+    return response.data.content;
+});

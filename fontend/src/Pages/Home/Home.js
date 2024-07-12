@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Styles from './Home.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,6 +36,8 @@ function Home() {
         setCurrentIndex(newIndex);
     };
 
+    // setInterval(() => gotoNext(), 5000)
+
     const sliderFilm = isPc
         ? [favoriteFilm[currentIndex]]
         : [favoriteFilm[currentIndex], favoriteFilm[currentIndex + 1]];
@@ -57,6 +59,10 @@ function Home() {
 
         btnRefs.current[index].classList.add(btnNames);
     };
+
+    useEffect(() => {
+        
+    },[])
 
     return (
         <>

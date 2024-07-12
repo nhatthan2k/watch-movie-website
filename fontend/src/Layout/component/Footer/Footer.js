@@ -17,7 +17,9 @@ function Footer() {
                     </a>
                 </div>
             </div>
-            <div className={cx('halimthemes')}> © Copyright ® 2023 MyWebsite</div>
+            <div className={cx('container')}>
+                <div className={cx('halimthemes')}> © Copyright ® 2023 MyWebsite</div>
+            </div>
         </footer>
     );
 }

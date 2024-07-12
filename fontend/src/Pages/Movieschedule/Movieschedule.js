@@ -11,10 +11,7 @@ const cx = classNames.bind(Styles);
 function Movieschedule() {
     return (
         <>
-            <Header />
-            <Navbar />
             <History />
-            <Footer />
         </>
     );
 }
