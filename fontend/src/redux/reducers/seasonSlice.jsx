@@ -1,4 +1,4 @@
-import { GET_ALL_SEASON } from '../api/service/seasonService';
+import { GET_ALL_SEASON, GET_ALL_SEASON_HOME } from '../api/service/seasonService';
 import { createSlice } from '@reduxjs/toolkit';
 
 const seasonSlice = createSlice({
@@ -30,6 +30,16 @@ const seasonSlice = createSlice({
                 state.status = 'pending';
             })
             .addCase(GET_ALL_SEASON.fulfilled, (state, action) => {
+                state.status = '';
+                state.seasons = action.payload.content;
+                state.totalPages = action.payload.totalPages;
+                state.size = action.payload.size;
+                state.current = action.payload.number + 1;
+            })
+            .addCase(GET_ALL_SEASON_HOME.pending, (state) => {
+                state.status = 'pending';
+            })
+            .addCase(GET_ALL_SEASON_HOME.fulfilled, (state, action) => {
                 state.status = '';
                 state.seasons = action.payload.content;
                 state.totalPages = action.payload.totalPages;
