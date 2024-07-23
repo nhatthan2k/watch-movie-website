@@ -7,7 +7,6 @@ import Translate from '../../hook/Translate';
 const cx = classNames.bind(Styles);
 
 function SliderItem({ data, className }) {
-    const moviePath = Translate(data.Name);
 
     const classes = cx('sliderItem', {
         [className]: className,
@@ -15,11 +14,11 @@ function SliderItem({ data, className }) {
 
     return (
         <div className={classes}>
-            <Link to={`/phim/${moviePath}`}>
-                <img src={data.Poster} />
+            <Link to={`/phim/${data?.pathSeason}`}>
+                <img src={data?.movie.poster} />
                 <div className={cx('sliderText')}>
-                    <h1>{data.Name}</h1>
-                    <p>{data.EnglishName}</p>
+                    <h1>{data?.seasonName}</h1>
+                    <p>{data?.nickName}</p>
                 </div>
             </Link>
         </div>

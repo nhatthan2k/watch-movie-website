@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SEASON } from '../../redux/selectors/selectors';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import MovieItem from '../../component/MovieItem/MovieItem';
+import { GET_ALL_SEASON_HOME } from '../../redux/api/service/seasonService';
+import { changeCurrentPage } from '../../redux/reducers/seasonSlice';
 
 const cx = classNames.bind(Styles);
 
@@ -41,6 +43,8 @@ function Home() {
     const [active, setActive] = useState(0);
     const [hiddenFilm, setHiddenFilm] = useState([]);
     const [hiddeSectionBar, setHiddensectionBar] = useState(false);
+
+    console.log(seasons);
 
     const handleClick = (index) => {
         setActive(index);
@@ -71,9 +75,7 @@ function Home() {
         setHiddenFilm(filterFilm);
     }, [selecday]);
 
-    const favoriteFilm = FilmList.filter((FilmItem) => {
-        return FilmItem.hasOwnProperty('Poster');
-    });
+    const favoriteFilm = seasons.seasons.filter(season => season.slider);
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -113,9 +115,14 @@ function Home() {
         btnRefs.current[index].classList.add(btnNames);
     };
 
+    // handle change page
+    const handleChangePage = (value) => {
+        dispatch(changeCurrentPage(value));
+    };
+
     useEffect(() => {
-        
-    },[])
+        dispatch(GET_ALL_SEASON_HOME(seasons.current - 1));
+    },[seasons.current]);
 
     return (
         <>
@@ -191,26 +198,63 @@ function Home() {
 
                     <div className={cx('numberPage')}>
                         <ul>
+                            {seasons.current > 1 && (
+                                <li>
+                                    <span>
+                                        <FontAwesomeIcon icon={faAngleLeft} />
+                                    </span>
+                                </li>
+                            )}
                             <li>
-                                <span className={cx('current')}>1</span>
+                                <span onClick={() => handleChangePage(1)} className={seasons.current === 1 ? cx('current') : cx('')}>1</span>
                             </li>
-                            <li>
-                                <span>2</span>
-                            </li>
-                            <li>
-                                <span>3</span>
-                            </li>
-                            <li>
+                            {seasons.current-3 > 1 && (
+                                <li>
                                 <span className={cx('dots')}>...</span>
-                            </li>
-                            <li>
-                                <span>10</span>
-                            </li>
-                            <li>
-                                <span>
-                                    <FontAwesomeIcon icon={faAngleRight} />
-                                </span>
-                            </li>
+                                </li>
+                            )}
+                            {seasons.current-2 > 1 &&(
+                                <li>
+                                    <span onClick={() => handleChangePage(seasons.current-2)}>{seasons.current-2}</span>
+                                </li>
+                            )}
+                            {seasons.current-1 > 1 &&(
+                                <li>
+                                    <span onClick={() => handleChangePage(seasons.current-1)}>{seasons.current-1}</span>
+                                </li>
+                            )}
+                            {seasons.current > 1 && seasons.current < seasons.totalPages &&(
+                                <li>
+                                    <span className={cx('current')}>{seasons.current}</span>
+                                </li>
+                            )}
+                            {seasons.current+1 < seasons.totalPages &&(
+                                <li>
+                                    <span onClick={() => handleChangePage(seasons.current+1)}>{seasons.current+1}</span>
+                                </li>
+                            )}
+                            {seasons.current+2 < seasons.totalPages &&(
+                                <li>
+                                    <span onClick={() => handleChangePage(seasons.current+2)}>{seasons.current+2}</span>
+                                </li>
+                            )}
+                            {seasons.current+3 < seasons.totalPages && (
+                                <li>
+                                    <span className={cx('dots')}>...</span>
+                                </li>
+                            )}
+                            {seasons.current <= seasons.totalPages && seasons.totalPages !== 1 && (
+                                <li>
+                                    <span onClick={() => handleChangePage(seasons.totalPages)} className={seasons.current === seasons.totalPages ? cx('current') : cx('')}>{seasons.totalPages}</span>
+                                </li>
+                            )}
+                            {seasons.current < seasons.totalPages && (
+                                <li>
+                                    <span>
+                                        <FontAwesomeIcon icon={faAngleRight} />
+                                    </span>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>

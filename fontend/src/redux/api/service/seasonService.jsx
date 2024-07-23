@@ -64,7 +64,7 @@ export const DELETE_DAY_TO_SEASON = async ({ seasonId, dayId }) => {
 };
 
 // User
-export const GET_ALL_SEASON_HOME = createAsyncThunk('season/GET_ALL_SEASON_HOME', async ({ page }) => {
+export const GET_ALL_SEASON_HOME = createAsyncThunk('season/GET_ALL_SEASON_HOME', async ( page ) => {
     let response = await instance.get(`/v1/permit/seasons?page=${page}`);
     return response.data.content;
 });
