@@ -10,6 +10,7 @@ import seasonSlice from './reducers/seasonSlice';
 import sizeSlice from './reducers/sizeSlice';
 import userAdminSlice from './reducers/userAdminSlice';
 import userSlice from './reducers/userSlice';
+import sliderSlice from './reducers/sliderSlice'
 
 const persistConfig = {
     key: 'root',
@@ -27,6 +28,7 @@ const combinedReducer = combineReducers({
     size: sizeSlice,
     user: userSlice,
     userAdmin: userAdminSlice,
+    slider: sliderSlice
 });
 
 const rootReducer = (state, action) => {

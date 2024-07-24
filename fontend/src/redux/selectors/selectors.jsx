@@ -12,6 +12,8 @@ export const USER = (state) => state.user;
 
 export const USERS_ADMIN = (state) => state.userAdmin;
 
+export const SLIDER = (state) => state.slider;
+
 // delete
 export const SIZE = (state) => state.size;
 

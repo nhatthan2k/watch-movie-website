@@ -11,11 +11,16 @@ import Header from '../../Layout/component/Header/Header';
 import Navbar from '../../Layout/component/Navbar/Navbar';
 import Footer from '../../Layout/component/Footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEASON } from '../../redux/selectors/selectors';
+import { SEASON, SLIDER } from '../../redux/selectors/selectors';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import MovieItem from '../../component/MovieItem/MovieItem';
 import { GET_ALL_SEASON_HOME } from '../../redux/api/service/seasonService';
 import { changeCurrentPage } from '../../redux/reducers/seasonSlice';
+import { GET_SLIDER_SEASON } from '../../redux/api/service/sliderService';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { NextArrow, PrevArrow } from './customSlider/CustomSlider';
 
 const cx = classNames.bind(Styles);
 
@@ -33,9 +38,9 @@ const daylist = [
 function Home() {
     const dispatch = useDispatch();
     const seasons = useSelector(SEASON);
-    const btnRefs = useRef([]);
+    const sliders = useSelector(SLIDER);
     const navRefs = useRef([]);
-    const isPc = useMediaQuery({ maxWidth: 1023 });
+    const sliderRef = useRef(null);
     const isMobile = useMediaQuery({ maxWidth: 739 });
 
     const [toggleDay, setToggleDay] = useState(true);
@@ -44,7 +49,7 @@ function Home() {
     const [hiddenFilm, setHiddenFilm] = useState([]);
     const [hiddeSectionBar, setHiddensectionBar] = useState(false);
 
-    console.log(seasons);
+    console.log(sliders);
 
     const handleClick = (index) => {
         setActive(index);
@@ -75,46 +80,6 @@ function Home() {
         setHiddenFilm(filterFilm);
     }, [selecday]);
 
-    const favoriteFilm = seasons.seasons.filter(season => season.slider);
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const gotoPrev = () => {
-        const isfistslide = currentIndex === 0;
-        const newIndex = isfistslide ? favoriteFilm.length - 2 : currentIndex - 1;
-        setCurrentIndex(newIndex);
-    };
-
-    const gotoNext = () => {
-        const islastslide = currentIndex === favoriteFilm.length - 2;
-        const newIndex = islastslide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
-    };
-
-    // setInterval(() => gotoNext(), 5000)
-
-    const sliderFilm = isPc
-        ? [favoriteFilm[currentIndex]]
-        : [favoriteFilm[currentIndex], favoriteFilm[currentIndex + 1]];
-
-    const gotoslides = (index) => {
-        setCurrentIndex(index);
-
-        const btnNames = cx({
-            active: true,
-        });
-
-        btnRefs.current.forEach((button, i) => {
-            // Nếu phần tử đang xét không phải là phần tử được click
-            if (i !== index) {
-                // Xóa lớp CSS "active" khỏi phần tử đó
-                button.classList.remove(btnNames);
-            }
-        });
-
-        btnRefs.current[index].classList.add(btnNames);
-    };
-
     // handle change page
     const handleChangePage = (value) => {
         dispatch(changeCurrentPage(value));
@@ -123,30 +88,61 @@ function Home() {
     useEffect(() => {
         dispatch(GET_ALL_SEASON_HOME(seasons.current - 1));
     },[seasons.current]);
+    
+    useEffect(() => {
+        dispatch(GET_SLIDER_SEASON())
+    },[])
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        customPaging: (i) => (
+            <div className={cx('dotSlider')}>
+                <button>
+                    <span></span>
+                </button>
+            </div>
+        ),
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              initialSlide: 1
+            }
+          }
+        ]
+    };
 
     return (
         <>
             <Header />
             <Navbar />
             <Content>
-                <div className={cx('slider')}>
-                    <div className={cx('action')}>
-                        {sliderFilm.map((sliderFilmItem, index) => (
-                            <SliderItem data={sliderFilmItem} key={index} />
-                        ))}
-                    </div>
+                <Slider ref={sliderRef} {...settings}>
+                    {sliders.sliders.map((sliderFilmItem, index) => (
+                        <SliderItem data={sliderFilmItem} key={index} />
+                    ))}
+                </Slider>
 
-                    <div className={cx('navSlider')}>
-                        <button className={cx('prev')} onClick={gotoPrev}>
-                            <FontAwesomeIcon icon={faAngleLeft} />
-                        </button>
-
-                        <button className={cx('next')} onClick={gotoNext}>
-                            <FontAwesomeIcon icon={faAngleRight} />
-                        </button>
-                    </div>
-
-                    <div className={cx('dotSlider')}>
+                    {/* <div className={cx('dotSlider')}>
                         <button>
                             <span
                                 ref={(el) => (btnRefs.current[0] = el)}
@@ -160,8 +156,7 @@ function Home() {
                         <button>
                             <span ref={(el) => (btnRefs.current[4] = el)} onClick={() => gotoslides(4)}></span>
                         </button>
-                    </div>
-                </div>
+                    </div> */}
 
                 <div className={cx('navContent')}>
                     <ul>

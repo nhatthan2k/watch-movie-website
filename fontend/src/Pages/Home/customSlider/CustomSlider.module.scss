@@ -1,0 +1,30 @@
+.prev {
+    position: absolute;
+    transform: translate(50%, -50%);
+    left: 30px;
+}
+
+.next {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    right: 30px;
+}
+
+.next, .prev {
+    width: 30px;
+    top: 50%;
+    z-index: 10;
+    color: #fff;
+    border-radius: 3px;
+    padding: 8px 5px;
+    background: rgba(255, 152, 0, 0.75);
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+    transition: 0.7s;
+    border: none;
+
+    &:hover {
+        background-position: right center;
+    }
+}
