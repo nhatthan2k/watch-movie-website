@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import Styles from './Home.module.scss';
+import "./customSlider/custom.css"
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -17,9 +21,6 @@ import MovieItem from '../../component/MovieItem/MovieItem';
 import { GET_ALL_SEASON_HOME } from '../../redux/api/service/seasonService';
 import { changeCurrentPage } from '../../redux/reducers/seasonSlice';
 import { GET_SLIDER_SEASON } from '../../redux/api/service/sliderService';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { NextArrow, PrevArrow } from './customSlider/CustomSlider';
 
 const cx = classNames.bind(Styles);
@@ -96,19 +97,18 @@ function Home() {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 1000,
+        speed: 1500,
         slidesToShow: 2,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
+        appendDots: dots => (
+            <ul style={{ bottom: 0, width: 'auto', right: '15px' }}> {dots} </ul>
+        ),
         customPaging: (i) => (
-            <div className={cx('dotSlider')}>
-                <button>
-                    <span></span>
-                </button>
-            </div>
+            <span className={cx('dot_span')}></span>
         ),
         responsive: [
           {
@@ -142,22 +142,6 @@ function Home() {
                     ))}
                 </Slider>
 
-                    {/* <div className={cx('dotSlider')}>
-                        <button>
-                            <span
-                                ref={(el) => (btnRefs.current[0] = el)}
-                                onClick={() => gotoslides(0)}
-                                className={cx('active')}
-                            ></span>
-                        </button>
-                        <button>
-                            <span ref={(el) => (btnRefs.current[2] = el)} onClick={() => gotoslides(2)}></span>
-                        </button>
-                        <button>
-                            <span ref={(el) => (btnRefs.current[4] = el)} onClick={() => gotoslides(4)}></span>
-                        </button>
-                    </div> */}
-
                 <div className={cx('navContent')}>
                     <ul>
                         {isMobile && (
@@ -178,7 +162,8 @@ function Home() {
                                         {dayItem.VnDay}
                                     </button>
                                 </li>
-                            ))}
+                            ))
+                        }
                     </ul>
                 </div>
 
