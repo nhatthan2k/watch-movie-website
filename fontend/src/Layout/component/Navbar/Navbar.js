@@ -7,19 +7,16 @@ import { faBars, faCaretDown, faMagnifyingGlass } from '@fortawesome/free-solid-
 import { publicRoute } from '../../../Route/Routes';
 import { useMediaQuery } from 'react-responsive';
 import Search from '../Search/Search';
+import Translate from '../../../hook/Translate';
 
 const cx = classNames.bind(Styles);
 
-function Navbar() {
+function Navbar({ genres }) {
     const itemRefs = useRef([]);
     const menuRefs = useRef([]);
     const [toggleMenu, setToggleMenu] = useState(true);
     const [toggleSeach, setToggleSeach] = useState(false);
     const isTabletMobile = useMediaQuery({ maxWidth: 1200 });
-
-    const MovieGenderList = publicRoute.filter((publicRouteItem) => {
-        return publicRouteItem.hasOwnProperty('Typefilm');
-    });
 
     const Navnamelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Navname');
@@ -87,14 +84,14 @@ function Navbar() {
                             Thể loại <FontAwesomeIcon icon={faCaretDown} />
                         </a>
                         <ul className={cx('dropdownMenu')}>
-                            {MovieGenderList.map((MovieGenderItem, index) => {
+                            {genres.genre.map((MovieGenderItem, index) => {
                                 return (
                                     <li
                                         key={index}
                                         ref={(el) => (menuRefs.current[index] = el)}
                                         onClick={() => handleMenuClick(index)}
                                     >
-                                        <Link to={MovieGenderItem.path}>{MovieGenderItem.Typefilm}</Link>
+                                        <Link to={'/'+Translate(MovieGenderItem.genreName)}>{MovieGenderItem.genreName}</Link>
                                     </li>
                                 );
                             })}

@@ -1,4 +1,4 @@
-import { GET_ALL_GENRE, GET_ALL_GENRE_NO_PAGE } from '../api/service/genreService';
+import { GET_ALL_GENRE, GET_ALL_GENRE_NO_PAGE, GET_GENRE_USER } from '../api/service/genreService';
 import { createSlice } from '@reduxjs/toolkit';
 
 const GenreSlice = createSlice({
@@ -61,6 +61,13 @@ const GenreSlice = createSlice({
                 ...item,
                 isEdit: false,
             }));
+        });
+        builder.addCase(GET_GENRE_USER.pending, (state) => {
+            state.status = 'pending';
+        });
+        builder.addCase(GET_GENRE_USER.fulfilled, (state, action) => {
+            state.status = '';
+            state.genre = action.payload;
         });
     },
 });

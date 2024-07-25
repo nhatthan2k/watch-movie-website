@@ -68,3 +68,8 @@ export const GET_ALL_SEASON_HOME = createAsyncThunk('season/GET_ALL_SEASON_HOME'
     let response = await instance.get(`/v1/permit/seasons?page=${page}`);
     return response.data.content;
 });
+
+export const GET_SEASON_BY_DAY = createAsyncThunk('season/GET_SEASON_BY_DAY', async ( day ) => {
+    let response = await instance.get(`/v1/permit/seasons/day/${day}`);
+    return response.data.content;
+});

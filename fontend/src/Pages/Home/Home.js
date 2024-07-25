@@ -7,7 +7,6 @@ import "./customSlider/custom.css"
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { FilmList } from '../../filmlist/Filmlist';
 import SliderItem from '../../component/SliderItem/SliderItem';
 import Content from '../../Layout/component/Content/Content';
 import { useMediaQuery } from 'react-responsive';
@@ -15,13 +14,14 @@ import Header from '../../Layout/component/Header/Header';
 import Navbar from '../../Layout/component/Navbar/Navbar';
 import Footer from '../../Layout/component/Footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEASON, SLIDER } from '../../redux/selectors/selectors';
+import { GENRE, SEASON, SLIDER } from '../../redux/selectors/selectors';
 import SectionBar from '../../component/SectionBar/SectionBar';
 import MovieItem from '../../component/MovieItem/MovieItem';
-import { GET_ALL_SEASON_HOME } from '../../redux/api/service/seasonService';
+import { GET_ALL_SEASON_HOME, GET_SEASON_BY_DAY } from '../../redux/api/service/seasonService';
 import { changeCurrentPage } from '../../redux/reducers/seasonSlice';
 import { GET_SLIDER_SEASON } from '../../redux/api/service/sliderService';
 import { NextArrow, PrevArrow } from './customSlider/CustomSlider';
+import { GET_GENRE_USER } from '../../redux/api/service/genreService';
 
 const cx = classNames.bind(Styles);
 
@@ -40,24 +40,15 @@ function Home() {
     const dispatch = useDispatch();
     const seasons = useSelector(SEASON);
     const sliders = useSelector(SLIDER);
-    const navRefs = useRef([]);
+    const genres = useSelector(GENRE);
     const sliderRef = useRef(null);
     const isMobile = useMediaQuery({ maxWidth: 739 });
 
     const [toggleDay, setToggleDay] = useState(true);
-    const [selecday, setSelecday] = useState('');
-    const [active, setActive] = useState(0);
-    const [hiddenFilm, setHiddenFilm] = useState([]);
-    const [hiddeSectionBar, setHiddensectionBar] = useState(false);
+    const [hiddeSectionBar, setHiddensectionBar] = useState(true);
+    const [currentDay, setCurrentDay] = useState('Mới');
 
-    console.log(sliders);
-
-    const handleClick = (index) => {
-        setActive(index);
-
-        const spanElement = navRefs.current[index].querySelector('span');
-        setSelecday(spanElement.innerText);
-    };
+    console.log(seasons);
 
     useEffect(() => {
         if (isMobile) {
@@ -65,26 +56,18 @@ function Home() {
         } else setToggleDay(true);
     }, [isMobile]);
 
-    useEffect(() => {
-        if (selecday === '' || selecday === 'Mới') {
-            setHiddensectionBar(true);
-            setHiddenFilm(FilmList);
-            return;
-        } else {
-            setHiddensectionBar(false);
-        }
-
-        const filterFilm = FilmList.filter((Film) => {
-            return Film.Showdate && Film.Showdate.includes(selecday);
-        });
-
-        setHiddenFilm(filterFilm);
-    }, [selecday]);
-
     // handle change page
     const handleChangePage = (value) => {
         dispatch(changeCurrentPage(value));
     };
+
+    const handleDayClick = (day) => {
+        if(day !== 'mới') {
+            setHiddensectionBar(false)
+        }
+        dispatch(GET_SEASON_BY_DAY(day.toUpperCase()))
+        setCurrentDay(day);
+    }
 
     useEffect(() => {
         dispatch(GET_ALL_SEASON_HOME(seasons.current - 1));
@@ -92,6 +75,7 @@ function Home() {
     
     useEffect(() => {
         dispatch(GET_SLIDER_SEASON())
+        dispatch(GET_GENRE_USER())
     },[])
 
     const settings = {
@@ -121,7 +105,7 @@ function Home() {
             }
           },
           {
-            breakpoint: 600,
+            breakpoint: 768,
             settings: {
               slidesToShow: 1,
               slidesToScroll: 1,
@@ -134,7 +118,7 @@ function Home() {
     return (
         <>
             <Header />
-            <Navbar />
+            <Navbar genres={genres} />
             <Content>
                 <Slider ref={sliderRef} {...settings}>
                     {sliders.sliders.map((sliderFilmItem, index) => (
@@ -151,11 +135,22 @@ function Home() {
                         )}
                         {toggleDay &&
                             daylist.map((dayItem, index) => (
+                                dayItem.engDay === "Mới" ? 
                                 <li key={index}>
+                                    <a href='/'>
+                                        <button
+                                            className={dayItem.engDay === currentDay ? cx('active') : ''}
+                                        >
+                                            <span>{dayItem.engDay}</span>
+                                            <br />
+                                            {dayItem.VnDay}
+                                        </button>
+                                    </a>
+                                </li>
+                                : <li key={index}>
                                     <button
-                                        ref={(el) => (navRefs.current[index] = el)}
-                                        onClick={() => handleClick(index)}
-                                        className={active === index ? cx('active') : ''}
+                                        onClick={() => handleDayClick(dayItem.engDay)}
+                                        className={dayItem.engDay === currentDay ? cx('active') : ''}
                                     >
                                         <span>{dayItem.engDay}</span>
                                         <br />
@@ -171,16 +166,16 @@ function Home() {
                     {hiddeSectionBar && <SectionBar>Mới Cập Nhật</SectionBar>}
 
                     <div className={cx('showMovie')}>
-                        {hiddenFilm.map((FilmItem, index) => (
+                        {seasons.seasons.map((FilmItem, index) => (
                             <MovieItem data={FilmItem} key={index} />
                         ))}
                     </div>
 
-                    <div className={cx('numberPage')}>
+                    {currentDay === "Mới" && <div className={cx('numberPage')}>
                         <ul>
                             {seasons.current > 1 && (
                                 <li>
-                                    <span>
+                                    <span onClick={() => handleChangePage(seasons.current-1)}>
                                         <FontAwesomeIcon icon={faAngleLeft} />
                                     </span>
                                 </li>
@@ -230,13 +225,13 @@ function Home() {
                             )}
                             {seasons.current < seasons.totalPages && (
                                 <li>
-                                    <span>
+                                    <span onClick={() => handleChangePage(seasons.current+1)}>
                                         <FontAwesomeIcon icon={faAngleRight} />
                                     </span>
                                 </li>
                             )}
                         </ul>
-                    </div>
+                    </div>}
                 </div>
             </Content>
             <Footer />

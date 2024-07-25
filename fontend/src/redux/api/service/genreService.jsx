@@ -20,6 +20,12 @@ export const GET_ALL_GENRE_NO_PAGE = createAsyncThunk('genre/GET_ALL_GENRE_NO_PA
     return response.data.content;
 });
 
+// user get genre
+export const GET_GENRE_USER = createAsyncThunk('genre/GET_GENRE_USER', async () => {
+    let response = await instance.get(`/v1/permit/genre`);
+    return response.data.content;
+});
+
 export const POST_ADD_GENRE = async (formGenre) => {
     let response = await instance.post('/v1/admin/genres', formGenre, {
         headers: {
