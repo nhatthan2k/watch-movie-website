@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(Styles);
 
 function MovieItem({ data }) {
-    // const moviePath = Translate(data.Name);
-
     return (
         <div className={cx('movieItem')}>
             <Link to={`/phim/${data.pathSeason}`}>

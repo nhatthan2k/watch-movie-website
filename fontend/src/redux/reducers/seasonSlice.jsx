@@ -1,4 +1,4 @@
-import { GET_ALL_SEASON, GET_ALL_SEASON_HOME, GET_SEASON_BY_DAY } from '../api/service/seasonService';
+import { GET_ALL_SEASON, GET_ALL_SEASON_HOME, GET_SEASON_BY_DAY, GET_SEASON_CUSTOM } from '../api/service/seasonService';
 import { createSlice } from '@reduxjs/toolkit';
 
 const seasonSlice = createSlice({
@@ -52,6 +52,16 @@ const seasonSlice = createSlice({
             .addCase(GET_SEASON_BY_DAY.fulfilled, (state, action) => {
                 state.status = '';
                 state.seasons = action.payload;
+            })
+            .addCase(GET_SEASON_CUSTOM.pending, (state) => {
+                state.status = 'pending';
+            })
+            .addCase(GET_SEASON_CUSTOM.fulfilled, (state, action) => {
+                state.status = '';
+                state.seasons = action.payload.content;
+                state.totalPages = action.payload.totalPages;
+                state.size = action.payload.size;
+                state.current = action.payload.number + 1;
             });
     },
 });

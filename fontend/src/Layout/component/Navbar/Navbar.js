@@ -1,22 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Styles from './Navbar.module.scss';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCaretDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { publicRoute } from '../../../Route/Routes';
 import { useMediaQuery } from 'react-responsive';
 import Search from '../Search/Search';
-import Translate from '../../../hook/Translate';
 
 const cx = classNames.bind(Styles);
 
-function Navbar({ genres }) {
-    const itemRefs = useRef([]);
-    const menuRefs = useRef([]);
+function Navbar({ genres, FilmPagePath, Genre}) {
     const [toggleMenu, setToggleMenu] = useState(true);
     const [toggleSeach, setToggleSeach] = useState(false);
-    const isTabletMobile = useMediaQuery({ maxWidth: 1200 });
+    const isTabletMobile = useMediaQuery({ maxWidth: 1024 });
 
     const Navnamelist = publicRoute.filter((publicRouteItem) => {
         return publicRouteItem.hasOwnProperty('Navname');
@@ -29,38 +25,6 @@ function Navbar({ genres }) {
             setToggleMenu(true);
         }
     }, [isTabletMobile]);
-
-    const handleClick = (index) => {
-        const itemNames = cx({
-            active: true,
-        });
-
-        itemRefs.current.forEach((button, i) => {
-            // Nếu phần tử đang xét không phải là phần tử được click
-            if (i !== index) {
-                // Xóa lớp CSS "active" khỏi phần tử đó
-                button.classList.remove(itemNames);
-            }
-        });
-
-        itemRefs.current[index].classList.add(itemNames);
-    };
-
-    const handleMenuClick = (index) => {
-        const MenuName = cx({
-            activeMenu: true,
-        });
-
-        menuRefs.current.forEach((button, i) => {
-            // Nếu phần tử đang xét không phải là phần tử được click
-            if (i !== index) {
-                // Xóa lớp CSS "active" khỏi phần tử đó
-                button.classList.remove(MenuName);
-            }
-        });
-
-        menuRefs.current[index].classList.add(MenuName);
-    };
 
     return (
         <div className={cx('navbar')}>
@@ -77,21 +41,20 @@ function Navbar({ genres }) {
 
                 <ul className={cx('menu')} style={toggleMenu ? { display: 'flex' } : { display: 'none' }}>
                     <li>
-                        <Link to="/">Trang chủ</Link>
+                        <a href="/">Trang chủ</a>
                     </li>
                     <li className={cx('dropdown')}>
                         <a href="#">
                             Thể loại <FontAwesomeIcon icon={faCaretDown} />
                         </a>
                         <ul className={cx('dropdownMenu')}>
-                            {genres.genre.map((MovieGenderItem, index) => {
+                            {genres?.genre.map((MovieGenderItem, index) => {
                                 return (
                                     <li
                                         key={index}
-                                        ref={(el) => (menuRefs.current[index] = el)}
-                                        onClick={() => handleMenuClick(index)}
+                                        className={Genre === MovieGenderItem.pathGenre ? cx('activeMenu') : ''}
                                     >
-                                        <Link to={'/'+Translate(MovieGenderItem.genreName)}>{MovieGenderItem.genreName}</Link>
+                                        <a href={'/the-loai/'+MovieGenderItem.pathGenre}>{MovieGenderItem.genreName}</a>
                                     </li>
                                 );
                             })}
@@ -102,12 +65,11 @@ function Navbar({ genres }) {
                         return (
                             <li
                                 key={index}
-                                ref={(el) => (itemRefs.current[index] = el)}
-                                onClick={() => handleClick(index)}
+                                className={'/'+FilmPagePath === NavnameItem.path ? cx('active') : ''}
                             >
-                                <Link to={NavnameItem.path}>
+                                <a href={NavnameItem.path}>
                                     {NavnameItem.icon} {NavnameItem.Navname}
-                                </Link>
+                                </a>
                             </li>
                         );
                     })}

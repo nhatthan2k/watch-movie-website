@@ -34,6 +34,7 @@ function App() {
                     })}
                     <Route path="/register" Component={Register} />
                     <Route path="/:FilmPage" Component={FilmPage} />
+                    <Route path="/the-loai/:Genre" Component={FilmPage} />
                     <Route path="/phim/:IntroMovie" Component={IntroMovie} />
                     <Route path="/xem-phim/:WatchMovie" Component={WatchMoviePage} />
 

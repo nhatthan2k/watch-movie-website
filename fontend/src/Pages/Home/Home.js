@@ -1,27 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Styles from './Home.module.scss';
+import classNames from 'classnames/bind';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Styles from './Home.module.scss';
 import "./customSlider/custom.css"
-import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import SliderItem from '../../component/SliderItem/SliderItem';
-import Content from '../../Layout/component/Content/Content';
-import { useMediaQuery } from 'react-responsive';
-import Header from '../../Layout/component/Header/Header';
-import Navbar from '../../Layout/component/Navbar/Navbar';
-import Footer from '../../Layout/component/Footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { GENRE, SEASON, SLIDER } from '../../redux/selectors/selectors';
-import SectionBar from '../../component/SectionBar/SectionBar';
-import MovieItem from '../../component/MovieItem/MovieItem';
+import { useMediaQuery } from 'react-responsive';
 import { GET_ALL_SEASON_HOME, GET_SEASON_BY_DAY } from '../../redux/api/service/seasonService';
 import { changeCurrentPage } from '../../redux/reducers/seasonSlice';
 import { GET_SLIDER_SEASON } from '../../redux/api/service/sliderService';
 import { NextArrow, PrevArrow } from './customSlider/CustomSlider';
 import { GET_GENRE_USER } from '../../redux/api/service/genreService';
+import SliderItem from '../../component/SliderItem/SliderItem';
+import Content from '../../Layout/component/Content/Content';
+import Header from '../../Layout/component/Header/Header';
+import Navbar from '../../Layout/component/Navbar/Navbar';
+import Footer from '../../Layout/component/Footer/Footer';
+import SectionBar from '../../component/SectionBar/SectionBar';
+import MovieItem from '../../component/MovieItem/MovieItem';
 
 const cx = classNames.bind(Styles);
 
@@ -47,8 +47,6 @@ function Home() {
     const [toggleDay, setToggleDay] = useState(true);
     const [hiddeSectionBar, setHiddensectionBar] = useState(true);
     const [currentDay, setCurrentDay] = useState('Mới');
-
-    console.log(seasons);
 
     useEffect(() => {
         if (isMobile) {

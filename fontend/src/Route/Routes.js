@@ -21,18 +21,19 @@ const publicRoute = [
     { Name: 'Follow', path: '/follow', icon: <FontAwesomeIcon icon={faBookmark} />, component: Follow },
     { Name: 'History', path: '/history', icon: <FontAwesomeIcon icon={faClockRotateLeft} />, component: History },
     { Name: 'Login', path: '/login', icon: <FontAwesomeIcon icon={faRightToBracket} />, component: Login },
-    { Typefilm: 'huyền huyễn', path: '/huyen-huyen', component: FilmPage },
-    { Typefilm: 'Xuyên Không', path: '/xuyen-khong', component: FilmPage },
-    { Typefilm: 'Trùng Sinh', path: '/trung-sinh', component: FilmPage },
-    { Typefilm: 'Tiên Hiệp', path: '/tien-hiep', component: FilmPage },
-    { Typefilm: 'Cổ trang', path: '/co-trang', component: FilmPage },
-    { Typefilm: 'Hài Hước', path: '/hai-huoc', component: FilmPage },
-    { Typefilm: 'Kiếm Hiệp', path: '/kiem-hiep', component: FilmPage },
-    { Typefilm: 'Hiện Đại', path: '/hien-dai', component: FilmPage },
-    { Navname: 'Phim Lẻ', path: '/phim-hoat-hình-3d-le', icon: null, component: FilmPage },
+    { 
+        Navname: 'Phim Lẻ', 
+        path: '/phim-hoat-hình-3d-le', 
+        apiRequest: 'SINGLE',
+        type: 'type', 
+        icon: null, 
+        component: FilmPage 
+    },
     {
         Navname: 'Phim Đang chiếu',
         path: '/phim-dang-chieu',
+        apiRequest: 'SHOWING',
+        type: 'status',
         icon: <FontAwesomeIcon icon={faArrowsRotate} />,
         component: FilmPage,
     },
@@ -45,16 +46,25 @@ const publicRoute = [
     {
         Navname: 'Phim Hoàn Thành',
         path: '/phim-hoan-thanh',
+        apiRequest: 'COMPLETE',
+        type: 'status',
         icon: <FontAwesomeIcon icon={faCircleCheck} />,
         component: FilmPage,
     },
     {
         Navname: 'Phim Sắp chiếu',
         path: '/phim-sap-chieu',
+        apiRequest: 'COMING',
+        type: 'status',
         icon: <FontAwesomeIcon icon={faClock} />,
         component: FilmPage,
     },
-    { Navname: 'Đáng xem', path: '/dang-xem', icon: <FontAwesomeIcon icon={faThumbsUp} />, component: FilmPage },
+    { 
+        Navname: 'Đáng xem', 
+        path: '/dang-xem', 
+        icon: <FontAwesomeIcon icon={faThumbsUp} />, 
+        component: FilmPage 
+    },
 ];
 
 const privateRoute = [];
